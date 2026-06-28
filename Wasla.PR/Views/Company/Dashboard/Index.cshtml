@@ -1,0 +1,88 @@
+﻿@{
+
+}
+
+<section class="company-content">
+    <!-- بطاقات الإحصائيات -->
+    <div class="company-stats-grid">
+        <div class="company-stat-card">
+            <div class="company-stat-icon"><i class="fa-solid fa-circle-check"></i></div>
+            <div class="company-stat-info">
+                <span class="company-stat-label" data-i18n="completed">مكتمل</span>
+                <span class="company-stat-value">150</span>
+            </div>
+        </div>
+        <div class="company-stat-card">
+            <div class="company-stat-icon company-stat-warning"><i class="fa-solid fa-truck"></i></div>
+            <div class="company-stat-info">
+                <span class="company-stat-label" data-i18n="delivering">قيد التوصيل</span>
+                <span class="company-stat-value">18</span>
+            </div>
+        </div>
+        <div class="company-stat-card">
+            <div class="company-stat-icon company-stat-purple"><i class="fa-solid fa-rotate"></i></div>
+            <div class="company-stat-info">
+                <span class="company-stat-label" data-i18n="pending">قيد الانتظار</span>
+                <span class="company-stat-value">15</span>
+            </div>
+        </div>
+        <div class="company-stat-card">
+            <div class="company-stat-icon"><i class="fa-solid fa-users"></i></div>
+            <div class="company-stat-info">
+                <span class="company-stat-label" data-i18n="total_delegates">عدد المناديب</span>
+                <span class="company-stat-value">18</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- شبكة المحتوى (أحدث الطلبات + مناديب متاحة) -->
+    <div class="company-dashboard-grid">
+        <!-- أحدث الطلبات -->
+        <div class="company-card">
+            <div class="company-card-header">
+                <h3 class="company-card-title" data-i18n="latest_orders">أحدث الطلبات</h3>
+            </div>
+            <div class="company-table-container">
+                <table class="company-table">
+                    <thead>
+                        <tr>
+                            <th data-i18n="order_no">رقم الطلب</th>
+                            <th data-i18n="customer">العميل</th>
+                            <th data-i18n="date">التاريخ</th>
+                            <th data-i18n="status">الحالة</th>
+                            <th data-i18n="actions">الإجراءات</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>#1024</td>
+                            <td>علي عثمان</td>
+                            <td>2026/05/12</td>
+                            <td><span class="company-badge company-badge-success" data-i18n="completed">مكتمل</span></td>
+                            <td><button class="company-btn company-btn-primary view-order-btn" data-id="ord1" data-i18n="view_details">عرض التفاصيل</button></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- المناديب المتاحة -->
+        <div class="company-card">
+            <div class="company-card-header">
+                <h3 class="company-card-title" data-i18n="available_delegates">المناديب المتاحة</h3>
+            </div>
+            <div class="company-delegates-list">
+                <div class="company-delegate-card">
+                    <div class="company-delegate-info">
+                        <div class="company-delegate-avatar">Z</div>
+                        <div>
+                            <h4>زياد أحمد</h4>
+                            <span class="company-badge company-badge-success" data-i18n="active">نشط</span>
+                        </div>
+                    </div>
+                    <button class="company-btn company-btn-outline assign-order-btn" data-id="del1" data-i18n="assign_order">إسناد طلب</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

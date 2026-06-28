@@ -1,0 +1,66 @@
+﻿
+@{
+}
+
+
+<div class="company-content">
+    <!-- إحصائيات سريعة مع أيقونات -->
+    <div class="company-stats-mini-grid">
+        <div class="company-card company-stat-mini">
+            <i class="fa-solid fa-chart-simple"></i>
+            <span data-i18n="all">الكل</span>
+            <b id="statAll">0</b>
+        </div>
+        <div class="company-card company-stat-mini">
+            <i class="fa-solid fa-clock"></i>
+            <span data-i18n="pending">قيد الانتظار</span>
+            <b id="statPending">0</b>
+        </div>
+        <div class="company-card company-stat-mini">
+            <i class="fa-solid fa-truck"></i>
+            <span data-i18n="delivering">قيد التوصيل</span>
+            <b id="statDelivering">0</b>
+        </div>
+        <div class="company-card company-stat-mini">
+            <i class="fa-solid fa-circle-check"></i>
+            <span data-i18n="completed">مكتمل</span>
+            <b id="statCompleted">0</b>
+        </div>
+        <div class="company-card company-stat-mini">
+            <i class="fa-solid fa-rotate-left"></i>
+            <span data-i18n="returned">مرتجع</span>
+            <b id="statReturned">0</b>
+        </div>
+        <div class="company-card company-stat-mini">
+            <i class="fa-solid fa-hourglass-half"></i>
+            <span data-i18n="pending_approval">بانتظار الموافقة</span>
+            <b id="statPendingApproval">0</b>
+        </div>
+    </div>
+
+    <!-- جدول الطلبات -->
+    <div class="company-card">
+        <div class="company-card-header">
+
+            <div class="company-table-container">
+                <table class="company-table" id="ordersTable">
+                    <thead>
+                        <tr>
+                            <th data-i18n="order_no">رقم الطلب</th>
+                            <th data-i18n="customer">العميل</th>
+                            <th data-i18n="delegate">المندوب</th>
+                            <th data-i18n="amount">المبلغ</th>
+                            <th data-i18n="status">الحالة</th>
+                            <th data-i18n="actions">الإجراءات</th>
+                        </tr>
+                    </thead>
+                    <tbody id="ordersTableBody">
+                        <tr>
+                            <td colspan="6" style="text-align:center;">جاري التحميل...<\ /td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>

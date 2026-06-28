@@ -1,0 +1,239 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+<!-- Hero Section -->
+<header class="landing-hero bg-gradient-shift">
+    <div class="landing-hero-content">
+        <h1 class="reveal fade-up splash-inline-5" data-i18n="hero_title">
+            One platform to manage all shipping and
+            delivery operations
+        </h1>
+        <p class="reveal fade-up stagger-1 splash-inline-6" data-i18n="hero_subtitle">
+            Connecting merchants and
+            shipping companies to provide the best solutions for
+            managing logistics effectively.
+        </p>
+        <div class="reveal fade-up stagger-2 splash-inline-7">
+            <button class="btn btn-primary splash-inline-8" onclick="window.location.href='signup-role.html'"
+                    data-i18n="btn_start">
+                Start Now
+            </button>
+            <a asp-controller="Home"
+                   asp-action="About"
+                   class="btn btn-secondary splash-inline-9"
+                   data-i18n="nav_about">
+                About
+            </a>
+        </div>
+    </div>
+    <div class="landing-hero-img reveal zoom-in stagger-2">
+        <img class="float-anim splash-inline-10" src="~/imgs/WhatsApp%20Image%202026-05-06%20at%2011.36.05%20PM.jpeg"
+             alt="Dashboard Mockup">
+    </div>
+</header>
+
+<!-- The Problem -->
+<section class="section section-bg">
+    <h2 class="section-title" data-i18n="problem_title">The Problem We Solve</h2>
+    <p class="section-subtitle" data-i18n="problem_sub">
+        We provide radical solutions to the most important
+        challenges facing the sector.
+    </p>
+    <div class="grid-3">
+        <div class="feature-card reveal fade-up card-hover">
+            <div class="feature-icon icon-hover-effect splash-inline-11">
+                <i class="fa-solid fa-circle-info"></i>
+            </div>
+            <h3 class="feature-title" data-i18n="prob_1">Shipment Tracking</h3>
+            <p class="feature-desc" data-i18n="prob_1_desc">
+                Solve the problem of not knowing the shipment location.
+            </p>
+        </div>
+        <div class="feature-card reveal fade-up card-hover stagger-1">
+            <div class="feature-icon icon-hover-effect splash-inline-12">
+                <i class="fa-solid fa-circle-info"></i>
+            </div>
+            <h3 class="feature-title" data-i18n="prob_2">Delivery Delays</h3>
+            <p class="feature-desc" data-i18n="prob_2_desc">Optimize routing to ensure fast delivery.</p>
+        </div>
+        <div class="feature-card reveal fade-up card-hover stagger-2">
+            <div class="feature-icon icon-hover-effect splash-inline-13">
+                <i class="fa-solid fa-circle-info"></i>
+            </div>
+            <h3 class="feature-title" data-i18n="prob_3">Communication</h3>
+            <p class="feature-desc" data-i18n="prob_3_desc">Direct link between merchant, company, and driver.</p>
+        </div>
+        <div class="feature-card reveal fade-up card-hover">
+            <div class="feature-icon icon-hover-effect splash-inline-14">
+                <i class="fa-solid fa-circle-info"></i>
+            </div>
+            <h3 class="feature-title" data-i18n="prob_4">Lost Packages</h3>
+            <p class="feature-desc" data-i18n="prob_4_desc">High security and barcode system to prevent loss.</p>
+        </div>
+        <div class="feature-card reveal fade-up card-hover stagger-1">
+            <div class="feature-icon icon-hover-effect splash-inline-15">
+                <i class="fa-solid fa-circle-info"></i>
+            </div>
+            <h3 class="feature-title" data-i18n="prob_5">Unclear Costs</h3>
+            <p class="feature-desc" data-i18n="prob_5_desc">Transparent pricing with no hidden fees.</p>
+        </div>
+        <div class="feature-card reveal fade-up card-hover stagger-2">
+            <div class="feature-icon icon-hover-effect splash-inline-16">
+                <i class="fa-solid fa-circle-info"></i>
+            </div>
+            <h3 class="feature-title" data-i18n="prob_6">Returns Management</h3>
+            <p class="feature-desc" data-i18n="prob_6_desc">Smooth return process for customers.</p>
+        </div>
+    </div>
+</section>
+
+<!-- Smart Solutions -->
+<section class="section">
+    <h2 class="section-title" data-i18n="solutions_title">Smart Logistics Solutions</h2>
+    <p class="section-subtitle" data-i18n="solutions_sub">Designed to serve you efficiently.</p>
+    <div class="grid-3">
+        <div class="feature-card reveal fade-up card-hover splash-inline-17">
+            <div class="feature-icon icon-hover-effect splash-inline-18">
+                <i class="fa-solid fa-circle-info"></i>
+            </div>
+            <h3 class="feature-title" data-i18n="sol_1">For Companies</h3>
+            <p class="feature-desc" data-i18n="sol_1_desc">Manage operations easily.</p>
+        </div>
+        <div class="feature-card reveal fade-up card-hover stagger-1 splash-inline-17">
+            <div class="feature-icon icon-hover-effect splash-inline-18">
+                <i class="fa-solid fa-circle-info"></i>
+            </div>
+            <h3 class="feature-title" data-i18n="sol_2">Fleet Management</h3>
+            <p class="feature-desc" data-i18n="sol_2_desc">Track your vehicles live.</p>
+        </div>
+        <div class="feature-card reveal fade-up card-hover stagger-2 splash-inline-17">
+            <div class="feature-icon icon-hover-effect splash-inline-18">
+                <i class="fa-solid fa-circle-info"></i>
+            </div>
+            <h3 class="feature-title" data-i18n="sol_3">Live Tracking</h3>
+            <p class="feature-desc" data-i18n="sol_3_desc">Real-time updates.</p>
+        </div>
+        <div class="feature-card reveal fade-up card-hover splash-inline-17">
+            <div class="feature-icon icon-hover-effect splash-inline-18">
+                <i class="fa-solid fa-circle-info"></i>
+            </div>
+            <h3 class="feature-title" data-i18n="sol_4">For Merchants</h3>
+            <p class="feature-desc" data-i18n="sol_4_desc">Monitor your sales.</p>
+        </div>
+        <div class="feature-card reveal fade-up card-hover stagger-1 splash-inline-17">
+            <div class="feature-icon icon-hover-effect splash-inline-18">
+                <i class="fa-solid fa-circle-info"></i>
+            </div>
+            <h3 class="feature-title" data-i18n="sol_5">Track Shipments</h3>
+            <p class="feature-desc" data-i18n="sol_5_desc">Follow orders step by step.</p>
+        </div>
+        <div class="feature-card reveal fade-up card-hover stagger-2 splash-inline-17">
+            <div class="feature-icon icon-hover-effect splash-inline-18">
+                <i class="fa-solid fa-circle-info"></i>
+            </div>
+            <h3 class="feature-title" data-i18n="sol_6">Detailed Stats</h3>
+            <p class="feature-desc" data-i18n="sol_6_desc">Comprehensive reports.</p>
+        </div>
+    </div>
+</section>
+
+<!-- Pricing -->
+<section class="section section-bg">
+    <h2 class="section-title reveal fade-up" data-i18n="pricing_title">Pricing by User Type</h2>
+    <p class="section-subtitle reveal fade-up stagger-1" data-i18n="pricing_sub">
+        Flexible plans suitable for
+        everyone.
+    </p>
+
+    <div class="pricing-card reveal fade-up card-hover">
+        <div class="pricing-info">
+            <div class="pricing-icon icon-hover-effect splash-inline-13">
+                <i class="fa-solid fa-circle-info"></i>
+            </div>
+            <div>
+                <h3 data-i18n="price_driver" class="splash-inline-19">Driver</h3>
+                <p data-i18n="price_driver_desc" class="splash-inline-20">
+                    No fees
+                    (Free).
+                </p>
+            </div>
+        </div>
+        <div><span data-i18n="badge_driver" class="splash-inline-21">Free</span></div>
+    </div>
+
+    <div class="pricing-card reveal fade-up card-hover stagger-1">
+        <div class="pricing-info">
+            <div class="pricing-icon icon-hover-effect">
+                <i class="fa-solid fa-circle-info"></i>
+            </div>
+            <div>
+                <h3 data-i18n="price_merchant" class="splash-inline-19">Merchant</h3>
+                <p data-i18n="price_merchant_desc" class="splash-inline-20">
+                    Pricing is
+                    based on number of orders.
+                </p>
+            </div>
+        </div>
+        <div><span data-i18n="badge_merchant" class="splash-inline-22">Per Order</span></div>
+    </div>
+
+    <div class="pricing-card reveal fade-up card-hover stagger-2">
+        <div class="pricing-info">
+            <div class="pricing-icon icon-hover-effect splash-inline-15">
+                <i class="fa-solid fa-circle-info"></i>
+            </div>
+            <div>
+                <h3 data-i18n="price_company" class="splash-inline-19">
+                    Shipping Company
+                </h3>
+                <p data-i18n="price_company_desc" class="splash-inline-20">
+                    Subscription-based (monthly and yearly packages).
+                </p>
+            </div>
+        </div>
+        <div><span data-i18n="badge_company" class="splash-inline-23">Subscription</span></div>
+    </div>
+</section>
+
+<!-- How it Works -->
+<section class="section">
+    <h2 class="section-title reveal fade-up" data-i18n="how_title">How the System Works?</h2>
+    <p class="section-subtitle reveal fade-up stagger-1" data-i18n="how_sub">
+        Simple steps to start your logistics
+        journey.
+    </p>
+
+    <div class="steps-container">
+        <div class="step-item reveal zoom-in">
+            <div class="step-circle" data-i18n="step_1">1</div>
+            <div class="step-title" data-i18n="step_1_title">Register</div>
+            <div class="step-desc" data-i18n="step_1_desc">Create an account easily.</div>
+        </div>
+        <div class="step-item reveal zoom-in stagger-1">
+            <div class="step-circle" data-i18n="step_2">2</div>
+            <div class="step-title" data-i18n="step_2_title">Add Shipments</div>
+            <div class="step-desc" data-i18n="step_2_desc">Enter order details.</div>
+        </div>
+        <div class="step-item reveal zoom-in stagger-2">
+            <div class="step-circle" data-i18n="step_3">3</div>
+            <div class="step-title" data-i18n="step_3_title">Assign</div>
+            <div class="step-desc" data-i18n="step_3_desc">Select a shipping company.</div>
+        </div>
+        <div class="step-item reveal zoom-in stagger-3">
+            <div class="step-circle" data-i18n="step_4">4</div>
+            <div class="step-title" data-i18n="step_4_title">Pickup</div>
+            <div class="step-desc" data-i18n="step_4_desc">Driver picks up the order.</div>
+        </div>
+        <div class="step-item reveal zoom-in stagger-4">
+            <div class="step-circle" data-i18n="step_5">5</div>
+            <div class="step-title" data-i18n="step_5_title">Track</div>
+            <div class="step-desc" data-i18n="step_5_desc">Live tracking until delivery.</div>
+        </div>
+        <div class="step-item reveal zoom-in stagger-5">
+            <div class="step-circle" data-i18n="step_6">6</div>
+            <div class="step-title" data-i18n="step_6_title">Delivery</div>
+            <div class="step-desc" data-i18n="step_6_desc">Successful delivery to customer.</div>
+        </div>
+    </div>
+</section>
+

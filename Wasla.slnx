@@ -1,0 +1,8 @@
+<Solution>
+  <Folder Name="/Solution Items/">
+    <File Path=".gitignore" />
+  </Folder>
+  <Project Path="Wasla.BLL/Wasla.BLL.csproj" Id="eec48534-d39a-49ba-b71a-6b356ddc3d05" />
+  <Project Path="Wasla.DAL/Wasla.DAL.csproj" Id="51516044-37c2-4a61-92b6-fb41cdfb78d5" />
+  <Project Path="Wasla.PR/Wasla.PR.csproj" Id="cf2b0321-a8fd-47c6-9909-504f46353120" />
+</Solution>

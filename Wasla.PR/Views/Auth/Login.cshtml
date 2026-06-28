@@ -1,0 +1,48 @@
+﻿@{
+    ViewData["Auth_Title"]= "Login";
+}
+<div class="container">
+    <div class="header-top">
+        <a href="../index.html" class="logo-icon" style="text-decoration: none;">
+            <i class="fa-solid fa-right-to-bracket"></i>
+        </a>
+        <h1 class="app-title" data-i18n="welcome_back">Welcome Back</h1>
+        <p class="app-subtitle" data-i18n="sign_in_continue">Sign in to your account to continue</p>
+    </div>
+
+    <div class="card">
+        <form id="login-form">
+            <div class="form-group">
+                <label class="form-label" data-i18n="email_address">Email Address</label>
+                <div class="input-wrapper">
+                    <div class="input-icon"><i class="fa-regular fa-envelope"></i></div>
+                    <input type="email" name="email" class="form-control has-icon" data-i18n="enter_email" required>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label" data-i18n="password">Password</label>
+                <div class="input-wrapper">
+                    <div class="input-icon"><i class="fa-solid fa-lock"></i></div>
+                    <input type="password" name="password" class="form-control has-icon has-toggle" data-i18n="enter_password" required>
+                    <button type="button" class="toggle-password"><i class="fa-solid fa-eye"></i></button>
+                </div>
+            </div>
+
+            <div class="form-actions">
+                <label class="checkbox-label">
+                    <input type="checkbox" name="remember">
+                    <span data-i18n="remember_me">Remember me</span>
+                </label>
+                <a href="forget-password.html" class="link" data-i18n="forgot_password_q">Forgot Password?</a>
+            </div>
+
+            <button type="submit" class="btn btn-primary" data-i18n="login">Login</button>
+                
+            <p class="footer-text" style="display:flex; flex-direction:column; gap:0.5rem; align-items:center;">
+                <span data-i18n="dont_have_account">Don't have an account?</span>
+                <a href="signup-role.html" class="link" data-i18n="register">Register</a>
+            </p>
+        </form>
+    </div>
+</div>

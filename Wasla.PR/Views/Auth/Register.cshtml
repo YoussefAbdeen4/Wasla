@@ -1,0 +1,84 @@
+﻿@{
+    ViewData["Auth_Title"] = "Register";
+}
+<div class="container wide">
+    <div class="header-top">
+        <a href="../index.html" class="logo-icon" style="text-decoration: none;">
+            <i class="fa-solid fa-truck-fast"></i>
+        </a>
+        <h1 class="app-title" data-i18n="account_setup">Account Setup</h1>
+        <p class="app-subtitle" data-i18n="step_1_of_2">Step 1 of 2</p>
+    </div>
+
+    <div class="card">
+        <form id="signup-role-form">
+            <div class="form-group">
+                <label class="form-label" data-i18n="full_name">Full Name <span class="required">*</span></label>
+                <div class="input-wrapper">
+                    <div class="input-icon"><i class="fa-regular fa-user"></i></div>
+                    <input type="text" name="fullName" class="form-control has-icon" data-i18n="enter_full_name" required>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label" data-i18n="phone_number">Phone Number <span class="required">*</span></label>
+                <div class="input-wrapper">
+                    <div class="input-icon"><i class="fa-solid fa-phone"></i></div>
+                    <input type="tel" name="phone" class="form-control has-icon" data-i18n="enter_phone" required>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label" data-i18n="email_address">Email Address <span class="required">*</span></label>
+                <div class="input-wrapper">
+                    <div class="input-icon"><i class="fa-regular fa-envelope"></i></div>
+                    <input type="email" name="email" class="form-control has-icon" data-i18n="enter_email" required>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label" data-i18n="create_password">Create a password <span class="required">*</span></label>
+                <div class="input-wrapper">
+                    <div class="input-icon"><i class="fa-solid fa-lock"></i></div>
+                    <input type="password" name="password" class="form-control has-icon has-toggle" data-i18n="enter_password" required>
+                    <button type="button" class="toggle-password"><i class="fa-solid fa-eye"></i></button>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label" data-i18n="confirm_password">Confirm Password <span class="required">*</span></label>
+                <div class="input-wrapper">
+                    <div class="input-icon"><i class="fa-solid fa-lock"></i></div>
+                    <input type="password" name="confirmPassword" class="form-control has-icon has-toggle" data-i18n="confirm_your_password" required>
+                    <button type="button" class="toggle-password"><i class="fa-solid fa-eye"></i></button>
+                </div>
+            </div>
+
+            <div class="form-group" style="margin-top: 2rem;">
+                <label class="form-label" data-i18n="account_type">Account Type <span class="required">*</span></label>
+                <div class="role-cards">
+                    <label class="role-card selected" id="role-merchant">
+                        <input type="radio" name="role" value="merchant" checked>
+                        <div class="role-icon"><i class="fa-solid fa-store"></i></div>
+                        <div class="role-title" data-i18n="merchant">Merchant</div>
+                        <div class="role-desc" data-i18n="merchant_desc">I need shipping services for my business</div>
+                    </label>
+                    <label class="role-card" id="role-shipping">
+                        <input type="radio" name="role" value="company">
+                        <div class="role-icon"><i class="fa-solid fa-truck-moving"></i></div>
+                        <div class="role-title" data-i18n="shipping_company">Shipping Company</div>
+                        <div class="role-desc" data-i18n="shipping_company_desc">I provide logistics and shipping services</div>
+                    </label>
+                </div>
+            </div>
+
+            <button type="submit" class="btn btn-primary" data-i18n="continue">Continue</button>
+                
+            <p class="footer-text">
+                <span data-i18n="already_have_account">Already have an account?</span>
+                <a href="login.html" class="link" data-i18n="login">Login</a>
+            </p>
+        </form>
+    </div>
+</div>
+

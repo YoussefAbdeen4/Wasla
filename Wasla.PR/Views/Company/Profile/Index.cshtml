@@ -1,0 +1,50 @@
+﻿
+@{
+}
+
+<div class="company-content">
+    <div class="company-card company-profile-header">
+        <div class="company-profile-info">
+            <div class="company-avatar-large"><i class="fa-solid fa-truck-fast"></i></div>
+            <div>
+                <h2 data-i18n="company_name">شركة الشحن السريع</h2>
+                <p class="company-muted"><span data-i18n="manager_name">مدير الحساب</span>: أحمد محمد علي</p>
+                <span class="company-badge company-badge-success" data-i18n="active">نشط</span>
+            </div>
+        </div>
+        <button class="company-btn company-btn-primary" id="editProfileBtn" data-i18n="edit_profile">تعديل الملف الشخصي</button>
+    </div>
+
+    <div class="company-profile-grid">
+        <div class="company-card">
+            <div class="company-card-header"><h3 class="company-card-title" data-i18n="basic_info">المعلومات الأساسية</h3></div>
+            <div class="company-card-body">
+                <div class="company-info-row"><span class="company-info-label" data-i18n="name">اسم الشركة</span><span class="company-info-value" id="profileCompanyName" data-i18n="company_name">شركة الشحن السريع</span></div>
+                <div class="company-info-row"><span class="company-info-label" data-i18n="manager_name">اسم المسؤول</span><span class="company-info-value" id="profileManagerName">أحمد محمد علي</span></div>
+                <div class="company-info-row"><span class="company-info-label" data-i18n="phone">رقم التواصل</span><span class="company-info-value" id="profilePhone" dir="ltr">+966 50 123 4567</span></div>
+                <div class="company-info-row"><span class="company-info-label" data-i18n="email">البريد الإلكتروني</span><span class="company-info-value" id="profileEmail">info@fastship.com</span></div>
+            </div>
+        </div>
+
+        <div class="company-profile-secondary">
+            <div class="company-card">
+                <div class="company-card-header"><h3 class="company-card-title" data-i18n="transport_settings">إعدادات النقل</h3></div>
+                <div class="company-card-body">
+                    <div class="company-info-row"><span class="company-info-label" data-i18n="min_delivery_time">الحد الأدنى لوقت التوصيل</span><span class="company-info-value" id="profileMinTime">24 ساعة</span></div>
+                    <div class="company-info-row"><span class="company-info-label" data-i18n="max_delivery_time">الحد الأقصى لوقت التوصيل</span><span class="company-info-value" id="profileMaxTime">48 ساعة</span></div>
+                </div>
+            </div>
+            <div class="company-card">
+                <div class="company-card-header"><h3 class="company-card-title" data-i18n="delivery_zones">مناطق التوصيل</h3></div>
+                <div class="company-card-body">
+                    <div class="company-badges-list" id="profileZones">
+                        <span class="company-badge company-badge-primary">الرياض</span>
+                        <span class="company-badge company-badge-primary">جدة</span>
+                        <span class="company-badge company-badge-primary">الدمام</span>
+                        <span class="company-badge company-badge-primary">مكة المكرمة</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

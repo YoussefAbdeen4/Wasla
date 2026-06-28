@@ -1,0 +1,54 @@
+﻿
+@{
+}
+
+<div class="company-content">
+    <!-- 3 بطاقات مالية -->
+    <div class="company-stats-grid">
+        <div class="company-stat-card">
+            <div class="company-stat-icon"><i class="fa-solid fa-chart-line"></i></div>
+            <div class="company-stat-info">
+                <span class="company-stat-label" data-i18n="expected_cash">المتوقع تحصيله</span>
+                <span class="company-stat-value" id="expectedCashValue">0 ج.م</span>
+            </div>
+        </div>
+        <div class="company-stat-card">
+            <div class="company-stat-icon"><i class="fa-solid fa-hand-holding-dollar"></i></div>
+            <div class="company-stat-info">
+                <span class="company-stat-label" data-i18n="submitted_cash">المسلم للشركة</span>
+                <span class="company-stat-value" id="submittedCashValue">0 ج.م</span>
+            </div>
+        </div>
+        <div class="company-stat-card">
+            <div class="company-stat-icon"><i class="fa-solid fa-scale-balanced"></i></div>
+            <div class="company-stat-info">
+                <span class="company-stat-label" data-i18n="balance">الرصيد</span>
+                <span class="company-stat-value" id="balanceValue">0 ج.م</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- جدول سجل التحصيلات -->
+    <div class="company-card">
+        <div class="company-card-header">
+            <h3 class="company-card-title"><i class="fa-solid fa-clock-rotate-left"></i> <span data-i18n="transactions_history">سجل عمليات التحصيل</span></h3>
+        </div>
+        <div class="company-table-container">
+            <table class="company-table">
+                <thead>
+                    <tr>
+                        <th data-i18n="delegate">المندوب</th>
+                        <th data-i18n="amount">المبلغ</th>
+                        <th data-i18n="date">التاريخ</th>
+                    </tr>
+                </thead>
+                <tbody id="collectionTableBody">
+                    <td>
+                        <td colspan="3" style="text-align:center;">
+                            جاري التحميل...<\ /td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>

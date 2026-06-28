@@ -1,0 +1,22 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Folder Include="Controllers\Auth\" />
+    <Folder Include="Controllers\Admin\" />
+    <Folder Include="Controllers\Company\" />
+    <Folder Include="Controllers\Merchant\" />
+    <Folder Include="Controllers\Agent\" />
+    <Folder Include="ViewModels\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Wasla.DAL\Wasla.DAL.csproj" />
+  </ItemGroup>
+
+</Project>
