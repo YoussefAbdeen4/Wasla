@@ -13,9 +13,6 @@ namespace Wasla.Constraints
             
         }
 
-        void IEntityTypeConfiguration<DriverVehicle>.Configure(EntityTypeBuilder<DriverVehicle> builder)
-        {
-            throw new NotImplementedException();
-        }
+        
     }
 }

@@ -6,10 +6,8 @@ namespace Wasla
 {
     public class AppDbContext : DbContext
     {
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
         {
-            string con = "Server=.\\SQLEXPRESS;Database=Logistics;Trusted_Connection=True;TrustServerCertificate=True;";
-            optionsBuilder.UseSqlServer(con);
         }
 
         public DbSet<Merchant> Merchants { get; set; }
