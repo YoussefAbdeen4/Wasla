@@ -189,29 +189,19 @@
                                     <th data-i18n="col_date">Date</th>
                                 </tr>
                             </thead>
-                            <tbody>
-                                <tr>
-                                    <td><strong>#ORD-1024</strong></td>
-                                    <td>Khalid Ahmed</td>
-                                    <td>150 E.G</td>
-                                    <td><span class="merchant-badge merchant-badge-success" data-i18n="status_delivered">Delivered</span></td>
-                                    <td style="color:var(--merchant-text-secondary);">2024/05/12</td>
-                                </tr>
-                                <tr>
-                                    <td><strong>#ORD-1025</strong></td>
-                                    <td>Omar Ali</td>
-                                    <td>320 E.G</td>
-                                    <td><span class="merchant-badge merchant-badge-info" data-i18n="status_processing">Processing</span></td>
-                                    <td style="color:var(--merchant-text-secondary);">2024/05/14</td>
-                                </tr>
-                                <tr>
-                                    <td><strong>#ORD-1026</strong></td>
-                                    <td>Sara Hassan</td>
-                                    <td>85 E.G</td>
-                                    <td><span class="merchant-badge merchant-badge-warning" data-i18n="status_pending">Pending</span></td>
-                                    <td style="color:var(--merchant-text-secondary);">2024/05/15</td>
-                                </tr>
-                            </tbody>
+<tbody>
+    @foreach (var order in Model.RecentOrders)
+    {
+        <tr>
+            <td><strong>#@order.Id</strong></td>
+            <td>@order.CustomerName</td>
+            <td>@order.Amount E.G</td>
+            <td><span class="merchant-badge merchant-badge-success">@order.Status</span></td>
+            <td>@order.Date.ToString("yyyy/MM/dd")</td>
+        </tr>
+    }
+</tbody>
+
                         </table>
                     </div>
                 </div>
