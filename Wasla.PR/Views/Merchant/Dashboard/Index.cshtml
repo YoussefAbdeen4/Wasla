@@ -1,5 +1,224 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
-}
+
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <title>Wasla - لوحة التحكم</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdn.sheetjs.com/xlsx-0.20.2/package/dist/xlsx.full.min.js"></script>
+    <link rel="stylesheet" href="css/merchant.css">
+</head>
+...
+<body data-theme="wasla">
+    <div class="merchant-app">
+        
+        <!-- Sidebar -->
+        <aside class="merchant-sidebar">
+            <div class="merchant-sidebar-header">
+                <a href="index.html" class="merchant-logo">
+                    <i class="fas fa-truck-fast" style="font-size: 1.5rem;"></i>
+                    <span data-i18n="platform_name">Wasla Platform</span>
+                </a>
+            </div>
+            
+            <nav class="merchant-nav">
+                <a href="index.html" class="merchant-nav-item active">
+                    <i class="fas fa-chart-line"></i>
+                    <span data-i18n="nav_dashboard">Dashboard</span>
+                </a>
+                <a href="orders.html" class="merchant-nav-item">
+                    <i class="fas fa-clipboard-list"></i>
+                    <span data-i18n="nav_orders">Orders</span>
+                </a>
+                <a href="add-order.html" class="merchant-nav-item">
+                    <i class="fas fa-plus-circle"></i>
+                    <span data-i18n="nav_add_order">Add Order</span>
+                </a>
+                <a href="wallet.html" class="merchant-nav-item">
+                    <i class="fas fa-wallet"></i>
+                    <span data-i18n="nav_wallet">Financials</span>
+                </a>
+                <a href="profile.html" class="merchant-nav-item">
+                    <i class="fas fa-user-circle"></i>
+                    <span data-i18n="nav_profile">Profile</span>
+                </a>
+                <a href="settings.html" class="merchant-nav-item">
+                    <i class="fas fa-cog"></i>
+                    <span data-i18n="nav_settings">Settings</span>
+                </a>
+            </nav>
+            
+            <div style="padding: 1.5rem 1rem; border-top: 1px solid var(--merchant-border);">
+                <a href="../login.html" class="merchant-nav-item" style="color: #ef4444;">
+                    <i class="fas fa-sign-out-alt"></i>
+                    <span data-i18n="logout">Logout</span>
+                </a>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="merchant-main-wrapper">
+            <!-- Header -->
+            <header class="merchant-header">
+                <div class="merchant-header-left">
+                    <button class="merchant-toggle-btn" id="merchant-sidebar-toggle">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                    <h2 class="merchant-page-title" style="margin:0; font-size: 1.25rem;" data-i18n="nav_dashboard">Dashboard</h2>
+                </div>
+                
+                <div class="merchant-header-right">
+                    <!-- Language Switcher -->
+                    <div style="display:flex; background:var(--merchant-bg); padding:0.25rem; border-radius:var(--merchant-radius-sm);">
+                        <button class="lang-btn" data-lang="en" style="border:none; background:transparent; padding:0.25rem 0.75rem; border-radius:4px; font-size:0.875rem; font-weight:600; cursor:pointer; color:var(--merchant-text-secondary);">EN</button>
+                        <button class="lang-btn active" data-lang="ar" style="border:none; background:var(--merchant-surface); box-shadow:var(--merchant-shadow-sm); padding:0.25rem 0.75rem; border-radius:4px; font-size:0.875rem; font-weight:600; cursor:pointer; color:var(--primary, #3b82f6);">AR</button>
+                    </div>
+
+                    <!-- Notifications -->
+                    <div style="position: relative; cursor: pointer; color: var(--merchant-text-secondary); margin: 0 0.5rem;" onclick="window.location.href='notifications.html'">
+                        <i class="fas fa-bell"></i>
+                        <span style="position:absolute; top:2px; right:2px; width:8px; height:8px; background:#ef4444; border-radius:50%; border:2px solid var(--merchant-surface);"></span>
+                    </div>
+
+                    <!-- Profile -->
+                    <div class="merchant-user-profile" onclick="window.location.href='profile.html'">
+                        <div class="merchant-user-info" style="text-align: end;">
+                            <span class="merchant-user-name">أحمد محمد</span>
+                            <span class="merchant-user-role">متجر الأناقة</span>
+                        </div>
+                        <div class="merchant-avatar">A</div>
+                    </div>
+                </div>
+            </header>
+
+            <div class="merchant-content">
+                <div class="merchant-page-header">
+                    <div>
+                        <h1 class="merchant-page-title" data-i18n="welcome_back">Welcome Back, Ahmed!</h1>
+                        <p class="merchant-page-desc" data-i18n="dashboard_overview">Here's a summary of your store's logistics and operations.</p>
+                    </div>
+                    <div>
+                        <button class="merchant-btn merchant-btn-primary" onclick="window.location.href='add-order.html'">
+                            <i class="fas fa-plus"></i>
+                            <span data-i18n="nav_add_order">Add Order</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Stats Row -->
+                <div class="merchant-stats-grid" id="dashboard-stats">
+                    <div class="merchant-stat-card">
+                        <div class="merchant-stat-icon" style="background:#eff6ff; color:#3b82f6;">
+                            <i class="fas fa-box"></i>
+                        </div>
+                        <div class="merchant-stat-content">
+                            <div class="merchant-stat-label" data-i18n="total_orders">Total Orders</div>
+                            <div class="merchant-stat-value" id="stat-total">145</div>
+                        </div>
+                    </div>
+                    <div class="merchant-stat-card">
+                        <div class="merchant-stat-icon" style="background:#dcfce7; color:#10b981;">
+                            <i class="fas fa-check-circle"></i>
+                        </div>
+                        <div class="merchant-stat-content">
+                            <div class="merchant-stat-label" data-i18n="delivered">Delivered</div>
+                            <div class="merchant-stat-value" id="stat-delivered">120</div>
+                        </div>
+                    </div>
+                    <div class="merchant-stat-card">
+                        <div class="merchant-stat-icon" style="background:#fee2e2; color:#ef4444;">
+                            <i class="fas fa-times-circle"></i>
+                        </div>
+                        <div class="merchant-stat-content">
+                            <div class="merchant-stat-label" data-i18n="rejected">Rejected</div>
+                            <div class="merchant-stat-value" id="stat-rejected">15</div>
+                        </div>
+                    </div>
+                    <div class="merchant-stat-card">
+                        <div class="merchant-stat-icon" style="background:#fef3c7; color:#f59e0b;">
+                            <i class="fas fa-clock"></i>
+                        </div>
+                        <div class="merchant-stat-content">
+                            <div class="merchant-stat-label" data-i18n="under_review">Under Review</div>
+                            <div class="merchant-stat-value" id="stat-review">10</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Actions Row -->
+                <div class="merchant-actions-grid">
+                    <div class="merchant-action-card" id="excel-upload-card" style="cursor:pointer; position:relative;">
+                        <div class="merchant-stat-icon" style="background:#eff6ff; color:#3b82f6;">
+                            <i class="fas fa-cloud-upload-alt"></i>
+                        </div>
+                        <div style="display:flex; flex-direction:column; gap:0.5rem; flex:1;">
+                            <h3 data-i18n="upload_excel" style="font-size: 1.1rem; font-weight:700; margin:0;">Drag your Excel file here or click to browse</h3>
+                            <p data-i18n="upload_format" style="margin:0; font-size: 0.85rem; color:var(--merchant-text-secondary);">Supported formats: CSV / Max size: 10MB</p>
+                        </div>
+                        <button class="merchant-btn merchant-btn-primary" style="pointer-events:none;" data-i18n="browse_files">Browse</button>
+                    </div>
+                    <div class="merchant-action-card merchant-action-card-solid">
+                        <div class="merchant-stat-icon" style="background:#dcfce7; color:#10b981;">
+                            <i class="fas fa-download"></i>
+                        </div>
+                        <div style="display:flex; flex-direction:column; gap:0.5rem; flex:1;">
+                            <h3 data-i18n="download_template" style="font-size: 1.1rem; font-weight:700; margin:0;">Download Template</h3>
+                            <p data-i18n="download_desc" style="margin:0; font-size: 0.85rem; color:var(--merchant-text-secondary);">Use this template to ensure correct column formatting</p>
+                        </div>
+                      <button id="download-template-btn" class="merchant-btn merchant-btn-secondary" data-i18n="btn_download">Download</button>
+                    </div>
+                </div>
+
+                <!-- Recent Orders Preview -->
+                <div class="merchant-card">
+                    <div class="merchant-card-header">
+                        <h3 class="merchant-card-title" data-i18n="recent_orders">Recent Orders</h3>
+                        <a href="orders.html" class="merchant-btn merchant-btn-secondary" style="padding: 0.5rem 1rem; font-size: 0.8rem;" data-i18n="view_all">View All</a>
+                    </div>
+                    <div class="merchant-table-container">
+                        <table class="merchant-table">
+                            <thead>
+                                <tr>
+                                    <th data-i18n="col_order_id">Order ID</th>
+                                    <th data-i18n="col_customer">Customer</th>
+                                    <th data-i18n="col_amount">Amount</th>
+                                    <th data-i18n="col_status">Status</th>
+                                    <th data-i18n="col_date">Date</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><strong>#ORD-1024</strong></td>
+                                    <td>Khalid Ahmed</td>
+                                    <td>150 E.G</td>
+                                    <td><span class="merchant-badge merchant-badge-success" data-i18n="status_delivered">Delivered</span></td>
+                                    <td style="color:var(--merchant-text-secondary);">2024/05/12</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>#ORD-1025</strong></td>
+                                    <td>Omar Ali</td>
+                                    <td>320 E.G</td>
+                                    <td><span class="merchant-badge merchant-badge-info" data-i18n="status_processing">Processing</span></td>
+                                    <td style="color:var(--merchant-text-secondary);">2024/05/14</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>#ORD-1026</strong></td>
+                                    <td>Sara Hassan</td>
+                                    <td>85 E.G</td>
+                                    <td><span class="merchant-badge merchant-badge-warning" data-i18n="status_pending">Pending</span></td>
+                                    <td style="color:var(--merchant-text-secondary);">2024/05/15</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+            </div>
+        </main>
+    </div>
+  
+    <script src="js/merchant.js"></script>
+</body>
+</html>
