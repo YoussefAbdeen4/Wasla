@@ -10,9 +10,13 @@ namespace Wasla.Controllers
             // هنا بنجهز البيانات اللي هنبعتها للـ View
             var model = new MerchantDashboardViewModel 
             {
-                // دي بيانات تجريبية مؤقتاً لحد ما نربط الـ Database
-                // عدلي الأسماء حسب البروبرتيز اللي إنتِ معرفاها في الموديل
-            };
+         
+    // افترضي إن دي أسماء الـ Properties اللي عندك في الموديل
+    TotalOrders = 10,
+    PendingOrders = 3,
+    TotalSales = 5000
+};
+           
 
             return View(model); 
         }
