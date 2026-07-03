@@ -4,8 +4,8 @@ namespace Wasla.Controllers
 {
     public class MerchantController : Controller
     {
-        // ده الـ Action اللي هيفتح صفحة الداش بورد
-        public IActionResult Dashboard()
+        // غيرنا الاسم لـ Index عشان يطابق اسم ملف الـ cshtml اللي عندك
+        public IActionResult Index()
         {
             return View(); 
         }
