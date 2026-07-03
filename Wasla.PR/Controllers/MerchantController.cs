@@ -8,13 +8,16 @@ namespace Wasla.Controllers
         public IActionResult Index()
         {
             // هنا بنجهز البيانات اللي هنبعتها للـ View
-            var model = new MerchantDashboardViewModel 
-            {
-         
-    // افترضي إن دي أسماء الـ Properties اللي عندك في الموديل
+         var model = new MerchantDashboardViewModel
+{
     TotalOrders = 10,
     PendingOrders = 3,
-    TotalSales = 5000
+    TotalSales = 5000,
+    // ضيف السطر ده:
+   RecentOrders = new List<Order>
+{
+    new Order { Id = 1, CustomerName = "أحمد محمد", Amount = 150, Status = "مكتمل", Date = DateTime.Now },
+    new Order { Id = 2, CustomerName = "سارة علي", Amount = 200, Status = "قيد التنفيذ", Date = DateTime.Now }
 };
            
 
