@@ -24,8 +24,10 @@ namespace Wasla.Models
         public int MerchantId { get; set; }
         public virtual Merchant Merchant { get; set; }
 
+        public int CompanyId { get; set; }
         public virtual CourierCompany Company { get; set; }
 
+        public int DriverId { get; set; }
         public virtual Driver Driver { get; set; }
 
         public virtual List <OrderProduct> OrderProducts { get; set; }

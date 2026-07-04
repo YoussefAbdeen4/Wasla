@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using System;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Wasla.Models;
 
@@ -21,8 +22,9 @@ namespace Wasla.Configurations
                 .WithMany(v => v.DriverVehicles)
                 .HasForeignKey(dv => dv.VehicleId)
                 .OnDelete(DeleteBehavior.Cascade);
+            builder.HasData(new DriverVehicle { Id = 1, AssignedAt = new DateTime(2026, 6, 21, 12, 0, 0), ReturnedAt = DateTime.MinValue, DriverId = 1, VehicleId = 1 }, new DriverVehicle { Id = 2, AssignedAt = new DateTime(2026, 6, 26, 12, 0, 0), ReturnedAt = DateTime.MinValue, DriverId = 2, VehicleId = 2 }, new DriverVehicle { Id = 3, AssignedAt = new DateTime(2026, 6, 30, 12, 0, 0), ReturnedAt = DateTime.MinValue, DriverId = 3, VehicleId = 3 });
 
-            
+
         }
     }
 }

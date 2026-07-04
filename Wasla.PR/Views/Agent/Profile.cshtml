@@ -1,0 +1,58 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+
+@model Wasla.PR.Models.ViewModels.Agent.AgentProfileViewModel
+
+<div class="agent-card">
+    <!-- profile preview -->
+    <div class="agent-profile-info" style="display: flex; align-items: center; gap: 2rem; margin-bottom: 2rem;">
+        <div class="agent-avatar-large" id="avatarPreview" style="width: 100px; height: 100px; background: var(--agent-primary-light); display: flex; align-items: center; justify-content: center; border-radius: 32px; font-size: 3rem;">
+            @if (!string.IsNullOrEmpty(Model?.AvatarUrl))
+            {
+                <img src="@Model.AvatarUrl" alt="avatar" style="width:100%;height:100%;object-fit:cover;border-radius:32px;" />
+            }
+            else
+            {
+                @(!string.IsNullOrEmpty(Model?.FullName) ? Model.FullName.Substring(0,1) : "م")
+            }
+        </div>
+        <div>
+            <h2 id="agentFullName">@Model?.FullName</h2>
+            <p class="agent-muted" data-i18n="role_agent">مندوب توصيل</p>
+        </div>
+    </div>
+
+    <!-- read-only profile fields -->
+    <div class="agent-form-group">
+        <label class="agent-form-label" data-i18n="full_name">الاسم بالكامل</label>
+        <input type="text" id="agentName" class="agent-form-control" disabled value="@Model?.FullName" />
+    </div>
+    <div class="agent-form-group">
+        <label class="agent-form-label" data-i18n="phone">رقم الهاتف</label>
+        <input type="tel" id="agentPhone" class="agent-form-control" disabled value="@Model?.Phone" />
+    </div>
+    <div class="agent-form-group">
+        <label class="agent-form-label" data-i18n="vehicle_type">نوع المركبة</label>
+        <input type="text" id="agentVehicle" class="agent-form-control" disabled value="@Model?.VehicleType" />
+    </div>
+    <div class="agent-form-group">
+        <label class="agent-form-label">Email</label>
+        <input type="email" id="agentEmail" class="agent-form-control" disabled value="@Model?.Email" />
+    </div>
+
+    <hr style="margin: 2rem 0;" />
+    <h3 class="agent-card-title"><i class="fa-solid fa-camera"></i> <span data-i18n="update_avatar">تحديث الصورة</span></h3>
+    <div class="agent-form-group">
+        <label class="agent-form-label" data-i18n="upload_image">رفع صورة</label>
+        <input type="file" id="avatarUpload" accept="image/*" class="agent-form-control" />
+    </div>
+    <div class="agent-form-group">
+        <label class="agent-form-label" data-i18n="image_url">أو رابط صورة</label>
+        <input type="text" id="avatarUrl" class="agent-form-control" placeholder="https://example.com/avatar.jpg" value="@Model?.AvatarUrl" />
+    </div>
+    <button id="updateAvatarBtn" class="agent-btn agent-btn-primary"><i class="fa-solid fa-upload"></i> <span data-i18n="update">تحديث الصورة</span></button>
+</div>
+

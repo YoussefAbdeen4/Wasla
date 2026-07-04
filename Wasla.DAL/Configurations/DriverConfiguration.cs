@@ -15,6 +15,13 @@ namespace Wasla.Configurations
                    .HasForeignKey(d => d.CompanyId)
                    .OnDelete(DeleteBehavior.Cascade);
 
+            // seed sample drivers
+            builder.HasData(
+                new Driver { Id = 1, Name = "Ziad Ahmed", Email = "ziad@example.com", Password = "drv1", CompanyId = 1 },
+                new Driver { Id = 2, Name = "Omar Khalid", Email = "omar@example.com", Password = "drv2", CompanyId = 2 },
+                new Driver { Id = 3, Name = "Sara Ali", Email = "sara@example.com", Password = "drv3", CompanyId = 1 }
+            );
+
         }
     }
 }
