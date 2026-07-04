@@ -23,6 +23,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Wasla.BLL\Wasla.BLL.csproj" />
     <ProjectReference Include="..\Wasla.DAL\Wasla.DAL.csproj" />
   </ItemGroup>
 

@@ -1,27 +1,39 @@
 using Microsoft.AspNetCore.Mvc;
-using Wasla.Models; // اتأكدي إنك عاملة Using للـ Namespace بتاع الموديلز عندك
+using System.Linq;
+using System.Collections.Generic;
+using Wasla.Models;
+using Wasla.PR.ViewModels;
+using Wasla; // تأكدي أن هذا هو الـ Namespace الصحيح لملف AppDbContext
 
 namespace Wasla.Controllers
 {
     public class MerchantController : Controller
     {
+        private readonly AppDbContext _context;
+
+        public MerchantController(AppDbContext context)
+        {
+            _context = context;
+        }
+
         public IActionResult Index()
         {
-            // هنا بنجهز البيانات اللي هنبعتها للـ View
-         var model = new MerchantDashboardViewModel
-{
-    TotalOrders = 10,
-    PendingOrders = 3,
-    TotalSales = 5000,
-    // ضيف السطر ده:
-   RecentOrders = new List<Order>
-{
-    new Order { Id = 1, CustomerName = "أحمد محمد", Amount = 150, Status = "مكتمل", Date = DateTime.Now },
-    new Order { Id = 2, CustomerName = "سارة علي", Amount = 200, Status = "قيد التنفيذ", Date = DateTime.Now }
-};
-           
+            // جلب البيانات الحقيقية من قاعدة البيانات باستخدام الـ _context
+            var model = new MerchantDashboardViewModel
+            {
+                TotalOrders = _context.Orders.Count(),
+                
+                // حساب مجموع المبيعات مع التأكد من عدم وجود قيم فارغة
+                TotalSales = _context.Orders.Sum(o => (decimal?)o.TotalPrice) ?? 0,
+                
+                // جلب آخر 5 طلبات تم إضافتها
+                RecentOrders = _context.Orders
+                                       .OrderByDescending(o => o.CreatedAt)
+                                       .Take(5)
+                                       .ToList()
+            };
 
-            return View(model); 
+            return View(model);
         }
     }
 }

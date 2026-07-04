@@ -1,5 +1,45 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
+﻿@model Wasla.PR.ViewModels.MerchantDashboardViewModel
+
 @{
+    ViewData["Title"] = "لوحة تحكم التاجر";
 }
+
+<div class="container">
+    <h2>لوحة تحكم التاجر</h2>
+    
+    <div class="row">
+        <div class="col-md-4">
+            <div class="card">
+                <h3>إجمالي الطلبات</h3>
+                <p>@Model.TotalOrders</p>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card">
+                <h3>إجمالي المبيعات</h3>
+                <p>@Model.TotalSales</p>
+            </div>
+        </div>
+    </div>
+
+    <h3>آخر 5 طلبات</h3>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>رقم الطلب</th>
+                <th>التاريخ</th>
+                <th>الإجمالي</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.RecentOrders)
+            {
+                <tr>
+                    <td>@item.Id</td>
+                    <td>@item.CreatedAt</td>
+                    <td>@item.TotalPrice</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
