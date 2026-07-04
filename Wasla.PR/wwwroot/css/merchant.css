@@ -1,0 +1,674 @@
+/* ============================================================
+   MERCHANT DASHBOARD - PREMIUM STYLE (ALIGNED WITH COMPANY CSS)
+   تم إعادة تصميم كلاسات merchant-* لتطابق شكل style.css بالكامل
+   ============================================================ */
+
+/* استيراد نفس متغيرات الشركة مع إضافة أسماء merchant */
+:root {
+    /* Professional SaaS Palette */
+    --merchant-primary: #0061ff;
+    --merchant-primary-hover: #0052d9;
+    --merchant-primary-light: #f0f7ff;
+    --merchant-bg: #f8fafc;
+    --merchant-surface: #ffffff;
+    --merchant-text: #0f172a;
+    --merchant-text-muted: #64748b;
+    --merchant-border: #e2e8f0;
+    --merchant-border-hover: #cbd5e1;
+    --merchant-success: #10b981;
+    --merchant-success-light: #d1fae5;
+    --merchant-warning: #f59e0b;
+    --merchant-warning-light: #fef3c7;
+    --merchant-danger: #ef4444;
+    --merchant-danger-light: #fee2e2;
+
+    /* Dimensions */
+    --merchant-sidebar-width: 280px;
+    --merchant-sidebar-collapsed-width: 88px;
+    --merchant-header-height: 80px;
+    --merchant-radius: 24px;
+    --merchant-radius-sm: 16px;
+    --merchant-shadow-sm: 0 1px 2px rgba(0,0,0,0.02), 0 4px 8px rgba(0,0,0,0.02);
+    --merchant-shadow: 0 8px 30px rgba(0,0,0,0.04);
+    --merchant-shadow-hover: 0 20px 35px -12px rgba(0,0,0,0.12);
+    --merchant-transition: all 0.3s cubic-bezier(0.2, 0, 0, 1);
+}
+
+/* ============================================================
+   Global & Layout (يتبع نفس أسلوب company-app)
+   ============================================================ */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background: var(--merchant-bg);
+    font-family: 'Inter', 'Cairo', system-ui, -apple-system, sans-serif;
+    color: var(--merchant-text);
+}
+
+.merchant-app {
+    display: flex;
+    min-height: 100vh;
+    background: var(--merchant-bg);
+    position: relative;
+}
+
+/* ============================================================
+   Sidebar – Modern glassmorphism (مطابق للـ company-sidebar)
+   ============================================================ */
+.merchant-sidebar {
+    width: var(--merchant-sidebar-width);
+    background: rgba(255,255,255,0.96);
+    backdrop-filter: blur(2px);
+    border-right: 1px solid var(--merchant-border);
+    position: fixed;
+    inset: 0 auto 0 0;
+    z-index: 100;
+    transition: var(--merchant-transition);
+    display: flex;
+    flex-direction: column;
+    box-shadow: var(--merchant-shadow-sm);
+}
+
+.merchant-sidebar-header {
+    padding: 1.75rem 1.5rem;
+    border-bottom: 1px solid var(--merchant-border);
+}
+
+.merchant-logo {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: var(--merchant-primary);
+    text-decoration: none;
+    letter-spacing: -0.3px;
+}
+
+.merchant-logo i {
+    font-size: 1.4rem;
+    transition: transform 0.2s;
+}
+
+.merchant-logo:hover i {
+    transform: scale(1.02);
+}
+
+.merchant-nav {
+    flex: 1;
+    padding: 2rem 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.merchant-nav-item {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 0.8rem 1.2rem;
+    border-radius: var(--merchant-radius-sm);
+    color: var(--merchant-text-muted);
+    text-decoration: none;
+    font-weight: 500;
+    transition: var(--merchant-transition);
+}
+
+.merchant-nav-item i {
+    width: 22px;
+    font-size: 1.2rem;
+    transition: transform 0.2s;
+}
+
+.merchant-nav-item:hover {
+    background: var(--merchant-primary-light);
+    color: var(--merchant-primary);
+    transform: translateX(4px);
+}
+
+.merchant-nav-item:hover i {
+    transform: translateX(2px);
+}
+
+.merchant-nav-item.active {
+    background: var(--merchant-primary-light);
+    color: var(--merchant-primary);
+    font-weight: 600;
+    box-shadow: inset 3px 0 0 var(--merchant-primary), var(--merchant-shadow-sm);
+}
+
+/* ============================================================
+   Main Wrapper & Header
+   ============================================================ */
+.merchant-main-wrapper {
+    flex: 1;
+    margin-left: var(--merchant-sidebar-width);
+    transition: var(--merchant-transition);
+}
+
+.merchant-header {
+    height: var(--merchant-header-height);
+    background: var(--merchant-surface);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--merchant-border);
+    position: sticky;
+    top: 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 2rem;
+    z-index: 50;
+    box-shadow: 0 1px 0 rgba(0,0,0,0.02);
+}
+
+.merchant-header-left {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+}
+
+.merchant-toggle-btn {
+    background: none;
+    border: none;
+    padding: 0.5rem;
+    border-radius: 12px;
+    cursor: pointer;
+    color: var(--merchant-text-muted);
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.merchant-toggle-btn:hover {
+    background: var(--merchant-primary-light);
+    color: var(--merchant-primary);
+    transform: scale(0.98);
+}
+
+.merchant-page-title {
+    font-size: 1.3rem;
+    font-weight: 600;
+    margin: 0;
+    background: linear-gradient(135deg, var(--merchant-text) 0%, var(--merchant-primary) 100%);
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
+}
+
+.merchant-header-right {
+    display: flex;
+    align-items: center;
+    gap: 1.8rem;
+}
+
+/* Language buttons */
+.lang-btn {
+    border: none;
+    background: transparent;
+    font-weight: 600;
+    padding: 0.4rem 0.8rem;
+    border-radius: 40px;
+    transition: all 0.2s;
+    cursor: pointer;
+}
+
+.lang-btn.active {
+    background: var(--merchant-primary);
+    color: white;
+    box-shadow: 0 2px 6px rgba(2,132,199,0.2);
+}
+
+.merchant-user-profile {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    background: var(--merchant-bg);
+    padding: 0.4rem 0.8rem 0.4rem 1rem;
+    border-radius: 60px;
+    transition: var(--merchant-transition);
+    cursor: pointer;
+}
+
+.merchant-user-profile:hover {
+    background: var(--merchant-primary-light);
+    transform: translateY(-1px);
+}
+
+.merchant-user-info {
+    text-align: right;
+}
+
+.merchant-user-name {
+    display: block;
+    font-weight: 600;
+    font-size: 0.85rem;
+}
+
+.merchant-user-role {
+    display: block;
+    font-size: 0.7rem;
+    color: var(--merchant-text-muted);
+}
+
+.merchant-avatar {
+    width: 42px;
+    height: 42px;
+    background: var(--merchant-primary);
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    font-size: 1.1rem;
+    box-shadow: 0 4px 10px rgba(2,132,199,0.2);
+}
+
+/* ============================================================
+   Content Area – Fade In Animation
+   ============================================================ */
+.merchant-content {
+    padding: 2rem 2rem 3rem;
+    animation: merchantFadeInUp 0.4s ease-out;
+}
+
+@keyframes merchantFadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* ============================================================
+   Premium Stats Grid (مطابق تماماً لـ company-stats-grid)
+   ============================================================ */
+.merchant-stats-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.5rem;
+    margin-bottom: 2.5rem;
+}
+
+.merchant-stat-card {
+    background: var(--merchant-surface);
+    border-radius: 28px;
+    padding: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 1.2rem;
+    box-shadow: var(--merchant-shadow);
+    transition: var(--merchant-transition);
+    border: 1px solid rgba(226,232,240,0.6);
+}
+
+.merchant-stat-card:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--merchant-shadow-hover);
+    border-color: var(--merchant-primary-light);
+}
+
+.merchant-stat-icon {
+    width: 56px;
+    height: 56px;
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--merchant-primary-light);
+    color: var(--merchant-primary);
+    transition: 0.2s;
+}
+
+.merchant-stat-icon i {
+    font-size: 1.6rem;
+}
+
+.merchant-stat-content {
+    flex: 1;
+}
+
+.merchant-stat-label {
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--merchant-text-muted);
+    margin-bottom: 0.2rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.merchant-stat-value {
+    font-size: 2rem;
+    font-weight: 800;
+    color: var(--merchant-text);
+    line-height: 1.2;
+}
+
+/* ============================================================
+   Premium Cards (Unified)
+   ============================================================ */
+.merchant-card {
+    background: var(--merchant-surface);
+    border-radius: 28px;
+    border: 1px solid var(--merchant-border);
+    box-shadow: var(--merchant-shadow);
+    padding: 1.8rem;
+    margin-bottom: 2rem;
+    transition: var(--merchant-transition);
+    overflow: hidden;
+}
+
+.merchant-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--merchant-shadow-hover);
+}
+
+.merchant-card-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 1.5rem;
+    flex-wrap: wrap;
+    border-bottom: 1px solid var(--merchant-border);
+    padding-bottom: 1rem;
+}
+
+.merchant-card-title {
+    font-size: 1.3rem;
+    font-weight: 700;
+    letter-spacing: -0.3px;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+}
+
+.merchant-card-title i {
+    color: var(--merchant-primary);
+    font-size: 1.3rem;
+}
+
+/* ============================================================
+   Premium Tables
+   ============================================================ */
+.merchant-table-container {
+    overflow-x: auto;
+}
+
+.merchant-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.merchant-table th {
+    text-align: left;
+    padding: 1rem 1rem;
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--merchant-text-muted);
+    background: var(--merchant-bg);
+    border-bottom: 1px solid var(--merchant-border);
+}
+
+.merchant-table td {
+    padding: 1rem 1rem;
+    border-bottom: 1px solid var(--merchant-border);
+    font-size: 0.9rem;
+    vertical-align: middle;
+}
+
+.merchant-table tbody tr {
+    transition: all 0.2s;
+}
+
+.merchant-table tbody tr:hover {
+    background: rgba(0,97,255,0.02);
+    transform: scale(1.002);
+}
+
+/* ============================================================
+   Badges
+   ============================================================ */
+.merchant-badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.3rem 0.9rem;
+    border-radius: 40px;
+    font-size: 0.7rem;
+    font-weight: 600;
+}
+
+.merchant-badge i {
+    margin-left: 0.3rem;
+    font-size: 0.6rem;
+}
+
+.merchant-badge-success { background: var(--merchant-success-light); color: #0b5e42; }
+.merchant-badge-warning { background: var(--merchant-warning-light); color: #b45309; }
+.merchant-badge-danger { background: var(--merchant-danger-light); color: #b91c1c; }
+.merchant-badge-primary { background: var(--merchant-primary-light); color: var(--merchant-primary); }
+.merchant-badge-info { background: #e0e7ff; color: #3730a3; }
+
+/* ============================================================
+   Buttons
+   ============================================================ */
+.merchant-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.6rem 1.4rem;
+    border-radius: 40px;
+    font-weight: 600;
+    font-size: 0.85rem;
+    transition: all 0.2s;
+    cursor: pointer;
+    border: none;
+    text-decoration: none;
+}
+
+.merchant-btn i {
+    font-size: 0.9rem;
+}
+
+.merchant-btn-primary {
+    background: var(--merchant-primary);
+    color: white;
+    box-shadow: 0 2px 6px rgba(2,132,199,0.2);
+}
+
+.merchant-btn-primary:hover {
+    background: var(--merchant-primary-hover);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 16px -6px var(--merchant-primary);
+}
+
+.merchant-btn-secondary {
+    background: transparent;
+    border: 1px solid var(--merchant-border);
+    color: var(--merchant-text);
+}
+
+.merchant-btn-secondary:hover {
+    background: var(--merchant-bg);
+    border-color: var(--merchant-primary);
+    color: var(--merchant-primary);
+    transform: translateY(-1px);
+}
+
+.merchant-btn-danger {
+    background: var(--merchant-danger);
+    color: white;
+}
+
+.merchant-btn-danger:hover {
+    background: #dc2626;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 16px -6px var(--merchant-danger);
+}
+
+/* ============================================================
+   Forms
+   ============================================================ */
+.merchant-form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+}
+
+.merchant-form-label {
+    font-weight: 600;
+    font-size: 0.85rem;
+    color: var(--merchant-text-muted);
+}
+
+.merchant-form-control {
+    padding: 0.8rem 1rem;
+    border: 1px solid var(--merchant-border);
+    border-radius: 16px;
+    font-size: 0.9rem;
+    transition: var(--merchant-transition);
+    background: var(--merchant-surface);
+}
+
+.merchant-form-control:focus {
+    border-color: var(--merchant-primary);
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(0,97,255,0.1);
+}
+
+/* ============================================================
+   Page Header
+   ============================================================ */
+.merchant-page-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-bottom: 2rem;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.merchant-page-desc {
+    color: var(--merchant-text-muted);
+    margin-top: 0.25rem;
+}
+
+/* ============================================================
+   Actions Grid (Excel & template)
+   ============================================================ */
+.merchant-actions-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.merchant-action-card {
+    background: var(--merchant-surface);
+    border-radius: 28px;
+    padding: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    box-shadow: var(--merchant-shadow);
+    border: 1px solid var(--merchant-border);
+    transition: var(--merchant-transition);
+}
+
+.merchant-action-card:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--merchant-shadow-hover);
+}
+
+/* ============================================================
+   Responsive (مطابق لـ style.css)
+   ============================================================ */
+@media (max-width: 1024px) {
+    .merchant-stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    .merchant-actions-grid {
+        grid-template-columns: 1fr;
+    }
+    .merchant-sidebar {
+        transform: translateX(-100%);
+        box-shadow: none;
+    }
+    .merchant-app.sidebar-open .merchant-sidebar {
+        transform: translateX(0);
+        box-shadow: 10px 0 30px rgba(0,0,0,0.05);
+    }
+    .merchant-main-wrapper {
+        margin-left: 0;
+    }
+    .merchant-header {
+        padding: 0 1rem;
+    }
+    .merchant-content {
+        padding: 1rem 1.2rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .merchant-stats-grid {
+        grid-template-columns: 1fr;
+    }
+    .merchant-page-header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+}
+
+@media (max-width: 640px) {
+    :root {
+        --merchant-header-height: 70px;
+    }
+    .merchant-page-title {
+        font-size: 1rem;
+    }
+    .merchant-stat-card {
+        padding: 1rem;
+    }
+    .merchant-card {
+        padding: 1rem;
+    }
+}
+
+/* ============================================================
+   RTL Adjustments
+   ============================================================ */
+[dir="rtl"] .merchant-table th,
+[dir="rtl"] .merchant-table td {
+    text-align: right;
+}
+
+[dir="rtl"] .merchant-nav-item:hover {
+    transform: translateX(-4px);
+}
+
+[dir="rtl"] .merchant-nav-item:hover i {
+    transform: translateX(-2px);
+}
+
+[dir="rtl"] .merchant-header-left {
+    flex-direction: row-reverse;
+}
+
+[dir="rtl"] .merchant-header-right {
+    flex-direction: row-reverse;
+}
+
+[dir="rtl"] .merchant-user-info {
+    text-align: left;
+}
