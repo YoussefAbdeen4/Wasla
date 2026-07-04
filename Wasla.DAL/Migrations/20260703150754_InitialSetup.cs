@@ -3,10 +3,12 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
-namespace Wasla.Migrations
+#pragma warning disable CA1814 // Prefer jagged arrays over multidimensional
+
+namespace Wasla.DAL.Migrations
 {
     /// <inheritdoc />
-    public partial class InitialCreate : Migration
+    public partial class InitialSetup : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -35,7 +37,7 @@ namespace Wasla.Migrations
                     Name = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
                     Email = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
                     Password = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
-                    StoreName = table.Column<string>(type: "nvarchar(100)", nullable: false),
+                    StoreName = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     WalletBalance = table.Column<decimal>(type: "decimal(18,4)", precision: 18, scale: 4, nullable: false)
                 },
                 constraints: table =>
@@ -235,13 +237,26 @@ namespace Wasla.Migrations
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
                     DeliveredAt = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    MerchantId = table.Column<int>(type: "int", nullable: false)
+                    MerchantId = table.Column<int>(type: "int", nullable: false),
+                    CompanyId = table.Column<int>(type: "int", nullable: false),
+                    DriverId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Orders", x => x.Id);
                     table.CheckConstraint("CK_Order_TotalPrice", "TotalPrice >= 0");
-                   
+                    table.ForeignKey(
+                        name: "FK_Orders_Courier Company_CompanyId",
+                        column: x => x.CompanyId,
+                        principalTable: "Courier Company",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Orders_Drivers_DriverId",
+                        column: x => x.DriverId,
+                        principalTable: "Drivers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.NoAction);
                     table.ForeignKey(
                         name: "FK_Orders_Merchants_MerchantId",
                         column: x => x.MerchantId,
@@ -260,7 +275,8 @@ namespace Wasla.Migrations
                     Type = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
                     Capacity = table.Column<double>(type: "float", nullable: false),
                     IsActive = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
-                    CompanyId = table.Column<int>(type: "int", nullable: false)
+                    CompanyId = table.Column<int>(type: "int", nullable: false),
+                    DriverId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -271,7 +287,12 @@ namespace Wasla.Migrations
                         principalTable: "Courier Company",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
-                  
+                    table.ForeignKey(
+                        name: "FK_Vehicles_Drivers_DriverId",
+                        column: x => x.DriverId,
+                        principalTable: "Drivers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -314,7 +335,7 @@ namespace Wasla.Migrations
                         column: x => x.DriverId,
                         principalTable: "Drivers",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Driver-Orders_Orders_OrderId",
                         column: x => x.OrderId,
@@ -373,7 +394,7 @@ namespace Wasla.Migrations
                         column: x => x.OrderId,
                         principalTable: "Orders",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.NoAction);
                 });
 
             migrationBuilder.CreateTable(
@@ -423,7 +444,128 @@ namespace Wasla.Migrations
                         column: x => x.VehicleId,
                         principalTable: "Vehicles",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict
+                        );
+                });
+
+            migrationBuilder.InsertData(
+                table: "Courier Company",
+                columns: new[] { "Id", "CompanyEmail", "CompanyName", "Password" },
+                values: new object[,]
+                {
+                    { 1, "info@wasla.com", "Wasla Express", "pass123" },
+                    { 2, "hello@fastship.com", "FastShip", "secret" },
+                    { 3, "contact@citycouriers.com", "CityCouriers", "pwd123" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Merchants",
+                columns: new[] { "Id", "Email", "Name", "Password", "StoreName", "WalletBalance" },
+                values: new object[,]
+                {
+                    { 1, "alfa@store.com", "Alfa Store", "m1npass", "Alfa Store", 1000m },
+                    { 2, "beta@shop.com", "Beta Shop", "m2npass", "Beta Shop", 250m },
+                    { 3, "gamma@market.com", "Gamma Market", "m3npass", "Gamma Market", 500m }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Client",
+                columns: new[] { "Id", "Email", "MerchantId", "Name" },
+                values: new object[,]
+                {
+                    { 1, "ahmed.client@example.com", 1, "Ahmed Client" },
+                    { 2, "layla.client@example.com", 2, "Layla Client" },
+                    { 3, "hassan.client@example.com", 3, "Hassan Client" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Drivers",
+                columns: new[] { "Id", "CompanyId", "Email", "Name", "Password" },
+                values: new object[,]
+                {
+                    { 1, 1, "ziad@example.com", "Ziad Ahmed", "drv1" },
+                    { 2, 2, "omar@example.com", "Omar Khalid", "drv2" },
+                    { 3, 1, "sara@example.com", "Sara Ali", "drv3" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Rate Cards",
+                columns: new[] { "Id", "BaseFee", "CompanyId", "DestinationCity", "EffectiveDate", "ExpiryDate", "ExtraKiloPrice", "MaxWeight", "MinWeight", "OriginCity" },
+                values: new object[,]
+                {
+                    { 1, 50m, 1, "Giza", new DateTime(2026, 6, 1, 12, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(2027, 7, 1, 12, 0, 0, 0, DateTimeKind.Unspecified), 10m, 5.0, 0.0, "Cairo" },
+                    { 2, 80m, 2, "Cairo", new DateTime(2026, 6, 21, 12, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(2027, 1, 1, 12, 0, 0, 0, DateTimeKind.Unspecified), 8m, 10.0, 0.0, "Giza" },
+                    { 3, 150m, 1, "Alexandria", new DateTime(2026, 6, 26, 12, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(2026, 10, 1, 12, 0, 0, 0, DateTimeKind.Unspecified), 12m, 20.0, 0.0, "Cairo" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Ratings",
+                columns: new[] { "Id", "Comment", "CompanyId", "CreatedAt", "MerchantId", "RatedBy", "Stars" },
+                values: new object[,]
+                {
+                    { 1, "Good service", 1, new DateTime(2026, 6, 29, 12, 0, 0, 0, DateTimeKind.Unspecified), 1, "merchant", 4.5 },
+                    { 2, "Excellent", 1, new DateTime(2026, 6, 30, 12, 0, 0, 0, DateTimeKind.Unspecified), 2, "merchant", 5.0 },
+                    { 3, "Average", 2, new DateTime(2026, 7, 1, 12, 0, 0, 0, DateTimeKind.Unspecified), 3, "merchant", 3.5 }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Orders",
+                columns: new[] { "Id", "CityFrom", "CityTo", "CompanyId", "CreatedAt", "CustomerAddress", "CustomerName", "CustomerPhone", "DeliveredAt", "DriverId", "MerchantId", "PaymentType", "TotalPrice", "TrackingUuid", "UpdatedAt", "isBreakable", "isClaimingRequired" },
+                values: new object[,]
+                {
+                    { 1, "Cairo", "Giza", 1, new DateTime(2026, 7, 1, 12, 0, 0, 0, DateTimeKind.Unspecified), "Cairo", "Mohamed Ali", "01001234567", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 1, 1, "COD", 120m, "TRK1001", new DateTime(2026, 7, 1, 12, 0, 0, 0, DateTimeKind.Unspecified), false, false },
+                    { 2, "Giza", "Cairo", 1, new DateTime(2026, 6, 30, 12, 0, 0, 0, DateTimeKind.Unspecified), "Giza", "Nora Hussein", "01007654321", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 1, 2, "Online", 80m, "TRK1002", new DateTime(2026, 7, 1, 12, 0, 0, 0, DateTimeKind.Unspecified), true, false },
+                    { 3, "Cairo", "Alexandria", 1, new DateTime(2026, 6, 29, 12, 0, 0, 0, DateTimeKind.Unspecified), "Alexandria", "Omar Said", "01009998877", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 1, 3, "COD", 200m, "TRK1003", new DateTime(2026, 7, 1, 12, 0, 0, 0, DateTimeKind.Unspecified), false, true }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Vehicles",
+                columns: new[] { "Id", "Capacity", "CompanyId", "DriverId", "IsActive", "LicensePlate", "Type" },
+                values: new object[,]
+                {
+                    { 1, 500.0, 1, 1, "Active", "ABC-123", "Car" },
+                    { 2, 50.0, 2, 1, "Active", "XYZ-987", "Motorcycle" },
+                    { 3, 1200.0, 1, 1, "Active", "LMN-456", "Van" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Driver-Orders",
+                columns: new[] { "Id", "DriverId", "OrderId", "isActive" },
+                values: new object[,]
+                {
+                    { 1, 1, 1, "Active" },
+                    { 2, 2, 2, "Active" },
+                    { 3, 3, 3, "Active" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Driver-Vehicles",
+                columns: new[] { "Id", "AssignedAt", "DriverId", "ReturnedAt", "VehicleId" },
+                values: new object[,]
+                {
+                    { 1, new DateTime(2026, 6, 21, 12, 0, 0, 0, DateTimeKind.Unspecified), 1, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 1 },
+                    { 2, new DateTime(2026, 6, 26, 12, 0, 0, 0, DateTimeKind.Unspecified), 2, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 2 },
+                    { 3, new DateTime(2026, 6, 30, 12, 0, 0, 0, DateTimeKind.Unspecified), 3, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 3 }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Order-Products",
+                columns: new[] { "Id", "Name", "OrderId", "Price", "Qty" },
+                values: new object[,]
+                {
+                    { 1, "Item A", 1, 50m, 1 },
+                    { 2, "Item B", 2, 35m, 2 },
+                    { 3, "Item C", 3, 200m, 1 }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Tracking Histories of Orders",
+                columns: new[] { "Id", "Location", "OrderId", "Status", "Timestamp" },
+                values: new object[,]
+                {
+                    { 1, "Merchant", 1, "ReadyForPickup", new DateTime(2026, 6, 29, 12, 0, 0, 0, DateTimeKind.Unspecified) },
+                    { 2, "Warehouse", 2, "Packed", new DateTime(2026, 6, 30, 12, 0, 0, 0, DateTimeKind.Unspecified) },
+                    { 3, "System", 3, "Created", new DateTime(2026, 7, 1, 12, 0, 0, 0, DateTimeKind.Unspecified) }
                 });
 
             migrationBuilder.CreateIndex(
@@ -473,8 +615,15 @@ namespace Wasla.Migrations
                 column: "OrderId",
                 unique: true);
 
-        
+            migrationBuilder.CreateIndex(
+                name: "IX_Orders_CompanyId",
+                table: "Orders",
+                column: "CompanyId");
 
+            migrationBuilder.CreateIndex(
+                name: "IX_Orders_DriverId",
+                table: "Orders",
+                column: "DriverId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Orders_MerchantId",
@@ -506,7 +655,10 @@ namespace Wasla.Migrations
                 table: "Vehicles",
                 column: "CompanyId");
 
-            
+            migrationBuilder.CreateIndex(
+                name: "IX_Vehicles_DriverId",
+                table: "Vehicles",
+                column: "DriverId");
         }
 
         /// <inheritdoc />

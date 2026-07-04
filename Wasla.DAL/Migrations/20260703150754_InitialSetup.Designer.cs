@@ -9,11 +9,11 @@ using Wasla;
 
 #nullable disable
 
-namespace Wasla.Migrations
+namespace Wasla.DAL.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20260428212323_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20260703150754_InitialSetup")]
+    partial class InitialSetup
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -51,6 +51,29 @@ namespace Wasla.Migrations
                     b.HasIndex("MerchantId");
 
                     b.ToTable("Client");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Email = "ahmed.client@example.com",
+                            MerchantId = 1,
+                            Name = "Ahmed Client"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Email = "layla.client@example.com",
+                            MerchantId = 2,
+                            Name = "Layla Client"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Email = "hassan.client@example.com",
+                            MerchantId = 3,
+                            Name = "Hassan Client"
+                        });
                 });
 
             modelBuilder.Entity("Wasla.Models.ClientPhones", b =>
@@ -137,6 +160,29 @@ namespace Wasla.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Courier Company", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            CompanyEmail = "info@wasla.com",
+                            CompanyName = "Wasla Express",
+                            Password = "pass123"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            CompanyEmail = "hello@fastship.com",
+                            CompanyName = "FastShip",
+                            Password = "secret"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            CompanyEmail = "contact@citycouriers.com",
+                            CompanyName = "CityCouriers",
+                            Password = "pwd123"
+                        });
                 });
 
             modelBuilder.Entity("Wasla.Models.Driver", b =>
@@ -170,6 +216,32 @@ namespace Wasla.Migrations
                     b.HasIndex("CompanyId");
 
                     b.ToTable("Drivers");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            CompanyId = 1,
+                            Email = "ziad@example.com",
+                            Name = "Ziad Ahmed",
+                            Password = "drv1"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            CompanyId = 2,
+                            Email = "omar@example.com",
+                            Name = "Omar Khalid",
+                            Password = "drv2"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            CompanyId = 1,
+                            Email = "sara@example.com",
+                            Name = "Sara Ali",
+                            Password = "drv3"
+                        });
                 });
 
             modelBuilder.Entity("Wasla.Models.DriverOrder", b =>
@@ -199,6 +271,29 @@ namespace Wasla.Migrations
                         .IsUnique();
 
                     b.ToTable("Driver-Orders", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            DriverId = 1,
+                            OrderId = 1,
+                            isActive = "Active"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            DriverId = 2,
+                            OrderId = 2,
+                            isActive = "Active"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            DriverId = 3,
+                            OrderId = 3,
+                            isActive = "Active"
+                        });
                 });
 
             modelBuilder.Entity("Wasla.Models.DriverPhones", b =>
@@ -259,6 +354,32 @@ namespace Wasla.Migrations
                     b.HasIndex("VehicleId");
 
                     b.ToTable("Driver-Vehicles", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            AssignedAt = new DateTime(2026, 6, 21, 12, 0, 0, 0, DateTimeKind.Unspecified),
+                            DriverId = 1,
+                            ReturnedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            VehicleId = 1
+                        },
+                        new
+                        {
+                            Id = 2,
+                            AssignedAt = new DateTime(2026, 6, 26, 12, 0, 0, 0, DateTimeKind.Unspecified),
+                            DriverId = 2,
+                            ReturnedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            VehicleId = 2
+                        },
+                        new
+                        {
+                            Id = 3,
+                            AssignedAt = new DateTime(2026, 6, 30, 12, 0, 0, 0, DateTimeKind.Unspecified),
+                            DriverId = 3,
+                            ReturnedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            VehicleId = 3
+                        });
                 });
 
             modelBuilder.Entity("Wasla.Models.Merchant", b =>
@@ -297,6 +418,35 @@ namespace Wasla.Migrations
                     b.ToTable("Merchants", t =>
                         {
                             t.HasCheckConstraint("CK_Product_WalletBalance_NonNegative", "[WalletBalance] >= 0");
+                        });
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Email = "alfa@store.com",
+                            Name = "Alfa Store",
+                            Password = "m1npass",
+                            StoreName = "Alfa Store",
+                            WalletBalance = 1000m
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Email = "beta@shop.com",
+                            Name = "Beta Shop",
+                            Password = "m2npass",
+                            StoreName = "Beta Shop",
+                            WalletBalance = 250m
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Email = "gamma@market.com",
+                            Name = "Gamma Market",
+                            Password = "m3npass",
+                            StoreName = "Gamma Market",
+                            WalletBalance = 500m
                         });
                 });
 
@@ -411,6 +561,68 @@ namespace Wasla.Migrations
                         {
                             t.HasCheckConstraint("CK_Order_TotalPrice", "TotalPrice >= 0");
                         });
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            CityFrom = "Cairo",
+                            CityTo = "Giza",
+                            CompanyId = 1,
+                            CreatedAt = new DateTime(2026, 7, 1, 12, 0, 0, 0, DateTimeKind.Unspecified),
+                            CustomerAddress = "Cairo",
+                            CustomerName = "Mohamed Ali",
+                            CustomerPhone = "01001234567",
+                            DeliveredAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DriverId = 1,
+                            MerchantId = 1,
+                            PaymentType = "COD",
+                            TotalPrice = 120m,
+                            TrackingUuid = "TRK1001",
+                            UpdatedAt = new DateTime(2026, 7, 1, 12, 0, 0, 0, DateTimeKind.Unspecified),
+                            isBreakable = false,
+                            isClaimingRequired = false
+                        },
+                        new
+                        {
+                            Id = 2,
+                            CityFrom = "Giza",
+                            CityTo = "Cairo",
+                            CompanyId = 1,
+                            CreatedAt = new DateTime(2026, 6, 30, 12, 0, 0, 0, DateTimeKind.Unspecified),
+                            CustomerAddress = "Giza",
+                            CustomerName = "Nora Hussein",
+                            CustomerPhone = "01007654321",
+                            DeliveredAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DriverId = 1,
+                            MerchantId = 2,
+                            PaymentType = "Online",
+                            TotalPrice = 80m,
+                            TrackingUuid = "TRK1002",
+                            UpdatedAt = new DateTime(2026, 7, 1, 12, 0, 0, 0, DateTimeKind.Unspecified),
+                            isBreakable = true,
+                            isClaimingRequired = false
+                        },
+                        new
+                        {
+                            Id = 3,
+                            CityFrom = "Cairo",
+                            CityTo = "Alexandria",
+                            CompanyId = 1,
+                            CreatedAt = new DateTime(2026, 6, 29, 12, 0, 0, 0, DateTimeKind.Unspecified),
+                            CustomerAddress = "Alexandria",
+                            CustomerName = "Omar Said",
+                            CustomerPhone = "01009998877",
+                            DeliveredAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DriverId = 1,
+                            MerchantId = 3,
+                            PaymentType = "COD",
+                            TotalPrice = 200m,
+                            TrackingUuid = "TRK1003",
+                            UpdatedAt = new DateTime(2026, 7, 1, 12, 0, 0, 0, DateTimeKind.Unspecified),
+                            isBreakable = false,
+                            isClaimingRequired = true
+                        });
                 });
 
             modelBuilder.Entity("Wasla.Models.OrderCompany", b =>
@@ -480,6 +692,32 @@ namespace Wasla.Migrations
 
                             t.HasCheckConstraint("CK_OrderProduct_Quantity", "QTY >= 0");
                         });
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Name = "Item A",
+                            OrderId = 1,
+                            Price = 50m,
+                            Qty = 1
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Name = "Item B",
+                            OrderId = 2,
+                            Price = 35m,
+                            Qty = 2
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Name = "Item C",
+                            OrderId = 3,
+                            Price = 200m,
+                            Qty = 1
+                        });
                 });
 
             modelBuilder.Entity("Wasla.Models.RateCard", b =>
@@ -539,6 +777,47 @@ namespace Wasla.Migrations
 
                             t.HasCheckConstraint("CK_RateCard_MinWeight_NonNegative", "[MinWeight] >= 0");
                         });
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            BaseFee = 50m,
+                            CompanyId = 1,
+                            DestinationCity = "Giza",
+                            EffectiveDate = new DateTime(2026, 6, 1, 12, 0, 0, 0, DateTimeKind.Unspecified),
+                            ExpiryDate = new DateTime(2027, 7, 1, 12, 0, 0, 0, DateTimeKind.Unspecified),
+                            ExtraKiloPrice = 10m,
+                            MaxWeight = 5.0,
+                            MinWeight = 0.0,
+                            OriginCity = "Cairo"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            BaseFee = 80m,
+                            CompanyId = 2,
+                            DestinationCity = "Cairo",
+                            EffectiveDate = new DateTime(2026, 6, 21, 12, 0, 0, 0, DateTimeKind.Unspecified),
+                            ExpiryDate = new DateTime(2027, 1, 1, 12, 0, 0, 0, DateTimeKind.Unspecified),
+                            ExtraKiloPrice = 8m,
+                            MaxWeight = 10.0,
+                            MinWeight = 0.0,
+                            OriginCity = "Giza"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            BaseFee = 150m,
+                            CompanyId = 1,
+                            DestinationCity = "Alexandria",
+                            EffectiveDate = new DateTime(2026, 6, 26, 12, 0, 0, 0, DateTimeKind.Unspecified),
+                            ExpiryDate = new DateTime(2026, 10, 1, 12, 0, 0, 0, DateTimeKind.Unspecified),
+                            ExtraKiloPrice = 12m,
+                            MaxWeight = 20.0,
+                            MinWeight = 0.0,
+                            OriginCity = "Cairo"
+                        });
                 });
 
             modelBuilder.Entity("Wasla.Models.Rating", b =>
@@ -581,6 +860,38 @@ namespace Wasla.Migrations
                         {
                             t.HasCheckConstraint("CK_Rating_Score_Range", "[Stars] >= 1 AND [Stars] <= 5");
                         });
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Comment = "Good service",
+                            CompanyId = 1,
+                            CreatedAt = new DateTime(2026, 6, 29, 12, 0, 0, 0, DateTimeKind.Unspecified),
+                            MerchantId = 1,
+                            RatedBy = "merchant",
+                            Stars = 4.5
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Comment = "Excellent",
+                            CompanyId = 1,
+                            CreatedAt = new DateTime(2026, 6, 30, 12, 0, 0, 0, DateTimeKind.Unspecified),
+                            MerchantId = 2,
+                            RatedBy = "merchant",
+                            Stars = 5.0
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Comment = "Average",
+                            CompanyId = 2,
+                            CreatedAt = new DateTime(2026, 7, 1, 12, 0, 0, 0, DateTimeKind.Unspecified),
+                            MerchantId = 3,
+                            RatedBy = "merchant",
+                            Stars = 3.5
+                        });
                 });
 
             modelBuilder.Entity("Wasla.Models.TrackingHistory", b =>
@@ -611,6 +922,32 @@ namespace Wasla.Migrations
                     b.HasIndex("OrderId");
 
                     b.ToTable("Tracking Histories of Orders", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Location = "Merchant",
+                            OrderId = 1,
+                            Status = "ReadyForPickup",
+                            Timestamp = new DateTime(2026, 6, 29, 12, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Location = "Warehouse",
+                            OrderId = 2,
+                            Status = "Packed",
+                            Timestamp = new DateTime(2026, 6, 30, 12, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Location = "System",
+                            OrderId = 3,
+                            Status = "Created",
+                            Timestamp = new DateTime(2026, 7, 1, 12, 0, 0, 0, DateTimeKind.Unspecified)
+                        });
                 });
 
             modelBuilder.Entity("Wasla.Models.Vehicle", b =>
@@ -652,6 +989,38 @@ namespace Wasla.Migrations
                     b.HasIndex("DriverId");
 
                     b.ToTable("Vehicles");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Capacity = 500.0,
+                            CompanyId = 1,
+                            DriverId = 1,
+                            IsActive = "Active",
+                            LicensePlate = "ABC-123",
+                            Type = "Car"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Capacity = 50.0,
+                            CompanyId = 2,
+                            DriverId = 1,
+                            IsActive = "Active",
+                            LicensePlate = "XYZ-987",
+                            Type = "Motorcycle"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Capacity = 1200.0,
+                            CompanyId = 1,
+                            DriverId = 1,
+                            IsActive = "Active",
+                            LicensePlate = "LMN-456",
+                            Type = "Van"
+                        });
                 });
 
             modelBuilder.Entity("Wasla.Models.Client", b =>

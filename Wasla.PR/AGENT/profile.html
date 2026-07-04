@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title data-i18n="profile_title">بروفايلي - مندوب</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="agent-app">
+    <!-- القائمة الجانبية -->
+    <aside class="agent-sidebar">
+        <div class="agent-sidebar-header"><a href="dashboard.html" class="agent-logo"><i class="fa-solid fa-truck-fast"></i> <span>وصلة</span></a></div>
+        <nav class="agent-nav">
+            <a href="dashboard.html" class="agent-nav-item"><i class="fa-solid fa-chart-line"></i> <span data-i18n="dashboard">لوحة التحكم</span></a>
+            <a href="my-orders.html" class="agent-nav-item"><i class="fa-solid fa-box"></i> <span data-i18n="my_orders">طلباتي</span></a>
+            <a href="my-financials.html" class="agent-nav-item"><i class="fa-solid fa-wallet"></i> <span data-i18n="my_financials">مالياتي</span></a>
+            <a href="profile.html" class="agent-nav-item active"><i class="fa-solid fa-user"></i> <span data-i18n="profile">بروفايلي</span></a>
+        </nav>
+        <div class="agent-sidebar-footer"><a href="#" class="agent-nav-item agent-logout"><i class="fa-solid fa-right-from-bracket"></i> <span data-i18n="logout">تسجيل خروج</span></a></div>
+    </aside>
+
+    <main class="agent-main">
+        <header class="agent-header">
+            <div class="agent-header-left">
+                <button class="agent-toggle-btn"><i class="fa-solid fa-bars"></i></button>
+                <h2 class="agent-page-title" data-i18n="profile">بروفايلي</h2>
+            </div>
+            <div class="agent-header-right">
+                <!-- أزرار تغيير اللغة -->
+                <div class="agent-lang-switcher">
+                    <button class="agent-lang-btn" data-lang="en">EN</button>
+                    <button class="agent-lang-btn active" data-lang="ar">AR</button>
+                </div>
+                <div class="agent-user-profile">
+                    <div class="agent-user-info">
+                        <span class="agent-user-name" id="agentNameHeader">مندوب</span>
+                        <span class="agent-user-role" data-i18n="role_agent">مندوب توصيل</span>
+                    </div>
+                    <div class="agent-avatar" id="agentAvatarHeader">م</div>
+                </div>
+            </div>
+        </header>
+
+        <div class="agent-content">
+            <div class="agent-card">
+                <!-- معاينة الصورة والاسم -->
+                <div class="agent-profile-info" style="display: flex; align-items: center; gap: 2rem; margin-bottom: 2rem;">
+                    <div class="agent-avatar-large" id="avatarPreview" style="width: 100px; height: 100px; background: var(--agent-primary-light); display: flex; align-items: center; justify-content: center; border-radius: 32px; font-size: 3rem;">م</div>
+                    <div>
+                        <h2 id="agentFullName">مندوب</h2>
+                        <p class="agent-muted" data-i18n="role_agent">مندوب توصيل</p>
+                    </div>
+                </div>
+
+                <!-- عرض البيانات فقط (للقراءة) -->
+                <div class="agent-form-group">
+                    <label class="agent-form-label" data-i18n="full_name">الاسم بالكامل</label>
+                    <input type="text" id="agentName" class="agent-form-control" disabled>
+                </div>
+                <div class="agent-form-group">
+                    <label class="agent-form-label" data-i18n="phone">رقم الهاتف</label>
+                    <input type="tel" id="agentPhone" class="agent-form-control" disabled>
+                </div>
+                <div class="agent-form-group">
+                    <label class="agent-form-label" data-i18n="vehicle_type">نوع المركبة</label>
+                    <input type="text" id="agentVehicle" class="agent-form-control" disabled>
+                </div>
+
+                
+                <hr style="margin: 2rem 0;">
+                <h3 class="agent-card-title"><i class="fa-solid fa-camera"></i> <span data-i18n="update_avatar">تحديث الصورة</span></h3>
+                <div class="agent-form-group">
+                    <label class="agent-form-label" data-i18n="upload_image">رفع صورة</label>
+                    <input type="file" id="avatarUpload" accept="image/*" class="agent-form-control">
+                </div>
+                <div class="agent-form-group">
+                    <label class="agent-form-label" data-i18n="image_url">أو رابط صورة</label>
+                    <input type="text" id="avatarUrl" class="agent-form-control" placeholder="https://example.com/avatar.jpg">
+                </div>
+                <button id="updateAvatarBtn" class="agent-btn agent-btn-primary"><i class="fa-solid fa-upload"></i> <span data-i18n="update">تحديث الصورة</span></button>
+            </div>
+        </div>
+    </main>
+</div>
+
+<script src="agent.js"></script>
+</body>
+</html>

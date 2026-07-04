@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title data-i18n="my_financials">مالياتي - مندوب</title>
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="agent-app">
+    <!-- القائمة الجانبية -->
+    <aside class="agent-sidebar">
+        <div class="agent-sidebar-header"><a href="dashboard.html" class="agent-logo"><i class="fa-solid fa-truck-fast"></i> <span>وصلة</span></a></div>
+        <nav class="agent-nav">
+            <a href="dashboard.html" class="agent-nav-item"><i class="fa-solid fa-chart-line"></i> <span data-i18n="dashboard">لوحة التحكم</span></a>
+            <a href="my-orders.html" class="agent-nav-item"><i class="fa-solid fa-box"></i> <span data-i18n="my_orders">طلباتي</span></a>
+            <a href="my-financials.html" class="agent-nav-item active"><i class="fa-solid fa-wallet"></i> <span data-i18n="my_financials">مالياتي</span></a>
+            <a href="profile.html" class="agent-nav-item"><i class="fa-solid fa-user"></i> <span data-i18n="profile">بروفايلي</span></a>
+        </nav>
+        <div class="agent-sidebar-footer"><a href="#" class="agent-nav-item agent-logout"><i class="fa-solid fa-right-from-bracket"></i> <span data-i18n="logout">تسجيل خروج</span></a></div>
+    </aside>
+
+    <main class="agent-main">
+        <header class="agent-header">
+            <div class="agent-header-left">
+                <button class="agent-toggle-btn"><i class="fa-solid fa-bars"></i></button>
+                <h2 class="agent-page-title" data-i18n="my_financials">مالياتي</h2>
+            </div>
+            <div class="agent-header-right">
+                <!-- أزرار تغيير اللغة -->
+                <div class="agent-lang-switcher">
+                    <button class="agent-lang-btn" data-lang="en">EN</button>
+                    <button class="agent-lang-btn active" data-lang="ar">AR</button>
+                </div>
+                <div class="agent-user-profile">
+                    <div class="agent-user-info">
+                        <span class="agent-user-name" id="agentName">مندوب</span>
+                        <span class="agent-user-role" data-i18n="role_agent">مندوب توصيل</span>
+                    </div>
+                    <div class="agent-avatar" id="agentAvatar">م</div>
+                </div>
+            </div>
+        </header>
+
+        <div class="agent-content">
+            <!-- 3 بطاقات مالية -->
+            <div class="agent-stats-grid">
+                <div class="agent-stat-card">
+                    <div class="agent-stat-icon"><i class="fa-solid fa-coins"></i></div>
+                    <div class="agent-stat-info">
+                        <span class="agent-stat-label" data-i18n="cash_in_hand">النقدية معي</span>
+                        <span class="agent-stat-value" id="cashInHand">0 E.G</span>
+                    </div>
+                </div>
+                <div class="agent-stat-card">
+                    <div class="agent-stat-icon"><i class="fa-solid fa-building"></i></div>
+                    <div class="agent-stat-info">
+                        <span class="agent-stat-label" data-i18n="cash_delivered">سلمت للشركة</span>
+                        <span class="agent-stat-value" id="cashDelivered">0 E.G</span>
+                    </div>
+                </div>
+                <div class="agent-stat-card">
+                    <div class="agent-stat-icon"><i class="fa-solid fa-scale-balanced"></i></div>
+                    <div class="agent-stat-info">
+                        <span class="agent-stat-label" data-i18n="balance">الرصيد</span>
+                        <span class="agent-stat-value" id="balance">0 E.G</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- نموذج تسليم النقدية -->
+            <div class="agent-card">
+                <h3 class="agent-card-title"><i class="fa-solid fa-hand-holding-dollar"></i> <span data-i18n="submit_cash">تسليم نقدية للشركة</span></h3>
+                <div class="agent-form-group">
+                    <label class="agent-form-label" data-i18n="amount_egp">المبلغ (E.G)</label>
+                    <input type="number" id="submitAmount" class="agent-form-control" data-i18n-placeholder="amount_egp" placeholder="أدخل المبلغ">
+                </div>
+                <button id="submitCashBtn" class="agent-btn agent-btn-primary"><i class="fa-solid fa-money-bill-transfer"></i> <span data-i18n="submit">تسليم</span></button>
+            </div>
+        </div>
+    </main>
+</div>
+
+<script src="agent.js"></script>
+</body>
+</html>

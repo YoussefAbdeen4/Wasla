@@ -14,6 +14,12 @@ namespace Wasla.Configurations
                 .WithMany(m => m.Clients)
                 .HasForeignKey(c => c.MerchantId)
                 .OnDelete(DeleteBehavior.Cascade);
+
+            builder.HasData(
+                new Client { Id = 1, Name = "Ahmed Client", Email = "ahmed.client@example.com", MerchantId = 1 },
+                new Client { Id = 2, Name = "Layla Client", Email = "layla.client@example.com", MerchantId = 2 },
+                new Client { Id = 3, Name = "Hassan Client", Email = "hassan.client@example.com", MerchantId = 3 }
+            );
         }
     }
 }

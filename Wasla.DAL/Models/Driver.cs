@@ -8,7 +8,7 @@ namespace Wasla.Models
         public string Name { get; set; }
         public string Email { get; set; }
         public string Password { get; set; }
-
+        public decimal TotalCashSubmitted { get; set; }
 
         //public List<string> Phone { get; set; }
         public List<DriverPhones> Phones { get; set; }

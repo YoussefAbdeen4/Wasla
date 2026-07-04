@@ -1,0 +1,91 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+
+@model Wasla.PR.Models.ViewModels.Agent.AgentDashboardViewModel
+
+<!-- Stats grid -->
+<div class="agent-stats-grid">
+    <div class="agent-stat-card">
+        <div class="agent-stat-icon"><i class="fa-solid fa-truck"></i></div>
+        <div class="agent-stat-info">
+            <span class="agent-stat-label" data-i18n="total_orders">إجمالي الطلبات</span>
+            <span class="agent-stat-value" id="statTotal">@Model.TotalOrders</span>
+        </div>
+    </div>
+    <div class="agent-stat-card">
+        <div class="agent-stat-icon"><i class="fa-solid fa-check-circle"></i></div>
+        <div class="agent-stat-info">
+            <span class="agent-stat-label" data-i18n="delivered">تم التوصيل</span>
+            <span class="agent-stat-value" id="statDelivered">@Model.Delivered</span>
+        </div>
+    </div>
+    <div class="agent-stat-card">
+        <div class="agent-stat-icon"><i class="fa-solid fa-undo"></i></div>
+        <div class="agent-stat-info">
+            <span class="agent-stat-label" data-i18n="returned">مرتجع</span>
+            <span class="agent-stat-value" id="statReturned">@Model.Returned</span>
+        </div>
+    </div>
+    <div class="agent-stat-card">
+        <div class="agent-stat-icon"><i class="fa-solid fa-coins"></i></div>
+        <div class="agent-stat-info">
+            <span class="agent-stat-label" data-i18n="cash_in_hand">النقدية معي</span>
+            <span class="agent-stat-value" id="statCashInHand">@Model.CashInHand.ToString("F2") E.G</span>
+        </div>
+    </div>
+    <div class="agent-stat-card">
+        <div class="agent-stat-icon"><i class="fa-solid fa-building"></i></div>
+        <div class="agent-stat-info">
+            <span class="agent-stat-label" data-i18n="cash_delivered">سلمت للشركة</span>
+            <span class="agent-stat-value" id="statCashDelivered">@Model.CashDelivered.ToString("F2") E.G</span>
+        </div>
+    </div>
+    <div class="agent-stat-card">
+        <div class="agent-stat-icon"><i class="fa-solid fa-scale-balanced"></i></div>
+        <div class="agent-stat-info">
+            <span class="agent-stat-label" data-i18n="balance">الرصيد المتبقي</span>
+            <span class="agent-stat-value" id="statBalance">@Model.Balance.ToString("F2") E.G</span>
+        </div>
+    </div>
+</div>
+
+<!-- Recent orders -->
+<div class="agent-card">
+    <div class="agent-card-header">
+        <h3 class="agent-card-title"><i class="fa-solid fa-clock-rotate-left"></i> <span data-i18n="recent_orders">أحدث الطلبات</span></h3>
+    </div>
+    <div class="agent-table-container">
+        <table class="agent-table">
+            <thead>
+                <tr>
+                    <th data-i18n="order_no">رقم الطلب</th>
+                    <th data-i18n="customer">العميل</th>
+                    <th data-i18n="amount">المبلغ</th>
+                    <th data-i18n="status">الحالة</th>
+                </tr>
+            </thead>
+            <tbody id="recentOrdersBody">
+                @if (Model.RecentOrders == null || !Model.RecentOrders.Any())
+                {
+                    <tr><td colspan="4" style="text-align:center;">@Html.Raw("<span data-i18n=\"no_data\">لا توجد بيانات</span>")</td></tr>
+                }
+                else
+                {
+                    foreach (var order in Model.RecentOrders)
+                    {
+                        <tr>
+                            <td>@order.OrderNumber</td>
+                            <td>@order.CustomerName</td>
+                            <td>@order.Amount.ToString("F2") E.G</td>
+                            <td>@order.Status</td>
+                        </tr>
+                    }
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
