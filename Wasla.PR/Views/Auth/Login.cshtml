@@ -1,6 +1,7 @@
 ﻿@{
     ViewData["Auth_Title"]= "Login";
 }
+@model LoginViewModel
 <div class="container">
     <div class="header-top">
         <a href="../index.html" class="logo-icon" style="text-decoration: none;">
@@ -11,12 +12,12 @@
     </div>
 
     <div class="card">
-        <form id="login-form">
+        <form id="login-form" asp-controller="Auth" asp-action="Login" method="post">
             <div class="form-group">
                 <label class="form-label" data-i18n="email_address">Email Address</label>
                 <div class="input-wrapper">
                     <div class="input-icon"><i class="fa-regular fa-envelope"></i></div>
-                    <input type="email" name="email" class="form-control has-icon" data-i18n="enter_email" required>
+                    <input type="email" asp-for="Email" class="form-control has-icon" data-i18n="enter_email" required>
                 </div>
             </div>
 
@@ -24,14 +25,14 @@
                 <label class="form-label" data-i18n="password">Password</label>
                 <div class="input-wrapper">
                     <div class="input-icon"><i class="fa-solid fa-lock"></i></div>
-                    <input type="password" name="password" class="form-control has-icon has-toggle" data-i18n="enter_password" required>
+                    <input type="password" asp-for="Password" class="form-control has-icon has-toggle" data-i18n="enter_password" required>
                     <button type="button" class="toggle-password"><i class="fa-solid fa-eye"></i></button>
                 </div>
             </div>
 
             <div class="form-actions">
                 <label class="checkbox-label">
-                    <input type="checkbox" name="remember">
+                    <input type="checkbox" asp-for="RememberMe">
                     <span data-i18n="remember_me">Remember me</span>
                 </label>
                 <a href="forget-password.html" class="link" data-i18n="forgot_password_q">Forgot Password?</a>
@@ -41,7 +42,7 @@
                 
             <p class="footer-text" style="display:flex; flex-direction:column; gap:0.5rem; align-items:center;">
                 <span data-i18n="dont_have_account">Don't have an account?</span>
-                <a href="signup-role.html" class="link" data-i18n="register">Register</a>
+                <a asp-controller="Auth" asp-action="Register" class="link" data-i18n="register">Register</a>
             </p>
         </form>
     </div>

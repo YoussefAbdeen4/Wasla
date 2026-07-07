@@ -1,4 +1,7 @@
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Wasla.BLL.Services;
+using Wasla.DAL.Identity;
 
 namespace Wasla.PR
 {
@@ -16,6 +19,17 @@ namespace Wasla.PR
                     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
                 }
             );
+            builder.Services
+                .AddIdentity<ApplicationUser, IdentityRole>()
+                .AddEntityFrameworkStores<AppDbContext>()
+                .AddDefaultTokenProviders();
+
+            builder.Services.AddScoped<AgentService>();
+            builder.Services.AddScoped<OrderServices>();
+            builder.Services.AddScoped<RateCardService>();
+            builder.Services.AddScoped<CompanyService>();
+            builder.Services.AddScoped<CompanyFinancialsService>();
+            builder.Services.AddScoped<CompanyDashboardService>();
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
@@ -29,6 +43,7 @@ namespace Wasla.PR
             app.UseHttpsRedirection();
             app.UseRouting();
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.MapStaticAssets();

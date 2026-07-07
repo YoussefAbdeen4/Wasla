@@ -1,0 +1,74 @@
+﻿@using Wasla.Enums
+@{
+    ViewData["Title"] = "إضافة مندوب جديد";
+    Layout = "~/Views/Shared/_CompanyLayout.cshtml";
+ }
+@model CreateDriverViewModel
+<section class="company-content">
+    <div class="company-form-card">
+        <div class="company-card-header">
+            <h3 class="company-card-title"><i class="fa-solid fa-user-plus"></i> <span data-i18n="add_delegate">إضافة مندوب جديد</span></h3>
+        </div>
+        <!-- السطر ده هو المسؤول عن عرض الأخطاء العامة والـ Exceptions اللي بتبعتها من الكنترولر -->
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <form id="addDelegateForm" class="company-form" autocomplete="off" asp-controller="CompanyAgent" asp-action="Create">
+            <div class="company-section-title"><i class="fa-solid fa-user"></i> <span data-i18n="basic_info">المعلومات الأساسية</span></div>
+            <div class="company-form-grid">
+                <div class="company-form-group">
+                    <label class="company-form-label" data-i18n="name">الاسم بالكامل</label>
+                    <input type="text" id="delegateName" asp-for="Name" class="company-form-control" required>
+                </div>
+                <div class="company-form-group">
+                    <label class="company-form-label" data-i18n="phone">رقم الهاتف</label>
+                    <input type="tel" id="delegatePhone" asp-for="Phone" class="company-form-control" dir="ltr" required>
+                </div>
+                <div class="company-form-group">
+                    <label class="company-form-label" data-i18n="email">البريد الإلكتروني</label>
+                    <input type="email" id="delegateEmail" asp-for="Email" class="company-form-control">
+                </div>
+                <div class="company-form-group">
+                    <label class="form-label" data-i18n="create_password">Create a password <span class="required">*</span></label>
+                    <div class="input-wrapper">
+                        <div class="input-icon"><i class="fa-solid fa-lock"></i></div>
+                        <input type="password" asp-for="Password" class="form-control has-icon has-toggle" data-i18n="enter_password" required>
+                        <button type="button" class="toggle-password"><i class="fa-solid fa-eye"></i></button>
+                    </div>
+                </div>
+
+                <div class="company-form-group">
+                    <label class="form-label" data-i18n="confirm_password">Confirm Password <span class="required">*</span></label>
+                    <div class="input-wrapper">
+                        <div class="input-icon"><i class="fa-solid fa-lock"></i></div>
+                        <input type="password" asp-for="ConfirmPassword" class="form-control has-icon has-toggle" data-i18n="confirm_your_password" required>
+                        <button type="button" class="toggle-password"><i class="fa-solid fa-eye"></i></button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="company-section-title company-mt"><i class="fa-solid fa-car-side"></i> <span data-i18n="vehicle_info">معلومات المركبة</span></div>
+            <div class="company-form-grid">
+                <div class="company-form-group">
+                    <label class="company-form-label" data-i18n="vehicle_type">نوع المركبة</label>
+                    <select asp-for="Vehicle" class="company-form-control">
+                        <option value="">اختر نوع المركبة</option>
+
+                        <option value="@VehicleType.Motorcycle">دراجة نارية</option>
+                        <option value="@VehicleType.Car">سيارة</option>
+                        <option value="@VehicleType.Van">فان</option>
+                        <option value="@VehicleType.Truck">شاحنة</option>
+                        <option value="@VehicleType.HeavyTruck">شاحنة ثقيلة</option>
+                    </select>
+                </div>
+                <div class="company-form-group">
+                    <label class="company-form-label" data-i18n="plate_number">رقم اللوحة</label>
+                    <input type="text" id="delegatePlate" class="company-form-control" asp-for="LicensePlate">
+                </div>
+            </div>
+
+            <div class="company-form-actions">
+                <button type="button" class="company-btn company-btn-outline" id="cancelAddDelegateBtn" data-i18n="cancel">إلغاء</button>
+                <button type="submit" class="company-btn company-btn-primary"><i class="fa-solid fa-floppy-disk"></i> <span data-i18n="save">حفظ البيانات</span></button>
+            </div>
+        </form>
+    </div>
+</section>

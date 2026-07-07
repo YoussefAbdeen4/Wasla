@@ -1,10 +1,10 @@
 ﻿@{
     ViewData["Auth_Title"] = "Complete Register Merchant";
 }
-
+@model RegisterMerchantViewModel
 <div class="container wide">
     <div class="header-top">
-        <a href="../index.html" class="logo-icon" style="text-decoration: none;">
+        <a asp-controller="Home" asp-action="Index" class="logo-icon" style="text-decoration: none;">
             <i class="fa-solid fa-store"></i>
         </a>
         <h1 class="app-title" data-i18n="complete_store_profile">Complete Your Store Profile</h1>
@@ -12,12 +12,17 @@
     </div>
 
     <div class="card">
-        <form id="signup-merchant-form">
+        <form id="signup-merchant-form" method="post" asp-action="RegisterMerchant">
+            <input asp-for="Name" type="hidden" />
+            <input asp-for="Email" type="hidden" />
+            <input asp-for="Phone" type="hidden" />
+            <input asp-for="Password" type="hidden" />
+            <input asp-for="ConfirmPassword" type="hidden" />
             <div class="form-group">
                 <label class="form-label" data-i18n="store_name">Store Name <span class="required">*</span></label>
                 <div class="input-wrapper">
                     <div class="input-icon"><i class="fa-solid fa-store"></i></div>
-                    <input type="text" name="storeName" class="form-control has-icon" data-i18n="enter_store_name" required>
+                    <input type="text" asp-for="StoreName" class="form-control has-icon" data-i18n="enter_store_name" required>
                 </div>
             </div>
 
@@ -25,29 +30,62 @@
                 <label class="form-label" data-i18n="tax_reg_number">Commercial Register Number <span class="required">*</span></label>
                 <div class="input-wrapper">
                     <div class="input-icon"><i class="fa-solid fa-file-invoice"></i></div>
-                    <input type="text" name="commercialRegister" class="form-control has-icon" data-i18n="enter_tax_reg" required>
+                    <input type="text" asp-for="TaxNumber" class="form-control has-icon" data-i18n="enter_tax_reg" required>
                 </div>
             </div>
 
             <div class="form-group">
-                <label class="form-label" data-i18n="product_category">Business Type <span class="required">*</span></label>
+                <label class="form-label" data-i18n="product_category">
+                    Business Type <span class="required">*</span>
+                </label>
+
                 <div class="input-wrapper">
-                    <div class="input-icon"><i class="fa-solid fa-tags"></i></div>
-                    <select name="businessType" class="form-control has-icon" required>
-                        <option value="" disabled selected data-i18n="select_category">Select a category</option>
-                        <option value="electronics">Electronics</option>
-                        <option value="fashion">Fashion</option>
-                        <option value="food">Food</option>
-                        <option value="other">Other</option>
+                    <div class="input-icon">
+                        <i class="fa-solid fa-tags"></i>
+                    </div>
+
+                    <select asp-for="Category" id="categorySelect" class="form-control has-icon" required>
+                        <option value="" disabled selected>Select a category</option>
+
+                        <option value="Electronics">Electronics</option>
+                        <option value="Fashion">Fashion & Clothing</option>
+                        <option value="Food">Food & Beverages</option>
+                        <option value="Groceries">Groceries</option>
+                        <option value="Pharmacy">Pharmacy & Medical Supplies</option>
+                        <option value="Beauty">Beauty & Cosmetics</option>
+                        <option value="Furniture">Furniture & Home Decor</option>
+                        <option value="HomeAppliances">Home Appliances</option>
+                        <option value="Books">Books & Stationery</option>
+                        <option value="Sports">Sports & Fitness</option>
+                        <option value="Toys">Toys & Kids</option>
+                        <option value="PetSupplies">Pet Supplies</option>
+                        <option value="Automotive">Automotive Parts & Accessories</option>
+                        <option value="Industrial">Industrial Equipment</option>
+                        <option value="Agriculture">Agriculture & Farming</option>
+                        <option value="Construction">Construction Materials</option>
+                        <option value="Jewelry">Jewelry & Accessories</option>
+                        <option value="Gifts">Gifts & Flowers</option>
+                        <option value="Handmade">Handmade Products</option>
+                        <option value="OfficeSupplies">Office Supplies</option>
+                        <option value="Wholesale">Wholesale</option>
+
+                        <option >Other (Write your own)</option>
                     </select>
                 </div>
             </div>
 
-            <div class="form-group">
-                <label class="form-label" data-i18n="business_address">Business Address <span style="font-weight:normal;color:var(--text-muted);font-size:0.7rem;" data-i18n="optional_recommended">(Optional)</span></label>
+            <div class="form-group" id="otherCategoryDiv" style="display:none;">
+                <label class="form-label">Specify Business Type</label>
+
                 <div class="input-wrapper">
-                    <div class="input-icon"><i class="fa-solid fa-location-dot"></i></div>
-                    <input type="text" name="address" class="form-control has-icon" data-i18n="enter_address">
+                    <div class="input-icon">
+                        <i class="fa-solid fa-pen"></i>
+                    </div>
+
+                    <input type="text"
+                           id="otherCategory"
+                           class="form-control has-icon"
+                           placeholder="Enter your business type" asp-for="Category">
                 </div>
             </div>
 

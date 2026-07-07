@@ -1,0 +1,203 @@
+@using Wasla.PR.ViewModels.Company
+@model CompanyProfileViewModel
+
+@{
+    ViewData["Title"] = "تحرير ملف الشركة";
+    Layout = "~/Views/Shared/_CompanyLayout.cshtml";
+}
+
+<div class="company-content">
+    <div class="company-section-title">
+        <h2><i class="fa-solid fa-building"></i> تحرير بيانات الشركة</h2>
+    </div>
+
+    <div class="company-form-card">
+        <form asp-controller="Company" asp-action="UpdateProfile" method="post" enctype="multipart/form-data">
+            @if (ViewBag.Error != null)
+            {
+                <div class="alert alert-danger" role="alert">
+                    <i class="fa-solid fa-circle-exclamation"></i>
+                    <span>@ViewBag.Error</span>
+                </div>
+            }
+
+            <div asp-validation-summary="ModelOnly" class="alert alert-danger"></div>
+
+            <input type="hidden" asp-for="Id" />
+
+            <div class="company-form-grid">
+                <!-- Company Name -->
+                <div class="company-form-group">
+                    <label asp-for="CompanyName" class="company-form-label">
+                        <i class="fa-solid fa-tag"></i> اسم الشركة
+                    </label>
+                    <input asp-for="CompanyName" type="text" class="company-form-control" placeholder="أدخل اسم الشركة" />
+                    <span asp-validation-for="CompanyName" class="text-danger"></span>
+                </div>
+
+                <!-- Manager Name -->
+                <div class="company-form-group">
+                    <label asp-for="Name" class="company-form-label">
+                        <i class="fa-solid fa-user"></i> اسم المسؤول
+                    </label>
+                    <input asp-for="Name" type="text" class="company-form-control" placeholder="أدخل اسم المسؤول" />
+                    <span asp-validation-for="Name" class="text-danger"></span>
+                </div>
+
+                <!-- Tax Number -->
+                <div class="company-form-group">
+                    <label asp-for="TaxNumber" class="company-form-label">
+                        <i class="fa-solid fa-receipt"></i> رقم الضريبة
+                    </label>
+                    <input asp-for="TaxNumber" type="text" class="company-form-control" placeholder="أدخل رقم الضريبة" />
+                    <span asp-validation-for="TaxNumber" class="text-danger"></span>
+                </div>
+
+                <!-- Email -->
+                <div class="company-form-group">
+                    <label asp-for="Email" class="company-form-label">
+                        <i class="fa-solid fa-envelope"></i> البريد الإلكتروني
+                    </label>
+                    <input asp-for="Email" type="email" class="company-form-control" placeholder="أدخل البريد الإلكتروني" />
+                    <span asp-validation-for="Email" class="text-danger"></span>
+                </div>
+
+                <!-- Phone Number -->
+                <div class="company-form-group">
+                    <label asp-for="PhoneNumber" class="company-form-label">
+                        <i class="fa-solid fa-phone"></i> رقم الهاتف
+                    </label>
+                    <input asp-for="PhoneNumber" type="tel" class="company-form-control" placeholder="أدخل رقم الهاتف" />
+                    <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+                </div>
+
+                <!-- Profile Image Upload -->
+                <div class="company-form-group">
+                    <label asp-for="ProfileImage" class="company-form-label">
+                        <i class="fa-solid fa-image"></i> صورة الملف الشخصي
+                    </label>
+                    <div class="company-file-upload">
+                        <input asp-for="ProfileImage" type="file" class="company-file-input" accept="image/*" />
+                        <span class="company-file-label">
+                            <i class="fa-solid fa-cloud-arrow-up"></i>
+                            اضغط لاختيار صورة أو اسحبها هنا
+                        </span>
+                    </div>
+                    @if (!string.IsNullOrEmpty(Model.ExistingImagePath))
+                    {
+                        <div class="company-image-preview" style="margin-top: 15px;">
+                            <p class="company-muted">الصورة الحالية:</p>
+                            <img src="@Model.ExistingImagePath" alt="صورة الشركة" style="max-width: 150px; border-radius: 8px;" />
+                        </div>
+                    }
+                    <span asp-validation-for="ProfileImage" class="text-danger"></span>
+                    <small class="form-text text-muted" style="display: block; margin-top: 8px;">
+                        الملفات المسموحة: jpg, jpeg, png, gif - الحد الأقصى: 5 ميجابايت
+                    </small>
+                </div>
+            </div>
+
+            <div class="company-form-actions">
+                <button type="submit" class="company-btn company-btn-primary">
+                    <i class="fa-solid fa-save"></i> حفظ التغييرات
+                </button>
+                <a asp-controller="Company" asp-action="Index" class="company-btn company-btn-secondary">
+                    <i class="fa-solid fa-times"></i> إلغاء
+                </a>
+            </div>
+        </form>
+    </div>
+</div>
+
+<style>
+    .company-file-upload {
+        position: relative;
+        border: 2px dashed #ccc;
+        border-radius: 8px;
+        padding: 40px 20px;
+        text-align: center;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        background-color: #f9f9f9;
+    }
+
+    .company-file-upload:hover {
+        border-color: #007bff;
+        background-color: #f0f7ff;
+    }
+
+    .company-file-input {
+        display: none;
+    }
+
+    .company-file-label {
+        display: block;
+        cursor: pointer;
+        font-size: 16px;
+    }
+
+    .company-file-label i {
+        font-size: 28px;
+        color: #007bff;
+        display: block;
+        margin-bottom: 10px;
+    }
+
+    .company-image-preview {
+        text-align: center;
+    }
+
+    .company-image-preview img {
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .company-form-control:focus {
+        border-color: #007bff;
+        box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+    }
+</style>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    <script>
+        // Handle file input click
+        document.querySelector('.company-file-upload').addEventListener('click', function () {
+            document.querySelector('.company-file-input').click();
+        });
+
+        // Handle drag and drop
+        const fileUploadArea = document.querySelector('.company-file-upload');
+        fileUploadArea.addEventListener('dragover', function (e) {
+            e.preventDefault();
+            this.style.borderColor = '#007bff';
+            this.style.backgroundColor = '#f0f7ff';
+        });
+
+        fileUploadArea.addEventListener('dragleave', function (e) {
+            e.preventDefault();
+            this.style.borderColor = '#ccc';
+            this.style.backgroundColor = '#f9f9f9';
+        });
+
+        fileUploadArea.addEventListener('drop', function (e) {
+            e.preventDefault();
+            const files = e.dataTransfer.files;
+            document.querySelector('.company-file-input').files = files;
+            updateFileLabel();
+        });
+
+        // Update label when file is selected
+        document.querySelector('.company-file-input').addEventListener('change', updateFileLabel);
+
+        function updateFileLabel() {
+            const input = document.querySelector('.company-file-input');
+            const label = document.querySelector('.company-file-label');
+            if (input.files && input.files[0]) {
+                label.innerHTML = `<i class="fa-solid fa-check"></i> تم اختيار: ${input.files[0].name}`;
+                label.style.color = '#28a745';
+            }
+        }
+    </script>
+}

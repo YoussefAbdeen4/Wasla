@@ -22,6 +22,207 @@ namespace Wasla.DAL.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("ConcurrencyStamp")
+                        .IsConcurrencyToken()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.Property<string>("NormalizedName")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("NormalizedName")
+                        .IsUnique()
+                        .HasDatabaseName("RoleNameIndex")
+                        .HasFilter("[NormalizedName] IS NOT NULL");
+
+                    b.ToTable("AspNetRoles", (string)null);
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("ClaimType")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ClaimValue")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("RoleId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("RoleId");
+
+                    b.ToTable("AspNetRoleClaims", (string)null);
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("ClaimType")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ClaimValue")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("AspNetUserClaims", (string)null);
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
+                {
+                    b.Property<string>("LoginProvider")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("ProviderKey")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("ProviderDisplayName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("LoginProvider", "ProviderKey");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("AspNetUserLogins", (string)null);
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<string>", b =>
+                {
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("RoleId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("UserId", "RoleId");
+
+                    b.HasIndex("RoleId");
+
+                    b.ToTable("AspNetUserRoles", (string)null);
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
+                {
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("LoginProvider")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Value")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("UserId", "LoginProvider", "Name");
+
+                    b.ToTable("AspNetUserTokens", (string)null);
+                });
+
+            modelBuilder.Entity("Wasla.DAL.Identity.ApplicationUser", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<int>("AccessFailedCount")
+                        .HasColumnType("int");
+
+                    b.Property<string>("ConcurrencyStamp")
+                        .IsConcurrencyToken()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Email")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.Property<bool>("EmailConfirmed")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("LockoutEnabled")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTimeOffset?>("LockoutEnd")
+                        .HasColumnType("datetimeoffset");
+
+                    b.Property<string>("NormalizedEmail")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.Property<string>("NormalizedUserName")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.Property<string>("PasswordHash")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PhoneNumber")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("PhoneNumberConfirmed")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("SecurityStamp")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("TwoFactorEnabled")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("UserName")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.Property<int>("UserType")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("NormalizedEmail")
+                        .HasDatabaseName("EmailIndex");
+
+                    b.HasIndex("NormalizedUserName")
+                        .IsUnique()
+                        .HasDatabaseName("UserNameIndex")
+                        .HasFilter("[NormalizedUserName] IS NOT NULL");
+
+                    b.ToTable("AspNetUsers", (string)null);
+                });
+
             modelBuilder.Entity("Wasla.Models.Client", b =>
                 {
                     b.Property<int>("Id")
@@ -48,42 +249,22 @@ namespace Wasla.DAL.Migrations
                     b.HasIndex("MerchantId");
 
                     b.ToTable("Client");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Email = "ahmed.client@example.com",
-                            MerchantId = 1,
-                            Name = "Ahmed Client"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Email = "layla.client@example.com",
-                            MerchantId = 2,
-                            Name = "Layla Client"
-                        },
-                        new
-                        {
-                            Id = 3,
-                            Email = "hassan.client@example.com",
-                            MerchantId = 3,
-                            Name = "Hassan Client"
-                        });
                 });
 
             modelBuilder.Entity("Wasla.Models.ClientPhones", b =>
                 {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
                     b.Property<int>("ClientId")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("Id")
-                        .HasColumnType("int");
-
                     b.Property<bool>("IsPrimary")
                         .HasColumnType("bit");
 
@@ -97,21 +278,26 @@ namespace Wasla.DAL.Migrations
                         .HasMaxLength(15)
                         .HasColumnType("nvarchar(15)");
 
-                    b.HasKey("ClientId");
+                    b.HasKey("Id");
+
+                    b.HasIndex("ClientId");
 
                     b.ToTable("ClientPhones");
                 });
 
             modelBuilder.Entity("Wasla.Models.CompanyPhones", b =>
                 {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
                     b.Property<int>("CompanyId")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
-
-                    b.Property<int>("Id")
-                        .HasColumnType("int");
 
                     b.Property<bool>("IsPrimary")
                         .HasColumnType("bit");
@@ -126,7 +312,9 @@ namespace Wasla.DAL.Migrations
                         .HasMaxLength(15)
                         .HasColumnType("nvarchar(15)");
 
-                    b.HasKey("CompanyId");
+                    b.HasKey("Id");
+
+                    b.HasIndex("CompanyId");
 
                     b.ToTable("CompanyPhones");
                 });
@@ -139,47 +327,25 @@ namespace Wasla.DAL.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("CompanyEmail")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
-
                     b.Property<string>("CompanyName")
                         .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
-                    b.Property<string>("Password")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("TaxNumber")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
 
                     b.HasKey("Id");
 
-                    b.ToTable("Courier Company", (string)null);
+                    b.HasIndex("UserId");
 
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            CompanyEmail = "info@wasla.com",
-                            CompanyName = "Wasla Express",
-                            Password = "pass123"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            CompanyEmail = "hello@fastship.com",
-                            CompanyName = "FastShip",
-                            Password = "secret"
-                        },
-                        new
-                        {
-                            Id = 3,
-                            CompanyEmail = "contact@citycouriers.com",
-                            CompanyName = "CityCouriers",
-                            Password = "pwd123"
-                        });
+                    b.ToTable("CourierCompanies");
                 });
 
             modelBuilder.Entity("Wasla.Models.Driver", b =>
@@ -193,17 +359,7 @@ namespace Wasla.DAL.Migrations
                     b.Property<int>("CompanyId")
                         .HasColumnType("int");
 
-                    b.Property<string>("Email")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
-
                     b.Property<string>("Name")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
-
-                    b.Property<string>("Password")
                         .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
@@ -211,40 +367,16 @@ namespace Wasla.DAL.Migrations
                     b.Property<decimal>("TotalCashSubmitted")
                         .HasColumnType("decimal(18,2)");
 
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
+
                     b.HasKey("Id");
 
                     b.HasIndex("CompanyId");
 
-                    b.ToTable("Drivers");
+                    b.HasIndex("UserId");
 
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            CompanyId = 1,
-                            Email = "ziad@example.com",
-                            Name = "Ziad Ahmed",
-                            Password = "drv1",
-                            TotalCashSubmitted = 0m
-                        },
-                        new
-                        {
-                            Id = 2,
-                            CompanyId = 2,
-                            Email = "omar@example.com",
-                            Name = "Omar Khalid",
-                            Password = "drv2",
-                            TotalCashSubmitted = 0m
-                        },
-                        new
-                        {
-                            Id = 3,
-                            CompanyId = 1,
-                            Email = "sara@example.com",
-                            Name = "Sara Ali",
-                            Password = "drv3",
-                            TotalCashSubmitted = 0m
-                        });
+                    b.ToTable("Drivers");
                 });
 
             modelBuilder.Entity("Wasla.Models.DriverOrder", b =>
@@ -273,41 +405,21 @@ namespace Wasla.DAL.Migrations
                     b.HasIndex("OrderId")
                         .IsUnique();
 
-                    b.ToTable("Driver-Orders", (string)null);
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            DriverId = 1,
-                            OrderId = 1,
-                            isActive = "Active"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            DriverId = 2,
-                            OrderId = 2,
-                            isActive = "Active"
-                        },
-                        new
-                        {
-                            Id = 3,
-                            DriverId = 3,
-                            OrderId = 3,
-                            isActive = "Active"
-                        });
+                    b.ToTable("DriverOrder");
                 });
 
             modelBuilder.Entity("Wasla.Models.DriverPhones", b =>
                 {
-                    b.Property<int>("DriverId")
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("Id")
+                    b.Property<int>("DriverId")
                         .HasColumnType("int");
 
                     b.Property<bool>("IsPrimary")
@@ -323,7 +435,9 @@ namespace Wasla.DAL.Migrations
                         .HasMaxLength(15)
                         .HasColumnType("nvarchar(15)");
 
-                    b.HasKey("DriverId");
+                    b.HasKey("Id");
+
+                    b.HasIndex("DriverId");
 
                     b.ToTable("DriverPhones");
                 });
@@ -356,33 +470,7 @@ namespace Wasla.DAL.Migrations
 
                     b.HasIndex("VehicleId");
 
-                    b.ToTable("Driver-Vehicles", (string)null);
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            AssignedAt = new DateTime(2026, 6, 21, 12, 0, 0, 0, DateTimeKind.Unspecified),
-                            DriverId = 1,
-                            ReturnedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            VehicleId = 1
-                        },
-                        new
-                        {
-                            Id = 2,
-                            AssignedAt = new DateTime(2026, 6, 26, 12, 0, 0, 0, DateTimeKind.Unspecified),
-                            DriverId = 2,
-                            ReturnedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            VehicleId = 2
-                        },
-                        new
-                        {
-                            Id = 3,
-                            AssignedAt = new DateTime(2026, 6, 30, 12, 0, 0, 0, DateTimeKind.Unspecified),
-                            DriverId = 3,
-                            ReturnedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            VehicleId = 3
-                        });
+                    b.ToTable("DriverVehicles");
                 });
 
             modelBuilder.Entity("Wasla.Models.Merchant", b =>
@@ -393,24 +481,22 @@ namespace Wasla.DAL.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("Email")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
+                    b.Property<string>("Category")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
-                    b.Property<string>("Password")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
-
                     b.Property<string>("StoreName")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("TaxNumber")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<decimal>("WalletBalance")
                         .HasPrecision(18, 4)
@@ -418,51 +504,24 @@ namespace Wasla.DAL.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("UserId");
+
                     b.ToTable("Merchants", t =>
                         {
                             t.HasCheckConstraint("CK_Product_WalletBalance_NonNegative", "[WalletBalance] >= 0");
-                        });
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Email = "alfa@store.com",
-                            Name = "Alfa Store",
-                            Password = "m1npass",
-                            StoreName = "Alfa Store",
-                            WalletBalance = 1000m
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Email = "beta@shop.com",
-                            Name = "Beta Shop",
-                            Password = "m2npass",
-                            StoreName = "Beta Shop",
-                            WalletBalance = 250m
-                        },
-                        new
-                        {
-                            Id = 3,
-                            Email = "gamma@market.com",
-                            Name = "Gamma Market",
-                            Password = "m3npass",
-                            StoreName = "Gamma Market",
-                            WalletBalance = 500m
                         });
                 });
 
             modelBuilder.Entity("Wasla.Models.MerchantPhones", b =>
                 {
-                    b.Property<int>("MerchantId")
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
-
-                    b.Property<int>("Id")
-                        .HasColumnType("int");
 
                     b.Property<bool>("IsPrimary")
                         .HasColumnType("bit");
@@ -472,12 +531,17 @@ namespace Wasla.DAL.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
+                    b.Property<int>("MerchantId")
+                        .HasColumnType("int");
+
                     b.Property<string>("PhoneNumber")
                         .IsRequired()
                         .HasMaxLength(15)
                         .HasColumnType("nvarchar(15)");
 
-                    b.HasKey("MerchantId");
+                    b.HasKey("Id");
+
+                    b.HasIndex("MerchantId");
 
                     b.ToTable("MerchantPhones");
                 });
@@ -500,7 +564,7 @@ namespace Wasla.DAL.Migrations
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
-                    b.Property<int>("CompanyId")
+                    b.Property<int?>("CompanyId")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("CreatedAt")
@@ -520,10 +584,10 @@ namespace Wasla.DAL.Migrations
                         .HasMaxLength(100)
                         .HasColumnType("char(11)");
 
-                    b.Property<DateTime>("DeliveredAt")
+                    b.Property<DateTime?>("DeliveredAt")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("DriverId")
+                    b.Property<int?>("DriverId")
                         .HasColumnType("int");
 
                     b.Property<int>("MerchantId")
@@ -543,7 +607,7 @@ namespace Wasla.DAL.Migrations
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
-                    b.Property<DateTime>("UpdatedAt")
+                    b.Property<DateTime?>("UpdatedAt")
                         .HasColumnType("datetime2");
 
                     b.Property<bool>("isBreakable")
@@ -551,6 +615,9 @@ namespace Wasla.DAL.Migrations
 
                     b.Property<bool>("isClaimingRequired")
                         .HasColumnType("bit");
+
+                    b.Property<int>("status")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
@@ -563,68 +630,6 @@ namespace Wasla.DAL.Migrations
                     b.ToTable("Orders", t =>
                         {
                             t.HasCheckConstraint("CK_Order_TotalPrice", "TotalPrice >= 0");
-                        });
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            CityFrom = "Cairo",
-                            CityTo = "Giza",
-                            CompanyId = 1,
-                            CreatedAt = new DateTime(2026, 7, 1, 12, 0, 0, 0, DateTimeKind.Unspecified),
-                            CustomerAddress = "Cairo",
-                            CustomerName = "Mohamed Ali",
-                            CustomerPhone = "01001234567",
-                            DeliveredAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            DriverId = 1,
-                            MerchantId = 1,
-                            PaymentType = "COD",
-                            TotalPrice = 120m,
-                            TrackingUuid = "TRK1001",
-                            UpdatedAt = new DateTime(2026, 7, 1, 12, 0, 0, 0, DateTimeKind.Unspecified),
-                            isBreakable = false,
-                            isClaimingRequired = false
-                        },
-                        new
-                        {
-                            Id = 2,
-                            CityFrom = "Giza",
-                            CityTo = "Cairo",
-                            CompanyId = 1,
-                            CreatedAt = new DateTime(2026, 6, 30, 12, 0, 0, 0, DateTimeKind.Unspecified),
-                            CustomerAddress = "Giza",
-                            CustomerName = "Nora Hussein",
-                            CustomerPhone = "01007654321",
-                            DeliveredAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            DriverId = 1,
-                            MerchantId = 2,
-                            PaymentType = "Online",
-                            TotalPrice = 80m,
-                            TrackingUuid = "TRK1002",
-                            UpdatedAt = new DateTime(2026, 7, 1, 12, 0, 0, 0, DateTimeKind.Unspecified),
-                            isBreakable = true,
-                            isClaimingRequired = false
-                        },
-                        new
-                        {
-                            Id = 3,
-                            CityFrom = "Cairo",
-                            CityTo = "Alexandria",
-                            CompanyId = 1,
-                            CreatedAt = new DateTime(2026, 6, 29, 12, 0, 0, 0, DateTimeKind.Unspecified),
-                            CustomerAddress = "Alexandria",
-                            CustomerName = "Omar Said",
-                            CustomerPhone = "01009998877",
-                            DeliveredAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            DriverId = 1,
-                            MerchantId = 3,
-                            PaymentType = "COD",
-                            TotalPrice = 200m,
-                            TrackingUuid = "TRK1003",
-                            UpdatedAt = new DateTime(2026, 7, 1, 12, 0, 0, 0, DateTimeKind.Unspecified),
-                            isBreakable = false,
-                            isClaimingRequired = true
                         });
                 });
 
@@ -689,37 +694,11 @@ namespace Wasla.DAL.Migrations
 
                     b.HasIndex("OrderId");
 
-                    b.ToTable("Order-Products", null, t =>
+                    b.ToTable("OrderProducts", t =>
                         {
                             t.HasCheckConstraint("CK_OrderProduct_Price", "Price >= 0");
 
                             t.HasCheckConstraint("CK_OrderProduct_Quantity", "QTY >= 0");
-                        });
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Name = "Item A",
-                            OrderId = 1,
-                            Price = 50m,
-                            Qty = 1
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Name = "Item B",
-                            OrderId = 2,
-                            Price = 35m,
-                            Qty = 2
-                        },
-                        new
-                        {
-                            Id = 3,
-                            Name = "Item C",
-                            OrderId = 3,
-                            Price = 200m,
-                            Qty = 1
                         });
                 });
 
@@ -768,7 +747,7 @@ namespace Wasla.DAL.Migrations
 
                     b.HasIndex("CompanyId");
 
-                    b.ToTable("Rate Cards", null, t =>
+                    b.ToTable("RateCards", t =>
                         {
                             t.HasCheckConstraint("CK_RateCard_BaseFee_NonNegative", "[BaseFee] >= 0");
 
@@ -779,47 +758,6 @@ namespace Wasla.DAL.Migrations
                             t.HasCheckConstraint("CK_RateCard_MinWeight_MaxWeight", "[MinWeight] < [MaxWeight]");
 
                             t.HasCheckConstraint("CK_RateCard_MinWeight_NonNegative", "[MinWeight] >= 0");
-                        });
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            BaseFee = 50m,
-                            CompanyId = 1,
-                            DestinationCity = "Giza",
-                            EffectiveDate = new DateTime(2026, 6, 1, 12, 0, 0, 0, DateTimeKind.Unspecified),
-                            ExpiryDate = new DateTime(2027, 7, 1, 12, 0, 0, 0, DateTimeKind.Unspecified),
-                            ExtraKiloPrice = 10m,
-                            MaxWeight = 5.0,
-                            MinWeight = 0.0,
-                            OriginCity = "Cairo"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            BaseFee = 80m,
-                            CompanyId = 2,
-                            DestinationCity = "Cairo",
-                            EffectiveDate = new DateTime(2026, 6, 21, 12, 0, 0, 0, DateTimeKind.Unspecified),
-                            ExpiryDate = new DateTime(2027, 1, 1, 12, 0, 0, 0, DateTimeKind.Unspecified),
-                            ExtraKiloPrice = 8m,
-                            MaxWeight = 10.0,
-                            MinWeight = 0.0,
-                            OriginCity = "Giza"
-                        },
-                        new
-                        {
-                            Id = 3,
-                            BaseFee = 150m,
-                            CompanyId = 1,
-                            DestinationCity = "Alexandria",
-                            EffectiveDate = new DateTime(2026, 6, 26, 12, 0, 0, 0, DateTimeKind.Unspecified),
-                            ExpiryDate = new DateTime(2026, 10, 1, 12, 0, 0, 0, DateTimeKind.Unspecified),
-                            ExtraKiloPrice = 12m,
-                            MaxWeight = 20.0,
-                            MinWeight = 0.0,
-                            OriginCity = "Cairo"
                         });
                 });
 
@@ -863,38 +801,6 @@ namespace Wasla.DAL.Migrations
                         {
                             t.HasCheckConstraint("CK_Rating_Score_Range", "[Stars] >= 1 AND [Stars] <= 5");
                         });
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Comment = "Good service",
-                            CompanyId = 1,
-                            CreatedAt = new DateTime(2026, 6, 29, 12, 0, 0, 0, DateTimeKind.Unspecified),
-                            MerchantId = 1,
-                            RatedBy = "merchant",
-                            Stars = 4.5
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Comment = "Excellent",
-                            CompanyId = 1,
-                            CreatedAt = new DateTime(2026, 6, 30, 12, 0, 0, 0, DateTimeKind.Unspecified),
-                            MerchantId = 2,
-                            RatedBy = "merchant",
-                            Stars = 5.0
-                        },
-                        new
-                        {
-                            Id = 3,
-                            Comment = "Average",
-                            CompanyId = 2,
-                            CreatedAt = new DateTime(2026, 7, 1, 12, 0, 0, 0, DateTimeKind.Unspecified),
-                            MerchantId = 3,
-                            RatedBy = "merchant",
-                            Stars = 3.5
-                        });
                 });
 
             modelBuilder.Entity("Wasla.Models.TrackingHistory", b =>
@@ -924,33 +830,7 @@ namespace Wasla.DAL.Migrations
 
                     b.HasIndex("OrderId");
 
-                    b.ToTable("Tracking Histories of Orders", (string)null);
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Location = "Merchant",
-                            OrderId = 1,
-                            Status = "ReadyForPickup",
-                            Timestamp = new DateTime(2026, 6, 29, 12, 0, 0, 0, DateTimeKind.Unspecified)
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Location = "Warehouse",
-                            OrderId = 2,
-                            Status = "Packed",
-                            Timestamp = new DateTime(2026, 6, 30, 12, 0, 0, 0, DateTimeKind.Unspecified)
-                        },
-                        new
-                        {
-                            Id = 3,
-                            Location = "System",
-                            OrderId = 3,
-                            Status = "Created",
-                            Timestamp = new DateTime(2026, 7, 1, 12, 0, 0, 0, DateTimeKind.Unspecified)
-                        });
+                    b.ToTable("TrackingHistories");
                 });
 
             modelBuilder.Entity("Wasla.Models.Vehicle", b =>
@@ -965,9 +845,6 @@ namespace Wasla.DAL.Migrations
                         .HasColumnType("float");
 
                     b.Property<int>("CompanyId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("DriverId")
                         .HasColumnType("int");
 
                     b.Property<string>("IsActive")
@@ -989,41 +866,58 @@ namespace Wasla.DAL.Migrations
 
                     b.HasIndex("CompanyId");
 
-                    b.HasIndex("DriverId");
-
                     b.ToTable("Vehicles");
+                });
 
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Capacity = 500.0,
-                            CompanyId = 1,
-                            DriverId = 1,
-                            IsActive = "Active",
-                            LicensePlate = "ABC-123",
-                            Type = "Car"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Capacity = 50.0,
-                            CompanyId = 2,
-                            DriverId = 1,
-                            IsActive = "Active",
-                            LicensePlate = "XYZ-987",
-                            Type = "Motorcycle"
-                        },
-                        new
-                        {
-                            Id = 3,
-                            Capacity = 1200.0,
-                            CompanyId = 1,
-                            DriverId = 1,
-                            IsActive = "Active",
-                            LicensePlate = "LMN-456",
-                            Type = "Van"
-                        });
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
+                {
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
+                        .WithMany()
+                        .HasForeignKey("RoleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
+                {
+                    b.HasOne("Wasla.DAL.Identity.ApplicationUser", null)
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
+                {
+                    b.HasOne("Wasla.DAL.Identity.ApplicationUser", null)
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<string>", b =>
+                {
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
+                        .WithMany()
+                        .HasForeignKey("RoleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Wasla.DAL.Identity.ApplicationUser", null)
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
+                {
+                    b.HasOne("Wasla.DAL.Identity.ApplicationUser", null)
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("Wasla.Models.Client", b =>
@@ -1059,6 +953,15 @@ namespace Wasla.DAL.Migrations
                     b.Navigation("Company");
                 });
 
+            modelBuilder.Entity("Wasla.Models.CourierCompany", b =>
+                {
+                    b.HasOne("Wasla.DAL.Identity.ApplicationUser", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId");
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("Wasla.Models.Driver", b =>
                 {
                     b.HasOne("Wasla.Models.CourierCompany", "Company")
@@ -1067,7 +970,13 @@ namespace Wasla.DAL.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("Wasla.DAL.Identity.ApplicationUser", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId");
+
                     b.Navigation("Company");
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("Wasla.Models.DriverOrder", b =>
@@ -1081,7 +990,7 @@ namespace Wasla.DAL.Migrations
                     b.HasOne("Wasla.Models.Order", "Order")
                         .WithOne("DriverOrder")
                         .HasForeignKey("Wasla.Models.DriverOrder", "OrderId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Driver");
@@ -1119,6 +1028,15 @@ namespace Wasla.DAL.Migrations
                     b.Navigation("Vehicle");
                 });
 
+            modelBuilder.Entity("Wasla.Models.Merchant", b =>
+                {
+                    b.HasOne("Wasla.DAL.Identity.ApplicationUser", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId");
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("Wasla.Models.MerchantPhones", b =>
                 {
                     b.HasOne("Wasla.Models.Merchant", "Merchant")
@@ -1134,20 +1052,16 @@ namespace Wasla.DAL.Migrations
                 {
                     b.HasOne("Wasla.Models.CourierCompany", "Company")
                         .WithMany("Orders")
-                        .HasForeignKey("CompanyId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("CompanyId");
 
                     b.HasOne("Wasla.Models.Driver", "Driver")
                         .WithMany("Orders")
-                        .HasForeignKey("DriverId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("DriverId");
 
                     b.HasOne("Wasla.Models.Merchant", "Merchant")
                         .WithMany("Orders")
                         .HasForeignKey("MerchantId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Company");
@@ -1203,13 +1117,13 @@ namespace Wasla.DAL.Migrations
                     b.HasOne("Wasla.Models.CourierCompany", "Company")
                         .WithMany("Ratings")
                         .HasForeignKey("CompanyId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("Wasla.Models.Merchant", "Merchant")
                         .WithMany("Ratings")
                         .HasForeignKey("MerchantId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Company");
@@ -1233,18 +1147,10 @@ namespace Wasla.DAL.Migrations
                     b.HasOne("Wasla.Models.CourierCompany", "Company")
                         .WithMany("Vehicles")
                         .HasForeignKey("CompanyId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("Wasla.Models.Driver", "Driver")
-                        .WithMany()
-                        .HasForeignKey("DriverId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Company");
-
-                    b.Navigation("Driver");
                 });
 
             modelBuilder.Entity("Wasla.Models.Client", b =>
@@ -1293,15 +1199,13 @@ namespace Wasla.DAL.Migrations
 
             modelBuilder.Entity("Wasla.Models.Order", b =>
                 {
-                    b.Navigation("DriverOrder")
-                        .IsRequired();
+                    b.Navigation("DriverOrder");
 
                     b.Navigation("OrderProducts");
 
                     b.Navigation("TrackingHistories");
 
-                    b.Navigation("orderCompany")
-                        .IsRequired();
+                    b.Navigation("orderCompany");
                 });
 
             modelBuilder.Entity("Wasla.Models.Vehicle", b =>

@@ -7,12 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Controllers\Auth\" />
     <Folder Include="Controllers\Admin\" />
-    <Folder Include="Controllers\Company\" />
-    <Folder Include="Controllers\Merchant\" />
-    <Folder Include="Controllers\Agent\" />
-    <Folder Include="ViewModels\" />
   </ItemGroup>
 
   <ItemGroup>

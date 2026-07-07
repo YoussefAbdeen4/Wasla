@@ -1,0 +1,83 @@
+﻿@model AgentDetailsViewModel
+
+<section class="company-content">
+
+    <div class="company-card">
+
+        <div class="company-delegate-profile">
+
+            <div class="company-delegate-info">
+
+                <img src="@(Model.Avatar ?? $"https://ui-avatars.com/api/?name={Model.Name}")"
+                     class="company-delegate-avatar" />
+
+                <div>
+                    <h2 class="company-delegate-name">@Model.Name</h2>
+
+                    <span class="company-badge @(Model.Status == "active" ? "company-badge-success" : "company-badge-danger")">
+                        <i class="fa-solid fa-circle"></i>
+                        @(Model.Status == "active" ? "نشط" : "غير نشط")
+                    </span>
+                </div>
+
+            </div>
+
+            <div class="company-profile-actions">
+                <a asp-controller="CompanyAgent" asp-action="Edit" asp-route-id="@Model.Id" class="company-btn company-btn-primary">تعديل</a>
+                <form asp-controller="CompanyAgent"
+                      asp-action="Delete"
+                      method="post"
+                      onsubmit="return confirm('هل أنت متأكد من حذف هذا المندوب؟');">
+
+                    <input type="hidden" name="id" value="@Model.Id" />
+
+                    <button type="submit" class="company-btn company-btn-danger">
+                        حذف
+                    </button>
+
+                </form>
+            </div>
+
+        </div>
+
+        <div class="company-details-grid">
+
+            <div class="company-detail-card">
+                <span class="company-detail-label">رقم الهاتف</span>
+                <h4 class="company-detail-value" dir="ltr">@Model.Phone</h4>
+            </div>
+
+            <div class="company-detail-card">
+                <span class="company-detail-label">نوع المركبة</span>
+                <h4 class="company-detail-value">@Model.VehicleType</h4>
+            </div>
+
+            <div class="company-detail-card">
+                <span class="company-detail-label">رقم اللوحة</span>
+                <h4 class="company-detail-value">@Model.PlateNumber</h4>
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="company-stats-grid">
+
+        <div class="company-stat-card">
+            <span class="company-stat-number">@Model.PendingOrders</span>
+            <span class="company-stat-label">قيد الانتظار</span>
+        </div>
+
+        <div class="company-stat-card">
+            <span class="company-stat-number">@Model.CompletedOrders</span>
+            <span class="company-stat-label">مكتمل</span>
+        </div>
+
+        <div class="company-stat-card">
+            <span class="company-stat-number">@Model.ReturnedOrders</span>
+            <span class="company-stat-label">مرتجع</span>
+        </div>
+
+    </div>
+
+</section>

@@ -1,0 +1,457 @@
+@using Wasla.PR.ViewModels.Company
+@using Wasla.Enums
+@model OrderDetailsViewModel
+
+@{
+    ViewData["Title"] = "تفاصيل الطلب";
+    Layout = "~/Views/Shared/_CompanyLayout.cshtml";
+}
+
+<div class="company-content">
+    <div class="company-section-title">
+        <h2><i class="fa-solid fa-box"></i> تفاصيل الطلب #@Model.TrackingUuid.Substring(0, 8)</h2>
+        <div>
+            <span class="company-badge @GetStatusBadgeClass(Model.Status)">
+                @GetStatusArabic(Model.Status)
+            </span>
+        </div>
+    </div>
+
+    @if (TempData["Success"] != null)
+    {
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            <i class="fa-solid fa-check-circle"></i>
+            <span>@TempData["Success"]</span>
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+    }
+
+    @if (TempData["Error"] != null)
+    {
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            <i class="fa-solid fa-circle-exclamation"></i>
+            <span>@TempData["Error"]</span>
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+    }
+
+    <!-- Customer Information -->
+    <div class="company-card">
+        <div class="company-card-header">
+            <h3><i class="fa-solid fa-user"></i> معلومات العميل</h3>
+        </div>
+        <div class="company-card-content">
+            <div class="company-details-grid">
+                <div class="company-detail-card">
+                    <span class="company-detail-label">اسم العميل</span>
+                    <h4 class="company-detail-value">@Model.CustomerName</h4>
+                </div>
+                <div class="company-detail-card">
+                    <span class="company-detail-label">رقم الهاتف</span>
+                    <h4 class="company-detail-value" dir="ltr">@Model.CustomerPhone</h4>
+                </div>
+                <div class="company-detail-card">
+                    <span class="company-detail-label">المدينة من</span>
+                    <h4 class="company-detail-value">@(Model.CityFrom?.ToString() ?? "غير محدد")</h4>
+                </div>
+                <div class="company-detail-card">
+                    <span class="company-detail-label">المدينة إلى</span>
+                    <h4 class="company-detail-value">@Model.CityTo</h4>
+                </div>
+            </div>
+            <div style="margin-top: 15px;">
+                <label class="company-detail-label">العنوان</label>
+                <p class="company-detail-value">@Model.CustomerAddress</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Order Details -->
+    <div class="company-card">
+        <div class="company-card-header">
+            <h3><i class="fa-solid fa-receipt"></i> تفاصيل الطلب</h3>
+        </div>
+        <div class="company-card-content">
+            <div class="company-details-grid">
+                <div class="company-detail-card">
+                    <span class="company-detail-label">نوع الدفع</span>
+                    <h4 class="company-detail-value">
+                        @if (Model.PaymentType == PaymentType.COD)
+                        {
+                            <span>الدفع عند الاستلام</span>
+                        }
+                        else
+                        {
+                            <span>دفع مسبق</span>
+                        }
+                    </h4>
+                </div>
+                <div class="company-detail-card">
+                    <span class="company-detail-label">يتطلب تأمين</span>
+                    <h4 class="company-detail-value">
+                        <i class="fa-solid @(Model.IsClaimingRequired ? "fa-check text-success" : "fa-times text-danger")"></i>
+                    </h4>
+                </div>
+                <div class="company-detail-card">
+                    <span class="company-detail-label">قابل للكسر</span>
+                    <h4 class="company-detail-value">
+                        <i class="fa-solid @(Model.IsBreakable ? "fa-check text-success" : "fa-times text-danger")"></i>
+                    </h4>
+                </div>
+                <div class="company-detail-card">
+                    <span class="company-detail-label">تم الإنشاء</span>
+                    <h4 class="company-detail-value" dir="ltr">@Model.CreatedAt.ToString("yyyy-MM-dd HH:mm")</h4>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Order Items -->
+    @if (Model.OrderProducts.Any())
+    {
+        <div class="company-card">
+            <div class="company-card-header">
+                <h3><i class="fa-solid fa-shopping-bag"></i> المنتجات</h3>
+            </div>
+            <div class="company-card-content">
+                <table class="company-table">
+                    <thead>
+                        <tr>
+                            <th>اسم المنتج</th>
+                            <th>الكمية</th>
+                            <th>السعر الواحد</th>
+                            <th>الإجمالي</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var product in Model.OrderProducts)
+                        {
+                            <tr>
+                                <td>@product.Name</td>
+                                <td>@product.Qty</td>
+                                <td>@product.Price.ToString("C")</td>
+                                <td>@(product.Price * product.Qty).ToString("C")</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    }
+
+    <!-- Financial Details -->
+    <div class="company-card">
+        <div class="company-card-header">
+            <h3><i class="fa-solid fa-wallet"></i> التفاصيل المالية</h3>
+        </div>
+        <div class="company-card-content">
+            <div class="company-stats-grid" style="grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));">
+                <div class="company-stat-card">
+                    <span class="company-stat-number" style="color: #007bff;">@Model.FinancialDetails.TotalPrice.ToString("C")</span>
+                    <span class="company-stat-label">السعر الإجمالي</span>
+                </div>
+                <div class="company-stat-card">
+                    <span class="company-stat-number" style="color: #28a745;">@Model.FinancialDetails.PaymentStatus</span>
+                    <span class="company-stat-label">حالة الدفع</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Driver Assignment -->
+    <div class="company-card">
+        <div class="company-card-header">
+            <h3><i class="fa-solid fa-user-tie"></i> إسناد السائق</h3>
+        </div>
+        <div class="company-card-content">
+            <div class="company-form-grid">
+                <div class="company-form-group" style="grid-column: span 2;">
+                    <label class="company-form-label">السائق المسند حالياً</label>
+                    <div class="company-detail-value" style="padding: 12px; background-color: #f5f5f5; border-radius: 4px;">
+                        @if (Model.CurrentDriverId.HasValue && !string.IsNullOrEmpty(Model.CurrentDriverName))
+                        {
+                            <i class="fa-solid fa-user-check" style="color: #28a745;"></i>
+                            <span>@Model.CurrentDriverName</span>
+                        }
+                        else
+                        {
+                            <i class="fa-solid fa-user-slash" style="color: #dc3545;"></i>
+                            <span>لم يتم إسناد السائق بعد</span>
+                        }
+                    </div>
+                </div>
+            </div>
+
+            @if (Model.AvailableDrivers.Any())
+            {
+                <form asp-controller="Company" asp-action="AssignDriver" method="post" style="margin-top: 20px;">
+                    <div class="company-form-grid">
+                        <div class="company-form-group">
+                            <label for="driverId" class="company-form-label">اختر سائقاً جديداً</label>
+                            <select name="driverId" id="driverId" class="company-form-control" required>
+                                <option value="">-- اختر السائق --</option>
+                                @foreach (var driver in Model.AvailableDrivers)
+                                {
+                                    <option value="@driver.Id">@driver.Name</option>
+                                }
+                            </select>
+                        </div>
+                    </div>
+
+                    <input type="hidden" name="orderId" value="@Model.Id" />
+                    @Html.AntiForgeryToken()
+
+                    <div class="company-form-actions" style="margin-top: 15px;">
+                        <button type="submit" class="company-btn company-btn-primary">
+                            <i class="fa-solid fa-check"></i> إسناد السائق
+                        </button>
+                    </div>
+                </form>
+            }
+        </div>
+    </div>
+
+    <!-- Change Status -->
+    <div class="company-card">
+        <div class="company-card-header">
+            <h3><i class="fa-solid fa-timeline"></i> تغيير حالة الطلب</h3>
+        </div>
+        <div class="company-card-content">
+            <form asp-controller="Company" asp-action="ChangeOrderStatus" method="post">
+                <div class="company-form-grid">
+                    <div class="company-form-group">
+                        <label for="newStatus" class="company-form-label">الحالة الجديدة</label>
+                        <select name="newStatus" id="newStatus" class="company-form-control" required>
+                            <option value="">-- اختر الحالة --</option>
+                            <option value="@OrderStatus.Created">تم الإنشاء</option>
+                            <option value="@OrderStatus.PendingConfirmation">قيد الانتظار</option>
+                            <option value="@OrderStatus.Packed">معبأ</option>
+                            <option value="@OrderStatus.OutForDelivery">قيد التسليم</option>
+                            <option value="@OrderStatus.Delivered">تم التسليم</option>
+                            <option value="@OrderStatus.FailedDelivery">فشل التسليم</option>
+                            <option value="@OrderStatus.Returned">مرتجع</option>
+                            <option value="@OrderStatus.Cancelled">ملغى</option>
+                        </select>
+                    </div>
+                </div>
+
+                <input type="hidden" name="orderId" value="@Model.Id" />
+                @Html.AntiForgeryToken()
+
+                <div class="company-form-actions" style="margin-top: 15px;">
+                    <button type="submit" class="company-btn company-btn-primary">
+                        <i class="fa-solid fa-save"></i> تحديث الحالة
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Tracking History -->
+    @if (Model.TrackingHistory.Any())
+    {
+        <div class="company-card">
+            <div class="company-card-header">
+                <h3><i class="fa-solid fa-history"></i> السجل الزمني</h3>
+            </div>
+            <div class="company-card-content">
+                <div class="tracking-timeline">
+                    @foreach (var history in Model.TrackingHistory)
+                    {
+                        <div class="timeline-item">
+                            <div class="timeline-marker">
+                                <i class="fa-solid fa-circle"></i>
+                            </div>
+                            <div class="timeline-content">
+                                <h5>@GetStatusArabic(history.Status)</h5>
+                                <p class="timeline-location">@history.Location</p>
+                                <small class="timeline-time" dir="ltr">@history.Timestamp.ToString("yyyy-MM-dd HH:mm:ss")</small>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    }
+
+    <!-- Back Button -->
+    <div class="company-form-actions" style="margin-top: 20px;">
+        <a asp-controller="Company" asp-action="Orders" class="company-btn company-btn-secondary">
+            <i class="fa-solid fa-arrow-left"></i> العودة إلى الطلبات
+        </a>
+    </div>
+</div>
+
+<style>
+    .timeline-item {
+        display: flex;
+        margin-bottom: 30px;
+        position: relative;
+    }
+
+    .timeline-marker {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 40px;
+        height: 40px;
+        min-width: 40px;
+        background-color: #007bff;
+        border-radius: 50%;
+        margin-left: 20px;
+        color: white;
+        z-index: 2;
+    }
+
+    .timeline-item:first-child .timeline-marker {
+        background-color: #28a745;
+    }
+
+    .timeline-item:last-child .timeline-marker {
+        background-color: #ffc107;
+    }
+
+    .timeline-item:not(:last-child)::before {
+        content: '';
+        position: absolute;
+        right: 19px;
+        top: 50px;
+        height: 30px;
+        width: 2px;
+        background-color: #ddd;
+        z-index: 1;
+    }
+
+    .timeline-content {
+        padding: 15px;
+        background-color: #f8f9fa;
+        border-radius: 8px;
+        flex: 1;
+    }
+
+    .timeline-content h5 {
+        margin-bottom: 8px;
+        color: #333;
+        font-weight: 600;
+    }
+
+    .timeline-location {
+        color: #666;
+        margin-bottom: 5px;
+        font-size: 14px;
+    }
+
+    .timeline-time {
+        color: #999;
+        font-size: 12px;
+    }
+
+    .company-badge {
+        display: inline-block;
+        padding: 6px 12px;
+        border-radius: 20px;
+        font-size: 14px;
+        font-weight: 500;
+    }
+
+    .badge-created {
+        background-color: #e2e3e5;
+        color: #383d41;
+    }
+
+    .badge-pending {
+        background-color: #fff3cd;
+        color: #856404;
+    }
+
+    .badge-packed {
+        background-color: #cfe2ff;
+        color: #084298;
+    }
+
+    .badge-delivery {
+        background-color: #d1ecf1;
+        color: #0c5460;
+    }
+
+    .badge-delivered {
+        background-color: #d1e7dd;
+        color: #0f5132;
+    }
+
+    .badge-failed {
+        background-color: #f8d7da;
+        color: #842029;
+    }
+
+    .badge-returned {
+        background-color: #f5c2c7;
+        color: #842029;
+    }
+
+    .badge-cancelled {
+        background-color: #e2e3e5;
+        color: #383d41;
+    }
+
+    .company-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 10px;
+    }
+
+    .company-table thead {
+        background-color: #f8f9fa;
+    }
+
+    .company-table th,
+    .company-table td {
+        padding: 12px;
+        text-align: right;
+        border-bottom: 1px solid #ddd;
+    }
+
+    .company-table tbody tr:hover {
+        background-color: #f5f5f5;
+    }
+
+    .company-table th {
+        font-weight: 600;
+        color: #333;
+        border-bottom: 2px solid #dee2e6;
+    }
+</style>
+
+@functions {
+    private string GetStatusArabic(OrderStatus status)
+    {
+        return status switch
+        {
+            OrderStatus.Created => "تم الإنشاء",
+            OrderStatus.PendingConfirmation => "قيد الانتظار",
+            OrderStatus.Packed => "معبأ",
+            OrderStatus.OutForDelivery => "قيد التسليم",
+            OrderStatus.Delivered => "تم التسليم",
+            OrderStatus.FailedDelivery => "فشل التسليم",
+            OrderStatus.Returned => "مرتجع",
+            OrderStatus.Cancelled => "ملغى",
+            _ => "غير معروف"
+        };
+    }
+
+    private string GetStatusBadgeClass(OrderStatus status)
+    {
+        return status switch
+        {
+            OrderStatus.Created => "company-badge badge-created",
+            OrderStatus.PendingConfirmation => "company-badge badge-pending",
+            OrderStatus.Packed => "company-badge badge-packed",
+            OrderStatus.OutForDelivery => "company-badge badge-delivery",
+            OrderStatus.Delivered => "company-badge badge-delivered",
+            OrderStatus.FailedDelivery => "company-badge badge-failed",
+            OrderStatus.Returned => "company-badge badge-returned",
+            OrderStatus.Cancelled => "company-badge badge-cancelled",
+            _ => "company-badge"
+        };
+    }
+}

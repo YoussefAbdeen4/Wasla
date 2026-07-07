@@ -1,0 +1,89 @@
+@using Wasla.PR.ViewModels.RateCards
+@model RateCardDetailsViewModel
+
+<section class="company-content">
+
+    <div class="company-card">
+
+        <div class="company-delegate-profile">
+
+            <div class="company-delegate-info">
+
+                <div style="flex: 1;">
+                    <h2 class="company-delegate-name">@Model.OriginCity → @Model.DestinationCity</h2>
+                    <p class="company-muted">بطاقة سعرية</p>
+                </div>
+
+            </div>
+
+            <div class="company-profile-actions">
+                <a asp-controller="CompanyRateCard" asp-action="Edit" asp-route-id="@Model.Id" class="company-btn company-btn-primary"><i class="fa-solid fa-edit"></i> تعديل</a>
+                <form asp-controller="CompanyRateCard"
+                      asp-action="Delete"
+                      method="post"
+                      onsubmit="return confirm('هل أنت متأكد من حذف هذه البطاقة السعرية؟');">
+
+                    <input type="hidden" name="id" value="@Model.Id" />
+
+                    <button type="submit" class="company-btn company-btn-danger">
+                        <i class="fa-solid fa-trash"></i> حذف
+                    </button>
+
+                </form>
+            </div>
+
+        </div>
+
+        <div class="company-details-grid">
+
+            <div class="company-detail-card">
+                <span class="company-detail-label">مدينة الأصل</span>
+                <h4 class="company-detail-value">@Model.OriginCity</h4>
+            </div>
+
+            <div class="company-detail-card">
+                <span class="company-detail-label">مدينة الوجهة</span>
+                <h4 class="company-detail-value">@Model.DestinationCity</h4>
+            </div>
+
+            <div class="company-detail-card">
+                <span class="company-detail-label">الحد الأدنى للوزن</span>
+                <h4 class="company-detail-value">@Model.MinWeight كغ</h4>
+            </div>
+
+            <div class="company-detail-card">
+                <span class="company-detail-label">الحد الأقصى للوزن</span>
+                <h4 class="company-detail-value">@Model.MaxWeight كغ</h4>
+            </div>
+
+            <div class="company-detail-card">
+                <span class="company-detail-label">الرسوم الأساسية</span>
+                <h4 class="company-detail-value">@Model.BaseFee.ToString("C")</h4>
+            </div>
+
+            <div class="company-detail-card">
+                <span class="company-detail-label">سعر الكيلو الإضافي</span>
+                <h4 class="company-detail-value">@Model.ExtraKiloPrice.ToString("C")</h4>
+            </div>
+
+            <div class="company-detail-card">
+                <span class="company-detail-label">تاريخ البدء</span>
+                <h4 class="company-detail-value" dir="ltr">@Model.EffectiveDate.ToString("yyyy-MM-dd HH:mm")</h4>
+            </div>
+
+            <div class="company-detail-card">
+                <span class="company-detail-label">تاريخ الانتهاء</span>
+                <h4 class="company-detail-value" dir="ltr">@Model.ExpiryDate.ToString("yyyy-MM-dd HH:mm")</h4>
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="company-form-actions" style="justify-content: flex-start; gap: 10px;">
+        <a asp-controller="CompanyRateCard" asp-action="Index" class="company-btn company-btn-secondary">
+            <i class="fa-solid fa-arrow-left"></i> عودة
+        </a>
+    </div>
+
+</section>

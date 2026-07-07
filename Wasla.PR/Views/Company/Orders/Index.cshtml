@@ -1,66 +1,147 @@
-﻿
+﻿@model Wasla.PR.ViewModels.Company.AllOrdersViewModel
+
 @{
+    ViewData["Company_Title"] = "طلبات المندوب";
+    Layout = "~/Views/Shared/_CompanyLayout.cshtml";
 }
 
-
 <div class="company-content">
-    <!-- إحصائيات سريعة مع أيقونات -->
+
+    <!-- الإحصائيات -->
     <div class="company-stats-mini-grid">
+
         <div class="company-card company-stat-mini">
             <i class="fa-solid fa-chart-simple"></i>
-            <span data-i18n="all">الكل</span>
-            <b id="statAll">0</b>
+            <span>الكل</span>
+            <b>@Model.TotalOrders</b>
         </div>
+
         <div class="company-card company-stat-mini">
             <i class="fa-solid fa-clock"></i>
-            <span data-i18n="pending">قيد الانتظار</span>
-            <b id="statPending">0</b>
+            <span>قيد الانتظار</span>
+            <b>@Model.PendingOrders</b>
         </div>
+
         <div class="company-card company-stat-mini">
             <i class="fa-solid fa-truck"></i>
-            <span data-i18n="delivering">قيد التوصيل</span>
-            <b id="statDelivering">0</b>
+            <span>قيد التوصيل</span>
+            <b>@Model.OutForDeliveryOrders</b>
         </div>
+
         <div class="company-card company-stat-mini">
             <i class="fa-solid fa-circle-check"></i>
-            <span data-i18n="completed">مكتمل</span>
-            <b id="statCompleted">0</b>
+            <span>مكتمل</span>
+            <b>@Model.DeliveredOrders</b>
         </div>
+
         <div class="company-card company-stat-mini">
             <i class="fa-solid fa-rotate-left"></i>
-            <span data-i18n="returned">مرتجع</span>
-            <b id="statReturned">0</b>
+            <span>مرتجع</span>
+            <b>@Model.ReturnedOrders</b>
         </div>
+
         <div class="company-card company-stat-mini">
             <i class="fa-solid fa-hourglass-half"></i>
-            <span data-i18n="pending_approval">بانتظار الموافقة</span>
-            <b id="statPendingApproval">0</b>
+            <span>بانتظار الموافقة</span>
+            <b>@Model.WaitingApprovalOrders</b>
         </div>
+
     </div>
 
     <!-- جدول الطلبات -->
     <div class="company-card">
-        <div class="company-card-header">
 
-            <div class="company-table-container">
-                <table class="company-table" id="ordersTable">
-                    <thead>
-                        <tr>
-                            <th data-i18n="order_no">رقم الطلب</th>
-                            <th data-i18n="customer">العميل</th>
-                            <th data-i18n="delegate">المندوب</th>
-                            <th data-i18n="amount">المبلغ</th>
-                            <th data-i18n="status">الحالة</th>
-                            <th data-i18n="actions">الإجراءات</th>
-                        </tr>
-                    </thead>
-                    <tbody id="ordersTableBody">
-                        <tr>
-                            <td colspan="6" style="text-align:center;">جاري التحميل...<\ /td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
+        <div class="company-card-header">
+            <h3>طلبات المندوب</h3>
         </div>
+
+        <div class="company-table-container">
+
+            <table class="company-table">
+
+                <thead>
+                    <tr>
+                        <th>رقم الطلب</th>
+                        <th>العميل</th>
+                        <th>المندوب</th>
+                        <th>المبلغ</th>
+                        <th>الحالة</th>
+                        <th>الإجراءات</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+
+                    @if (Model.LatestOrders.Any())
+                    {
+                        @foreach (var order in Model.LatestOrders)
+                        {
+                            <tr>
+
+                                <td>@order.OrderNumber</td>
+
+                                <td>@order.CustomerName</td>
+
+                                <td>@order.DriverName</td>
+
+                                <td>@order.Amount.ToString("0.##") ج.م</td>
+
+                                <td>
+                                    @switch (order.Status)
+                                    {
+                                        case Wasla.Enums.OrderStatus.PendingConfirmation:
+                                            <span class="company-badge company-badge-warning">بانتظار الموافقة</span>
+                                            break;
+
+                                        case Wasla.Enums.OrderStatus.ReadyForPickup:
+                                        case Wasla.Enums.OrderStatus.PickedUp:
+                                        case Wasla.Enums.OrderStatus.InTransit:
+                                        case Wasla.Enums.OrderStatus.OutForDelivery:
+                                            <span class="company-badge company-badge-primary">قيد التوصيل</span>
+                                            break;
+
+                                        case Wasla.Enums.OrderStatus.Delivered:
+                                            <span class="company-badge company-badge-success">مكتمل</span>
+                                            break;
+
+                                        case Wasla.Enums.OrderStatus.Returned:
+                                            <span class="company-badge company-badge-danger">مرتجع</span>
+                                            break;
+
+                                        default:
+                                            <span class="company-badge">@order.Status</span>
+                                            break;
+                                    }
+                                </td>
+
+                                <td>
+                                    <a asp-action="OrderDetails"
+                                       asp-controller="Company"
+                                       asp-route-id="@order.Id"
+                                       class="company-btn company-btn-primary">
+                                        <i class="fa-solid fa-eye"></i>
+                                        عرض
+                                    </a>
+                                </td>
+
+                            </tr>
+                        }
+                    }
+                    else
+                    {
+                        <tr>
+                            <td colspan="6" class="text-center">
+                                لا توجد طلبات لهذا المندوب
+                            </td>
+                        </tr>
+                    }
+
+                </tbody>
+
+            </table>
+
+        </div>
+
     </div>
+
+</div>

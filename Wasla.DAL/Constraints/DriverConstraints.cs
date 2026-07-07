@@ -9,8 +9,7 @@ namespace Wasla.Constraints
         public void Configure(EntityTypeBuilder<Driver> builder)
         {
             builder.Property(d => d.Name).IsRequired().HasMaxLength(100);
-            builder.Property(d => d.Email).IsRequired().HasMaxLength(100);
-            builder.Property(d => d.Password).IsRequired().HasMaxLength(100);
+           
         }
     }
 }

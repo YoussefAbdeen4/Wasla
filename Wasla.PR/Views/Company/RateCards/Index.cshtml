@@ -1,0 +1,82 @@
+@using Wasla.PR.ViewModels.RateCards
+@model List<RateCardListViewModel>
+
+<div class="company-content">
+    <div class="company-top-bar">
+        <div class="company-search-box">
+            <input type="text" id="searchRateCardInput" placeholder="ابحث عن بطاقة سعرية...">
+            <button><i class="fa-solid fa-magnifying-glass"></i></button>
+        </div>
+        <a asp-controller="CompanyRateCard" asp-action="Create" class="company-btn company-btn-primary"><i class="fa-solid fa-plus"></i> <span>إضافة بطاقة سعرية</span></a>
+    </div>
+
+    @if (!Model.Any())
+    {
+        <div class="company-card">
+            <p style="text-align: center; color: #999;">لا توجد بطاقات سعرية</p>
+        </div>
+    }
+    else
+    {
+        <div class="company-card">
+            <div class="company-table-wrapper">
+                <table class="company-table">
+                    <thead>
+                        <tr>
+                            <th>مدينة الأصل</th>
+                            <th>مدينة الوجهة</th>
+                            <th>الحد الأدنى للوزن (كغ)</th>
+                            <th>الحد الأقصى للوزن (كغ)</th>
+                            <th>الرسوم الأساسية</th>
+                            <th>سعر الكيلو الإضافي</th>
+                            <th>تاريخ البدء</th>
+                            <th>تاريخ الانتهاء</th>
+                            <th>الإجراءات</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var card in Model)
+                        {
+                            <tr>
+                                <td>@card.OriginCity</td>
+                                <td>@card.DestinationCity</td>
+                                <td>@card.MinWeight</td>
+                                <td>@card.MaxWeight</td>
+                                <td>@card.BaseFee.ToString("C")</td>
+                                <td>@card.ExtraKiloPrice.ToString("C")</td>
+                                <td>@card.EffectiveDate.ToString("yyyy-MM-dd")</td>
+                                <td>@card.ExpiryDate.ToString("yyyy-MM-dd")</td>
+                                <td style="display: flex; gap: 5px;">
+                                    <a asp-controller="CompanyRateCard" asp-action="Details" asp-route-id="@card.Id" class="company-btn company-btn-sm" style="background-color: #17a2b8;">
+                                        <i class="fa-solid fa-eye"></i>
+                                    </a>
+                                    <a asp-controller="CompanyRateCard" asp-action="Edit" asp-route-id="@card.Id" class="company-btn company-btn-sm" style="background-color: #ffc107;">
+                                        <i class="fa-solid fa-edit"></i>
+                                    </a>
+                                    <form asp-controller="CompanyRateCard" asp-action="Delete" asp-route-id="@card.Id" method="post" style="display: inline;" onsubmit="return confirm('هل أنت متأكد من حذف هذه البطاقة السعرية؟');">
+                                        @Html.AntiForgeryToken()
+                                        <button type="submit" class="company-btn company-btn-sm" style="background-color: #dc3545;">
+                                            <i class="fa-solid fa-trash"></i>
+                                        </button>
+                                    </form>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    }
+</div>
+
+<script>
+    document.getElementById('searchRateCardInput').addEventListener('keyup', function (e) {
+        const searchTerm = e.target.value.toLowerCase();
+        const rows = document.querySelectorAll('.company-table tbody tr');
+
+        rows.forEach(row => {
+            const text = row.textContent.toLowerCase();
+            row.style.display = text.includes(searchTerm) ? '' : 'none';
+        });
+    });
+</script>

@@ -1,0 +1,96 @@
+@using Wasla.PR.ViewModels.RateCards
+@using Wasla.Enums
+@model CreateRateCardViewModel
+
+@{
+    var cities = Enum.GetValues(typeof(EgyptCity)).Cast<EgyptCity>().ToList();
+}
+
+<div class="company-content">
+    <div class="company-section-title">
+        <h2><i class="fa-solid fa-plus"></i> إضافة بطاقة سعرية جديدة</h2>
+    </div>
+
+    <div class="company-form-card">
+        <form asp-controller="CompanyRateCard" asp-action="Create" method="post">
+            <div asp-validation-summary="ModelOnly" class="alert alert-danger"></div>
+
+            <div class="company-form-grid">
+                <div class="company-form-group">
+                    <label asp-for="OriginCity" class="company-form-label"></label>
+                    <select asp-for="OriginCity" class="company-form-control">
+                        <option value="">-- اختر مدينة الأصل --</option>
+                        @foreach (var city in cities)
+                        {
+                            <option value="@city">@city</option>
+                        }
+                    </select>
+                    <span asp-validation-for="OriginCity" class="text-danger"></span>
+                </div>
+
+                <div class="company-form-group">
+                    <label asp-for="DestinationCity" class="company-form-label"></label>
+                    <select asp-for="DestinationCity" class="company-form-control">
+                        <option value="">-- اختر مدينة الوجهة --</option>
+                        @foreach (var city in cities)
+                        {
+                            <option value="@city">@city</option>
+                        }
+                    </select>
+                    <span asp-validation-for="DestinationCity" class="text-danger"></span>
+                </div>
+
+                <div class="company-form-group">
+                    <label asp-for="MinWeight" class="company-form-label"></label>
+                    <input asp-for="MinWeight" type="number" step="0.1" class="company-form-control" placeholder="مثال: 1.0" />
+                    <span asp-validation-for="MinWeight" class="text-danger"></span>
+                </div>
+
+                <div class="company-form-group">
+                    <label asp-for="MaxWeight" class="company-form-label"></label>
+                    <input asp-for="MaxWeight" type="number" step="0.1" class="company-form-control" placeholder="مثال: 50.0" />
+                    <span asp-validation-for="MaxWeight" class="text-danger"></span>
+                </div>
+
+                <div class="company-form-group">
+                    <label asp-for="BaseFee" class="company-form-label"></label>
+                    <input asp-for="BaseFee" type="number" step="0.01" class="company-form-control" placeholder="مثال: 50.00" />
+                    <span asp-validation-for="BaseFee" class="text-danger"></span>
+                </div>
+
+                <div class="company-form-group">
+                    <label asp-for="ExtraKiloPrice" class="company-form-label"></label>
+                    <input asp-for="ExtraKiloPrice" type="number" step="0.01" class="company-form-control" placeholder="مثال: 5.00" />
+                    <span asp-validation-for="ExtraKiloPrice" class="text-danger"></span>
+                </div>
+
+                <div class="company-form-group">
+                    <label asp-for="EffectiveDate" class="company-form-label"></label>
+                    <input asp-for="EffectiveDate" type="datetime-local" class="company-form-control" />
+                    <span asp-validation-for="EffectiveDate" class="text-danger"></span>
+                </div>
+
+                <div class="company-form-group">
+                    <label asp-for="ExpiryDate" class="company-form-label"></label>
+                    <input asp-for="ExpiryDate" type="datetime-local" class="company-form-control" />
+                    <span asp-validation-for="ExpiryDate" class="text-danger"></span>
+                </div>
+            </div>
+
+            <div class="company-form-actions">
+                <button type="submit" class="company-btn company-btn-primary">
+                    <i class="fa-solid fa-save"></i> إضافة البطاقة
+                </button>
+                <a asp-controller="CompanyRateCard" asp-action="Index" class="company-btn company-btn-secondary">
+                    <i class="fa-solid fa-times"></i> إلغاء
+                </a>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

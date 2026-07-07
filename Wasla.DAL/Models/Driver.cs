@@ -1,4 +1,5 @@
 ﻿
+using Wasla.DAL.Identity;
 
 namespace Wasla.Models
 {
@@ -6,9 +7,9 @@ namespace Wasla.Models
     {
         public int Id { get; set; }
         public string Name { get; set; }
-        public string Email { get; set; }
-        public string Password { get; set; }
         public decimal TotalCashSubmitted { get; set; }
+        public string UserId { get; set; }
+        public ApplicationUser User { get; set; }
 
         //public List<string> Phone { get; set; }
         public List<DriverPhones> Phones { get; set; }

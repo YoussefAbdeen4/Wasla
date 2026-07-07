@@ -1,0 +1,66 @@
+﻿@model List<AgentListItemViewModel>
+@{
+}
+
+<div class="company-content">
+    <div class="company-top-bar">
+        <div class="company-search-box">
+            <input type="text" id="searchDelegateInput" data-i18n-placeholder="search_delegates" placeholder="ابحث عن مندوب...">
+            <button><i class="fa-solid fa-magnifying-glass"></i></button>
+        </div>
+        <a asp-controller="CompanyAgent" asp-action="Create" class="company-btn company-btn-primary"><i class="fa-solid fa-plus"></i> <span data-i18n="add_delegate">إضافة مندوب</span></a>
+    </div>
+
+
+<div class="company-delegates-grid">
+
+@if (!Model.Any())
+{
+    <div class="company-card">لا يوجد مناديب</div>
+}
+
+@foreach (var d in Model)
+{
+    <div class="company-delegate-card">
+
+        <div class="company-delegate-header">
+
+            <img class="company-avatar"
+                 src="@(d.Avatar ?? $"https://ui-avatars.com/api/?name={d.Name}")" />
+
+            <div>
+                <h3>@d.Name</h3>
+                <span class="company-muted">@d.Phone</span>
+            </div>
+
+            <span class="company-badge @(d.Status == "active" ? "company-badge-success" : "company-badge-danger")">
+                @(d.Status == "active" ? "نشط" : "غير نشط")
+            </span>
+
+        </div>
+
+        <div class="company-delegate-info">
+            <div>
+                <span><i class="fa-solid fa-box"></i> عدد الطلبات</span>
+                <h4>@d.OrdersCount</h4>
+            </div>
+        </div>
+
+        <div class="company-delegate-actions">
+
+            <a class="company-btn company-btn-primary" asp-controller="CompanyAgent" asp-action="Details" asp-route-id="@d.Id">
+                تفاصيل
+            </a>
+
+            <button class="company-btn company-btn-primary"
+                    data-id="@d.Id">
+                إسناد طلب
+            </button>
+
+        </div>
+
+    </div>
+}
+
+</div>
+

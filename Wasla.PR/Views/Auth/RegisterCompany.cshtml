@@ -1,10 +1,10 @@
 ﻿@{
     ViewData["Auth_Title"] = "Complete Register Company";
 }
-
+@model RegisteCompanyViewModel
 <div class="container wide">
     <div class="header-top">
-        <a href="../index.html" class="logo-icon" style="text-decoration: none;">
+        <a asp-controller="Home" asp-action="Index" class="logo-icon" style="text-decoration: none;">
             <i class="fa-solid fa-truck-moving"></i>
         </a>
         <h1 class="app-title" data-i18n="complete_company_profile">Complete Your Company Profile</h1>
@@ -12,12 +12,17 @@
     </div>
 
     <div class="card">
-        <form id="signup-company-form">
+        <form id="signup-company-form" method="post" asp-action="RegisterCompany">
+            <input asp-for="Name" type="hidden" />
+            <input asp-for="Email" type="hidden" />
+            <input asp-for="Phone" type="hidden" />
+            <input asp-for="Password" type="hidden" />
+            <input asp-for="ConfirmPassword" type="hidden" />
             <div class="form-group">
                 <label class="form-label" data-i18n="company_name">Company Name <span class="required">*</span></label>
                 <div class="input-wrapper">
                     <div class="input-icon"><i class="fa-regular fa-building"></i></div>
-                    <input type="text" name="companyName" class="form-control has-icon" data-i18n="enter_company_name" required>
+                    <input type="text" asp-for="CompanyName" class="form-control has-icon" data-i18n="enter_company_name" required>
                 </div>
             </div>
 
@@ -25,23 +30,7 @@
                 <label class="form-label" data-i18n="tax_reg_number">Tax Registration Number <span class="required">*</span></label>
                 <div class="input-wrapper">
                     <div class="input-icon"><i class="fa-solid fa-file-invoice"></i></div>
-                    <input type="text" name="taxNumber" class="form-control has-icon" data-i18n="enter_tax_reg" required>
-                </div>
-            </div>
-
-            <div class="form-group">
-                <label class="form-label">License Number <span class="required">*</span></label>
-                <div class="input-wrapper">
-                    <div class="input-icon"><i class="fa-solid fa-id-card"></i></div>
-                    <input type="text" name="licenseNumber" class="form-control has-icon" required>
-                </div>
-            </div>
-
-            <div class="form-group">
-                <label class="form-label">Website <span style="font-weight:normal;color:var(--text-muted);font-size:0.7rem;" data-i18n="optional_recommended">(Optional)</span></label>
-                <div class="input-wrapper">
-                    <div class="input-icon"><i class="fa-solid fa-globe"></i></div>
-                    <input type="url" name="website" class="form-control has-icon" placeholder="https://example.com">
+                    <input type="text" asp-for="TaxNumber" class="form-control has-icon" data-i18n="enter_tax_reg" required>
                 </div>
             </div>
 

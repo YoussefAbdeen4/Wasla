@@ -1,4 +1,5 @@
-﻿@model Wasla.PR.ViewModels.MerchantDashboardViewModel
+
+
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
@@ -189,6 +190,7 @@
                                     <th data-i18n="col_date">Date</th>
                                 </tr>
                             </thead>
+
 <tbody>
    @foreach (var order in Model.RecentOrders ?? new List<Order>())
 {
@@ -202,6 +204,19 @@
 }
 </tbody>
 
+<tbody>
+    @foreach (var order in Model.RecentOrders)
+    {
+        <tr>
+            <td><strong>#@order.Id</strong></td>
+            <td>@order.CustomerName</td>
+            <td>@order.Amount E.G</td>
+            <td><span class="merchant-badge merchant-badge-success">@order.Status</span></td>
+            <td>@order.Date.ToString("yyyy/MM/dd")</td>
+        </tr>
+    }
+</tbody>
+
                         </table>
                     </div>
                 </div>
@@ -212,4 +227,4 @@
   
     <script src="js/merchant.js"></script>
 </body>
-</html>
+</html>  
