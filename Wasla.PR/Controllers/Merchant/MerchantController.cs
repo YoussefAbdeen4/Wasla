@@ -60,7 +60,7 @@ namespace Wasla.Controllers
                 CreatedAt    = o.CreatedAt
             }).ToList();
 
-            return View(list);
+            return View("~/Views/Merchant/Orders/Index.cshtml", list);
         }
 
         // ==================== Add Order ====================
@@ -155,7 +155,7 @@ namespace Wasla.Controllers
                     : 0m
             };
 
-            return View(vm);
+            return View("~/Views/Merchant/Wallet/Index.cshtml", vm);
         }
 
         // ==================== Profile ====================
@@ -175,7 +175,7 @@ namespace Wasla.Controllers
                 Category  = merchant.Category
             };
 
-            return View(vm);
+            return View("~/Views/Merchant/Profile/Index.cshtml", vm);
         }
 
         [HttpPost]
@@ -183,7 +183,7 @@ namespace Wasla.Controllers
         public async Task<IActionResult> Profile(PR.ViewModels.Merchant.MerchantProfileViewModel model)
         {
             if (!ModelState.IsValid)
-                return View(model);
+                return View("~/Views/Merchant/Profile/Index.cshtml", model);
 
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
 
@@ -204,13 +204,13 @@ namespace Wasla.Controllers
         // ==================== Settings ====================
         public IActionResult Settings()
         {
-            return View();
+            return View("~/Views/Merchant/Settings/Index.cshtml");
         }
 
         // ==================== Notifications ====================
         public IActionResult Notifications()
         {
-            return View();
+            return View("~/Views/Merchant/Notifications/Index.cshtml");
         }
     }
 }

@@ -6,11 +6,14 @@ namespace Wasla.PR.ViewModels.Merchant
 {
     public class AddOrderViewModel
     {
-        [Required]
+        [Required(ErrorMessage = "اسم العميل مطلوب")]
+        [MaxLength(100, ErrorMessage = "الاسم يجب ألا يتجاوز 100 حرف")]
         public string CustomerName { get; set; }
 
-        [Required]
-        [Phone]
+        [Required(ErrorMessage = "رقم الهاتف مطلوب")]
+        [Phone(ErrorMessage = "رقم الهاتف غير صحيح")]
+        [StringLength(11, MinimumLength = 11, ErrorMessage = "رقم الهاتف يجب أن يتكون من 11 رقماً")]
+        [RegularExpression(@"^01[0-9]{9}$", ErrorMessage = "يجب أن يبدأ رقم الهاتف بـ 01")]
         public string CustomerPhone { get; set; }
 
         [Required]

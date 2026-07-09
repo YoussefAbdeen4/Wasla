@@ -1,4 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Wasla.Models;
 
@@ -13,7 +13,7 @@ namespace Wasla.Constraints
             builder.Property(o => o.CustomerPhone).IsRequired().HasMaxLength(100);
             builder.Property(o => o.TrackingUuid).IsRequired().HasMaxLength(100);
             builder.Property(o => o.CustomerAddress).IsRequired();
-            builder.Property(o => o.CityFrom).IsRequired();
+            builder.Property(o => o.CityFrom).IsRequired(false);
             builder.Property(o => o.CityTo).IsRequired();
             builder.Property(o => o.isClaimingRequired).IsRequired();
             builder.Property(o => o.isBreakable).IsRequired();
