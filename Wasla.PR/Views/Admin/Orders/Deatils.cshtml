@@ -1,0 +1,44 @@
+﻿@model Wasla.PR.ViewModels.Admin.AdminOrderDetailsViewModel
+@{
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    ViewData["Title"] = "Order Details";
+}
+
+<div class="admin-page-header">
+    <h1 class="admin-page-title">Order #@Model.Id</h1>
+    <a href="@Url.Action("Orders")" class="admin-btn admin-btn-outline">Back to Orders</a>
+</div>
+
+<div class="admin-card">
+    <h3 class="admin-card-title">Order Information</h3>
+    <table class="admin-table">
+        <tbody>
+            <tr><td><strong>Customer Name</strong></td><td>@Model.CustomerName</td></tr>
+            <tr><td><strong>Customer Phone</strong></td><td>@Model.CustomerPhone</td></tr>
+            <tr><td><strong>Customer Address</strong></td><td>@Model.CustomerAddress</td></tr>
+            <tr><td><strong>Merchant</strong></td><td>@Model.MerchantStoreName</td></tr>
+            <tr><td><strong>Shipping Company</strong></td><td>@Model.CompanyName</td></tr>
+            <tr><td><strong>Driver</strong></td><td>@Model.DriverName</td></tr>
+            <tr><td><strong>Total Price</strong></td><td>@Model.TotalPrice.ToString("N2")</td></tr>
+            <tr><td><strong>Payment Type</strong></td><td>@Model.PaymentType</td></tr>
+            <tr><td><strong>Created At</strong></td><td>@Model.CreatedAt.ToString("dd/MM/yyyy HH:mm")</td></tr>
+            <tr>
+                <td><strong>Delivered At</strong></td>
+                <td>@(Model.DeliveredAt.HasValue ? Model.DeliveredAt.Value.ToString("dd/MM/yyyy HH:mm") : "-")</td>
+            </tr>
+            <tr>
+                <td><strong>Status</strong></td>
+                <td><span class="admin-badge admin-badge-primary">@Model.Status</span></td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<div class="admin-stats-grid">
+    <div class="admin-stat-card">
+        <div class="admin-stat-info">
+            <div class="admin-stat-label">Products</div>
+            <div class="admin-stat-value">@Model.ProductsCount</div>
+        </div>
+    </div>
+</div>

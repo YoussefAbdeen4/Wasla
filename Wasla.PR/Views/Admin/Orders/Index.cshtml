@@ -1,5 +1,50 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
+﻿@model Wasla.PR.ViewModels.Admin.AdminOrdersListViewModel
 @{
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    ViewData["Title"] = "Orders Management";
 }
+
+<div class="admin-page-header">
+    <h1 class="admin-page-title">Orders Management</h1>
+</div>
+
+<div class="admin-card">
+    <div class="admin-table-container">
+        <table class="admin-table">
+            <thead>
+                <tr>
+                    <th>Order ID</th>
+                    <th>Customer</th>
+                    <th>Date</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var order in Model.Orders)
+                {
+                    <tr>
+                        <td><strong>#@order.Id</strong></td>
+                        <td>@order.CustomerName</td>
+                        <td>@order.CreatedAt.ToString("dd/MM/yyyy")</td>
+                        <td>
+                            @{
+                                var badgeClass = order.Status switch
+                                {
+                                    "Delivered" => "admin-badge-success",
+                                    "Cancelled" or "FailedDelivery" or "Returned" => "admin-badge-danger",
+                                    "OutForDelivery" or "Packed" => "admin-badge-primary",
+                                    _ => "admin-badge-warning"
+                                };
+                            }
+                            <span class="admin-badge @badgeClass">@order.Status</span>
+                        </td>
+                        <td>
+                            <a href="@Url.Action("OrderDetails", new { id = order.Id })" class="admin-btn admin-btn-outline">Details</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Wasla.BLL.Services;
+using Wasla.BLL.Services.Admin;
 using Wasla.DAL.Identity;
 
 namespace Wasla.PR
@@ -31,6 +32,12 @@ namespace Wasla.PR
             builder.Services.AddScoped<CompanyService>();
             builder.Services.AddScoped<CompanyFinancialsService>();
             builder.Services.AddScoped<CompanyDashboardService>();
+            builder.Services.AddScoped<AdminDashboardService>();
+            builder.Services.AddScoped<AdminOrdersService>();
+            builder.Services.AddScoped<AdminMerchantsService>();
+            builder.Services.AddScoped<AdminDriversService>();
+
+
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.

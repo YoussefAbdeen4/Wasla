@@ -10,3 +10,4 @@ obj/
 wwwroot/uploads/
 
 appsettings.Development.json
+/Wasla.PR/appsettings.json
