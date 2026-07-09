@@ -1,5 +1,26 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
 @{
+    ViewData["Title"] = "Notifications";
+}
+
+<div class="merchant-page-header">
+    <div>
+        <h1 class="merchant-page-title" data-i18n="notifications">الإشعارات</h1>
+        <p class="merchant-page-desc">متابعة أحدث التنبيهات الخاصة بمتجرك.</p>
+    </div>
+    <button id="mark-all-read" class="merchant-btn merchant-btn-secondary" data-i18n="mark_all_read">
+        <i class="fas fa-check-double"></i> تحديد الكل كمقروء
+    </button>
+</div>
+
+<div class="merchant-card" style="padding:0;">
+    <div id="notifications-container">
+        <div style="padding:3rem; text-align:center; color:var(--merchant-text-secondary);">
+            <i class="fas fa-bell-slash" style="font-size:2.5rem; display:block; margin-bottom:1rem;"></i>
+            <p style="margin:0; font-size:1rem;">لا توجد إشعارات جديدة</p>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="~/js/merchant.js"></script>
 }

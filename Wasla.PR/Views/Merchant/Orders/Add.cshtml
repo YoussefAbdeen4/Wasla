@@ -1,5 +1,121 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
+@model Wasla.PR.ViewModels.Merchant.AddOrderViewModel
+@using Wasla.Enums
 @{
+    ViewData["Title"] = "Add Order";
+}
+
+<div class="merchant-page-header">
+    <div>
+        <h1 class="merchant-page-title" data-i18n="nav_add_order">إنشاء شحنة جديدة</h1>
+        <p class="merchant-page-desc">أدخل بيانات العميل ومعلومات الطرد أدناه.</p>
+    </div>
+    <a asp-controller="Merchant" asp-action="Orders"
+       class="merchant-btn merchant-btn-secondary">
+        <i class="fas fa-arrow-right"></i>
+        <span data-i18n="back">رجوع للطلبات</span>
+    </a>
+</div>
+
+<div class="merchant-card" style="max-width:800px;">
+
+    @* Validation summary *@
+    @if (!ViewData.ModelState.IsValid)
+    {
+        <div style="padding:1rem; margin-bottom:1rem; background:#fee2e2; border-radius:8px; color:#991b1b; border:1px solid #fca5a5;">
+            <i class="fas fa-exclamation-triangle"></i>
+            <asp-validation-summary asp-validation-group="" model-only="true" />
+        </div>
+    }
+
+    <form asp-controller="Merchant" asp-action="AddOrder" method="post">
+        @Html.AntiForgeryToken()
+
+        @* Customer Info *@
+        <div style="margin-bottom:2rem;">
+            <h3 class="merchant-card-title" style="font-size:1.1rem; margin-bottom:1rem;">
+                <i class="fas fa-user"></i> بيانات العميل
+            </h3>
+            <div style="display:grid; grid-template-columns:1fr 1fr; gap:1rem;">
+                <div class="merchant-form-group">
+                    <label class="merchant-form-label" asp-for="CustomerName">اسم العميل</label>
+                    <input asp-for="CustomerName" class="merchant-form-control" />
+                    <span asp-validation-for="CustomerName" style="color:#ef4444; font-size:0.8rem;"></span>
+                </div>
+                <div class="merchant-form-group">
+                    <label class="merchant-form-label" asp-for="CustomerPhone">رقم الهاتف</label>
+                    <input asp-for="CustomerPhone" class="merchant-form-control" dir="ltr" />
+                    <span asp-validation-for="CustomerPhone" style="color:#ef4444; font-size:0.8rem;"></span>
+                </div>
+            </div>
+            <div class="merchant-form-group">
+                <label class="merchant-form-label" asp-for="CustomerAddress">العنوان</label>
+                <input asp-for="CustomerAddress" class="merchant-form-control" />
+                <span asp-validation-for="CustomerAddress" style="color:#ef4444; font-size:0.8rem;"></span>
+            </div>
+            <div style="display:grid; grid-template-columns:1fr 1fr; gap:1rem;">
+                <div class="merchant-form-group">
+                    <label class="merchant-form-label" asp-for="CityTo">مدينة التوصيل</label>
+                    <select asp-for="CityTo" class="merchant-form-control"
+                            asp-items="Html.GetEnumSelectList<EgyptCity>()">
+                        <option value="">-- اختر المدينة --</option>
+                    </select>
+                    <span asp-validation-for="CityTo" style="color:#ef4444; font-size:0.8rem;"></span>
+                </div>
+                <div class="merchant-form-group">
+                    <label class="merchant-form-label" asp-for="CityFrom">مدينة الإرسال (اختياري)</label>
+                    <select asp-for="CityFrom" class="merchant-form-control"
+                            asp-items="Html.GetEnumSelectList<EgyptCity>()">
+                        <option value="">-- اختر المدينة --</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        @* Package Info *@
+        <div style="margin-bottom:2rem; padding-top:1.5rem; border-top:1px solid var(--merchant-border);">
+            <h3 class="merchant-card-title" style="font-size:1.1rem; margin-bottom:1rem;">
+                <i class="fas fa-box"></i> معلومات الطرد
+            </h3>
+            <div style="display:grid; grid-template-columns:1fr 1fr; gap:1rem;">
+                <div class="merchant-form-group">
+                    <label class="merchant-form-label" asp-for="TotalPrice">المبلغ الإجمالي (COD)</label>
+                    <input asp-for="TotalPrice" type="number" step="0.01" class="merchant-form-control" placeholder="E.G" />
+                    <span asp-validation-for="TotalPrice" style="color:#ef4444; font-size:0.8rem;"></span>
+                </div>
+                <div class="merchant-form-group">
+                    <label class="merchant-form-label" asp-for="PaymentType">طريقة الدفع</label>
+                    <select asp-for="PaymentType" class="merchant-form-control"
+                            asp-items="Html.GetEnumSelectList<PaymentType>()">
+                    </select>
+                </div>
+            </div>
+            <div style="display:flex; gap:2rem; margin-top:1rem;">
+                <label style="display:flex; align-items:center; gap:0.5rem; cursor:pointer;">
+                    <input asp-for="IsBreakable" type="checkbox" style="width:18px; height:18px; accent-color:var(--primary);" />
+                    <span><i class="fas fa-fragile"></i> قابل للكسر</span>
+                </label>
+                <label style="display:flex; align-items:center; gap:0.5rem; cursor:pointer;">
+                    <input asp-for="IsClaimingRequired" type="checkbox" style="width:18px; height:18px; accent-color:var(--primary);" />
+                    <span><i class="fas fa-shield-alt"></i> يتطلب مطالبة</span>
+                </label>
+            </div>
+        </div>
+
+        @* Buttons *@
+        <div style="display:flex; justify-content:flex-end; gap:1rem;">
+            <a asp-controller="Merchant" asp-action="Orders"
+               class="merchant-btn merchant-btn-secondary">
+                <span data-i18n="cancel">إلغاء</span>
+            </a>
+            <button type="submit" class="merchant-btn merchant-btn-primary">
+                <i class="fas fa-save"></i>
+                <span data-i18n="btn_save">إنشاء الطلب</span>
+            </button>
+        </div>
+    </form>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+    <script src="~/js/merchant.js"></script>
 }

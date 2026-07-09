@@ -1,5 +1,52 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
+@model List<Wasla.PR.ViewModels.Merchant.OrderPreviewViewModel>
 @{
+    ViewData["Title"] = "Orders";
+}
+
+<div class="merchant-page-header">
+    <div>
+        <h1 class="merchant-page-title" data-i18n="nav_orders">All Orders</h1>
+        <p class="merchant-page-desc" data-i18n="orders_desc">View and manage your recent and past shipments.</p>
+    </div>
+    <div style="display:flex; gap:1rem;">
+        <input type="text" class="merchant-form-control" placeholder="Search orders..." style="width:250px;" />
+        <a asp-controller="Merchant" asp-action="AddOrder" class="merchant-btn merchant-btn-primary">
+            <i class="fas fa-plus"></i>
+            <span data-i18n="nav_add_order">New Order</span>
+        </a>
+    </div>
+</div>
+
+<div class="merchant-card">
+    <div class="merchant-table-container">
+        <table class="merchant-table" id="orders-table">
+            <thead>
+                <tr>
+                    <th data-i18n="col_order_id">Order ID</th>
+                    <th data-i18n="col_customer">Customer</th>
+                    <th data-i18n="col_amount">Amount</th>
+                    <th data-i18n="col_status">Status</th>
+                    <th data-i18n="col_date">Date</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach(var o in Model ?? new List<Wasla.PR.ViewModels.Merchant.OrderPreviewViewModel>())
+                {
+                    <tr>
+                        <td>#@o.Id</td>
+                        <td>@o.CustomerName</td>
+                        <td>@o.TotalPrice.ToString("N2")</td>
+                        <td>@o.Status</td>
+                        <td>@o.CreatedAt.ToString("yyyy/MM/dd")</td>
+                        <td><a asp-controller="Merchant" asp-action="Details" asp-route-id="@o.Id">Details</a></td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="~/js/merchant.js"></script>
 }

@@ -1,7 +1,71 @@
-﻿@{
+@{
     ViewData["Title"] = "Settings";
 }
 
-<h2>Settings</h2>
+<div class="merchant-page-header">
+    <div>
+        <h1 class="merchant-page-title" data-i18n="nav_settings">الإعدادات</h1>
+        <p class="merchant-page-desc">إدارة مفاتيح API والإشعارات.</p>
+    </div>
+</div>
 
-<p>Merchant settings page. Not implemented yet.</p>
+<div class="merchant-card" style="max-width:800px;">
+    <h3 class="merchant-card-title" style="margin-bottom:1.5rem;">
+        <i class="fas fa-plug"></i> API والتكاملات
+    </h3>
+
+    <div class="merchant-form-group">
+        <label class="merchant-form-label">
+            <i class="fas fa-key"></i> مفتاح API
+        </label>
+        <div style="display:flex; gap:0.5rem;">
+            <input type="password" id="api-key-input" class="merchant-form-control"
+                   value="wasla_live_1234567890abcdef" disabled dir="ltr" />
+            <button id="copy-api-key" class="merchant-btn merchant-btn-secondary">
+                <i class="fas fa-copy"></i> نسخ
+            </button>
+        </div>
+    </div>
+
+    <div class="merchant-form-group" style="margin-top:1.5rem;">
+        <label class="merchant-form-label">
+            <i class="fas fa-globe"></i> رابط Webhook
+        </label>
+        <input type="url" id="webhook-url" class="merchant-form-control"
+               placeholder="https://yourstore.com/webhook" dir="ltr" />
+        <p style="margin:0.5rem 0 0; font-size:0.8rem; color:var(--merchant-text-secondary);">
+            احصل على تحديثات تلقائية لحالات الطلبات.
+        </p>
+    </div>
+
+    <h3 class="merchant-card-title"
+        style="margin-top:2.5rem; margin-bottom:1.5rem; padding-top:2rem; border-top:1px solid var(--merchant-border);">
+        <i class="fas fa-bell"></i> إعدادات الإشعارات
+    </h3>
+
+    <label style="display:flex; align-items:center; gap:1rem; margin-bottom:1rem; cursor:pointer;">
+        <input type="checkbox" id="email-notifications" checked
+               style="width:18px; height:18px; accent-color:var(--primary);" />
+        <span style="font-weight:500;">
+            <i class="fas fa-envelope"></i> إشعارات البريد الإلكتروني عند تحديث الطلبات
+        </span>
+    </label>
+
+    <label style="display:flex; align-items:center; gap:1rem; margin-bottom:1rem; cursor:pointer;">
+        <input type="checkbox" id="sms-notifications" checked
+               style="width:18px; height:18px; accent-color:var(--primary);" />
+        <span style="font-weight:500;">
+            <i class="fas fa-sms"></i> إشعارات SMS عند التوصيل
+        </span>
+    </label>
+
+    <div style="display:flex; justify-content:flex-end; margin-top:2rem;">
+        <button id="save-settings" class="merchant-btn merchant-btn-primary">
+            <i class="fas fa-save"></i> حفظ الإعدادات
+        </button>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="~/js/merchant.js"></script>
+}

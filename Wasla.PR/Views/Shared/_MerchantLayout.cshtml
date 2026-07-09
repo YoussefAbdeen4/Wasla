@@ -1,1 +1,76 @@
-﻿
+@using Microsoft.AspNetCore.Identity
+@using Wasla.DAL.Identity
+@inject UserManager<ApplicationUser> UserManager
+@{
+    var user = UserManager.GetUserAsync(User).GetAwaiter().GetResult();
+}
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Wasla</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+    <link rel="stylesheet" href="/css/site.css" />
+    <link rel="stylesheet" href="/css/merchant.css" />
+</head>
+<body data-theme="wasla">
+    <div class="merchant-app">
+        <aside class="merchant-sidebar">
+            <div class="merchant-sidebar-header">
+                <a asp-controller="Merchant" asp-action="Index" class="merchant-logo">
+                    <i class="fas fa-truck-fast" style="font-size:1.5rem"></i>
+                    <span data-i18n="platform_name">Wasla Platform</span>
+                </a>
+            </div>
+            <nav class="merchant-nav">
+                <a asp-controller="Merchant" asp-action="Index" class="merchant-nav-item"> <i class="fas fa-chart-line"></i> <span data-i18n="nav_dashboard">Dashboard</span></a>
+                <a asp-controller="Merchant" asp-action="Orders" class="merchant-nav-item"> <i class="fas fa-clipboard-list"></i> <span data-i18n="nav_orders">Orders</span></a>
+                <a asp-controller="Merchant" asp-action="AddOrder" class="merchant-nav-item"> <i class="fas fa-plus-circle"></i> <span data-i18n="nav_add_order">Add Order</span></a>
+                <a asp-controller="Merchant" asp-action="Wallet" class="merchant-nav-item"> <i class="fas fa-wallet"></i> <span data-i18n="nav_wallet">Financials</span></a>
+                <a asp-controller="Merchant" asp-action="Profile" class="merchant-nav-item"> <i class="fas fa-user-circle"></i> <span data-i18n="nav_profile">Profile</span></a>
+                <a asp-controller="Merchant" asp-action="Settings" class="merchant-nav-item"> <i class="fas fa-cog"></i> <span data-i18n="nav_settings">Settings</span></a>
+            </nav>
+            <div style="padding:1.5rem 1rem; border-top:1px solid var(--merchant-border);">
+                <form asp-controller="Auth" asp-action="Logout" method="post">
+                    <button type="submit" class="merchant-nav-item" style="color:#ef4444; border:none; background:transparent; padding:0;">
+                        <i class="fas fa-sign-out-alt"></i>
+                        <span data-i18n="logout">Logout</span>
+                    </button>
+                </form>
+            </div>
+        </aside>
+
+        <main class="merchant-main-wrapper">
+            <header class="merchant-header">
+                <div class="merchant-header-left">
+                    <button class="merchant-toggle-btn" id="merchant-sidebar-toggle"><i class="fas fa-bars"></i></button>
+                    <h2 class="merchant-page-title" style="margin:0; font-size:1.25rem">@ViewData["Title"]</h2>
+                </div>
+                <div class="merchant-header-right">
+                    <div style="display:flex; background:var(--merchant-bg); padding:0.25rem; border-radius:var(--merchant-radius-sm);">
+                        <button class="lang-btn" data-lang="en" style="border:none; background:transparent; padding:0.25rem 0.75rem; border-radius:4px; font-size:0.875rem; font-weight:600; cursor:pointer; color:var(--merchant-text-secondary);">EN</button>
+                        <button class="lang-btn active" data-lang="ar" style="border:none; background:var(--merchant-surface); box-shadow:var(--merchant-shadow-sm); padding:0.25rem 0.75rem; border-radius:4px; font-size:0.875rem; font-weight:600; cursor:pointer; color:var(--primary, #3b82f6);">AR</button>
+                    </div>
+
+                    <div class="merchant-user-profile" onclick="location.href='@Url.Action("Profile","Merchant")'">
+                        <div class="merchant-user-info" style="text-align:end;">
+                            <span class="merchant-user-name">@user?.UserName</span>
+                            <span class="merchant-user-role">@user?.Email</span>
+                        </div>
+                        <div class="merchant-avatar">@((user?.UserName ?? "").FirstOrDefault())</div>
+                    </div>
+                </div>
+            </header>
+
+            <div class="merchant-content">
+                @RenderBody()
+            </div>
+        </main>
+    </div>
+
+    <script src="/js/site.js"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>
+

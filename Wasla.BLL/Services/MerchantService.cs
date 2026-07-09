@@ -121,5 +121,13 @@ namespace Wasla.BLL.Services
                 .Take(take)
                 .ToListAsync();
         }
+
+        public async Task<decimal> GetTotalRevenueAsync(int merchantId)
+        {
+            return await _context.Orders
+                .AsNoTracking()
+                .Where(o => o.MerchantId == merchantId && o.status == Enums.OrderStatus.Delivered)
+                .SumAsync(o => (decimal?)o.TotalPrice) ?? 0m;
+        }
     }
 }
