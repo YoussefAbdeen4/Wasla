@@ -26,6 +26,7 @@ namespace Wasla.PR
 
             builder.Services.AddScoped<AgentService>();
             builder.Services.AddScoped<OrderServices>();
+            builder.Services.AddScoped<MerchantService>();
             builder.Services.AddScoped<RateCardService>();
             builder.Services.AddScoped<CompanyService>();
             builder.Services.AddScoped<CompanyFinancialsService>();

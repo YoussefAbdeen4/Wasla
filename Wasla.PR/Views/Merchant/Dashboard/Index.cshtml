@@ -1,5 +1,4 @@
-
-
+@model Wasla.PR.ViewModels.MerchantDashboardViewModel
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
@@ -18,45 +17,47 @@
         <!-- Sidebar -->
         <aside class="merchant-sidebar">
             <div class="merchant-sidebar-header">
-                <asp-controller="Dashboard" asp-action="index" class="merchant-logo">
+                <a asp-controller="Merchant" asp-action="Index" class="merchant-logo">
                     <i class="fas fa-truck-fast" style="font-size: 1.5rem;"></i>
                     <span data-i18n="platform_name">Wasla Platform</span>
                 </a>
             </div>
             
             <nav class="merchant-nav">
-                <a href="index.html" class="merchant-nav-item active">
+                <a asp-controller="Merchant" asp-action="Index" class="merchant-nav-item active">
                     <i class="fas fa-chart-line"></i>
                     <span data-i18n="nav_dashboard">Dashboard</span>
                 </a>
-                <a href="orders.html" class="merchant-nav-item">
+                <a asp-controller="Merchant" asp-action="Orders" class="merchant-nav-item">
                     <i class="fas fa-clipboard-list"></i>
                     <span data-i18n="nav_orders">Orders</span>
                 </a>
-                <a href="add-order.html" class="merchant-nav-item">
+                <a asp-controller="Merchant" asp-action="AddOrder" class="merchant-nav-item">
                     <i class="fas fa-plus-circle"></i>
                     <span data-i18n="nav_add_order">Add Order</span>
                 </a>
-                <a href="wallet.html" class="merchant-nav-item">
+                <a asp-controller="Merchant" asp-action="Wallet" class="merchant-nav-item">
                     <i class="fas fa-wallet"></i>
                     <span data-i18n="nav_wallet">Financials</span>
                 </a>
-                <a href="profile.html" class="merchant-nav-item">
+                <a asp-controller="Merchant" asp-action="Profile" class="merchant-nav-item">
                     <i class="fas fa-user-circle"></i>
                     <span data-i18n="nav_profile">Profile</span>
                 </a>
-                <a href="settings.html" class="merchant-nav-item">
+                <a asp-controller="Merchant" asp-action="Settings" class="merchant-nav-item">
                     <i class="fas fa-cog"></i>
                     <span data-i18n="nav_settings">Settings</span>
                 </a>
             </nav>
             
-            <div style="padding: 1.5rem 1rem; border-top: 1px solid var(--merchant-border);">
-                <a href="../login.html" class="merchant-nav-item" style="color: #ef4444;">
-                    <i class="fas fa-sign-out-alt"></i>
-                    <span data-i18n="logout">Logout</span>
-                </a>
-            </div>
+                <div style="padding: 1.5rem 1rem; border-top: 1px solid var(--merchant-border);">
+                    <form asp-controller="Auth" asp-action="Logout" method="post">
+                        <button type="submit" class="merchant-nav-item" style="color:#ef4444; border:none; background:transparent; padding:0;">
+                            <i class="fas fa-sign-out-alt"></i>
+                            <span data-i18n="logout">Logout</span>
+                        </button>
+                    </form>
+                </div>
         </aside>
 
         <!-- Main Content -->
@@ -101,7 +102,7 @@
                         <p class="merchant-page-desc" data-i18n="dashboard_overview">Here's a summary of your store's logistics and operations.</p>
                     </div>
                     <div>
-                        <button class="merchant-btn merchant-btn-primary" onclick="window.location.href='add-order.html'">
+                        <button class="merchant-btn merchant-btn-primary" onclick="location.href='@Url.Action("AddOrder","Merchant")'">
                             <i class="fas fa-plus"></i>
                             <span data-i18n="nav_add_order">Add Order</span>
                         </button>
@@ -177,7 +178,7 @@
                 <div class="merchant-card">
                     <div class="merchant-card-header">
                         <h3 class="merchant-card-title" data-i18n="recent_orders">Recent Orders</h3>
-                        <a href="orders.html" class="merchant-btn merchant-btn-secondary" style="padding: 0.5rem 1rem; font-size: 0.8rem;" data-i18n="view_all">View All</a>
+                         <a asp-controller="Merchant" asp-action="Orders" class="merchant-btn merchant-btn-secondary" style="padding: 0.5rem 1rem; font-size: 0.8rem;" data-i18n="view_all">View All</a>
                     </div>
                     <div class="merchant-table-container">
                         <table class="merchant-table">
@@ -191,31 +192,18 @@
                                 </tr>
                             </thead>
 
-<tbody>
-   @foreach (var order in Model.RecentOrders ?? new List<Order>())
-{
-    <tr>
-        <td><strong>@order.Id</strong></td>
-        <td>@order.CustomerName</td>
-        <td>@order.TotalPrice E.G</td>
-        <td><span class="merchant-badge merchant-badge-success">@order.PaymentType</span></td>
-        <td>@order.CreatedAt.ToString("yyyy/MM/dd")</td>
-    </tr>
-}
-</tbody>
-
-<tbody>
-    @foreach (var order in Model.RecentOrders)
-    {
-        <tr>
-            <td><strong>#@order.Id</strong></td>
-            <td>@order.CustomerName</td>
-            <td>@order.Amount E.G</td>
-            <td><span class="merchant-badge merchant-badge-success">@order.Status</span></td>
-            <td>@order.Date.ToString("yyyy/MM/dd")</td>
-        </tr>
-    }
-</tbody>
+                                <tbody>
+                                    @foreach (var order in Model.RecentOrders ?? new List<Order>())
+                                    {
+                                        <tr>
+                                            <td><strong>#@order.Id</strong></td>
+                                            <td>@order.CustomerName</td>
+                                            <td>@order.TotalPrice.ToString("N2")</td>
+                                            <td><span class="merchant-badge merchant-badge-success">@order.status.ToString()</span></td>
+                                            <td>@order.CreatedAt.ToString("yyyy/MM/dd")</td>
+                                        </tr>
+                                    }
+                                </tbody>
 
                         </table>
                     </div>
