@@ -1,11 +1,11 @@
-﻿@model Wasla.PR.ViewModels.Admin.AdminMerchantsListViewModel
+﻿@model Wasla.PR.ViewModels.Admin.AdminDriversListViewModel
 @{
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
-    ViewData["Title"] = "Merchants Management";
+    ViewData["Title"] = "Drivers Management";
 }
 
 <div class="admin-page-header">
-    <h1 class="admin-page-title">Merchants Management</h1>
+    <h1 class="admin-page-title">Drivers Management</h1>
 </div>
 
 <div class="admin-card">
@@ -15,20 +15,18 @@
                 <tr>
                     <th>Name</th>
                     <th>Phone</th>
-                    <th>Orders</th>
                     <th>Status</th>
                     <th>Actions</th>
                 </tr>
             </thead>
             <tbody>
-                @foreach (var merchant in Model.Merchants)
+                @foreach (var driver in Model.Drivers)
                 {
                     <tr>
-                        <td><strong>@merchant.StoreName</strong></td>
-                        <td>@merchant.Phone</td>
-                        <td>@merchant.OrdersCount</td>
+                        <td><strong>@driver.Name</strong></td>
+                        <td>@driver.Phone</td>
                         <td>
-                            @if (merchant.Status == "Active")
+                            @if (driver.Status == "Active")
                             {
                                 <span class="admin-badge admin-badge-success">Active</span>
                             }
@@ -38,7 +36,7 @@
                             }
                         </td>
                         <td>
-                            <a href="@Url.Action("MerchantDetails", new { id = merchant.Id })" class="admin-btn admin-btn-outline">Details</a>
+                            <a href="@Url.Action("DriverDetails", new { id = driver.Id })" class="admin-btn admin-btn-outline">Details</a>
                         </td>
                     </tr>
                 }

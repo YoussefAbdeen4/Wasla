@@ -176,6 +176,8 @@ namespace Wasla.PR.Controllers.Auth
                 ModelState.AddModelError("", "Invalid email or password.");
                 return View(model);
             }
+            if (user.UserType == UserType.Admin)
+                return RedirectToAction("Index", "Admin");
 
             if (user.UserType == UserType.Merchant)
                 return RedirectToAction("Index", "Merchant");

@@ -1,5 +1,103 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
+﻿@model Wasla.PR.ViewModels.Admin.AdminDashboardViewModel
 @{
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    ViewData["Title"] = "Dashboard";
 }
+
+<!-- Stats Cards -->
+<div class="admin-stats-grid">
+    <div class="admin-stat-card">
+        <div class="admin-stat-info">
+            <div class="admin-stat-label">Total Companies</div>
+            <div class="admin-stat-value">@Model.TotalCompanies</div>
+        </div>
+    </div>
+    <div class="admin-stat-card">
+        <div class="admin-stat-info">
+            <div class="admin-stat-label">Total Merchants</div>
+            <div class="admin-stat-value">@Model.TotalMerchants</div>
+        </div>
+    </div>
+    <div class="admin-stat-card">
+        <div class="admin-stat-info">
+            <div class="admin-stat-label">Total Orders</div>
+            <div class="admin-stat-value">@Model.TotalOrders</div>
+        </div>
+    </div>
+    <div class="admin-stat-card">
+        <div class="admin-stat-info">
+            <div class="admin-stat-label">Total Drivers</div>
+            <div class="admin-stat-value">@Model.TotalDrivers</div>
+        </div>
+    </div>
+</div>
+
+<!-- Recent Orders -->
+<div class="admin-card">
+    <div class="admin-card-header">
+        <h3 class="admin-card-title">Recent Orders</h3>
+        <a href="@Url.Action("Orders")" class="admin-btn admin-btn-outline">View All</a>
+    </div>
+    <div class="admin-table-container">
+        <table class="admin-table">
+            <thead>
+                <tr>
+                    <th>Order ID</th>
+                    <th>Customer</th>
+                    <th>Date</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var order in Model.RecentOrders)
+                {
+                    <tr>
+                        <td>#@order.Id</td>
+                        <td>@order.CustomerName</td>
+                        <td>@order.CreatedAt.ToString("dd/MM/yyyy")</td>
+                        <td>@order.Status</td>
+                        <td>
+                            <a href="@Url.Action("OrderDetails", new { id = order.Id })" class="admin-btn admin-btn-outline">View</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<!-- Registered Companies -->
+<div class="admin-card">
+    <div class="admin-card-header">
+        <h3 class="admin-card-title">Registered Companies</h3>
+        <a href="@Url.Action("Companies")" class="admin-btn admin-btn-outline">View All</a>
+    </div>
+    <div class="admin-table-container">
+        <table class="admin-table">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Contact</th>
+                    <th>Orders</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var company in Model.RecentCompanies)
+                {
+                    <tr>
+                        <td>@company.Name</td>
+                        <td>@company.Contact</td>
+                        <td>@company.OrdersCount</td>
+                        <td>@company.Status</td>
+                        <td>
+                            <a href="@Url.Action("CompanyDetails", new { id = company.Id })" class="admin-btn admin-btn-outline">View</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
