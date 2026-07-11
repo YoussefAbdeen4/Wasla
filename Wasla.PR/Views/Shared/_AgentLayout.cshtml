@@ -38,10 +38,13 @@
                     <i class="fa-solid fa-user"></i> <span data-i18n="profile">بروفايلي</span>
                 </a>
             </nav>
-            <div class="agent-sidebar-footer">
-                <a href="#" class="agent-nav-item agent-logout">
-                    <i class="fa-solid fa-right-from-bracket"></i> <span data-i18n="logout">تسجيل خروج</span>
-                </a>
+            <div class="company-sidebar-footer">
+                <form asp-controller="Auth" asp-action="Logout" method="post" style="display:inline;">
+                    <button type="submit" class="company-nav-item company-logout-btn" style="border:none;background:none;padding:0;">
+                        <i class="fa-solid fa-right-from-bracket"></i>
+                        <span data-i18n="logout">تسجيل الخروج</span>
+                    </button>
+                </form>
             </div>
         </aside>
 

@@ -1,16 +1,19 @@
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Wasla.Models;
-using Wasla.Enums;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Security.Claims;
+using System.Threading.Tasks;
+using Wasla.Enums;
+using Wasla.Models;
 using Wasla.PR.ViewModels.Agent;
 
 namespace Wasla.PR.Controllers.Agent
 {
+    [Authorize]
     public class AgentController : Controller
     {
         private readonly AppDbContext _db;
@@ -24,38 +27,52 @@ namespace Wasla.PR.Controllers.Agent
         public async Task<IActionResult> Index(int? driverId)
         {
             var id = await ResolveDriverId(driverId);
+
             if (id == null)
-            {
                 return View(new AgentDashboardViewModel());
-            }
+
+            var driver = await _db.Drivers
+                .AsNoTracking()
+                .FirstOrDefaultAsync(d => d.Id == id);
+
+            if (driver == null)
+                return View(new AgentDashboardViewModel());
 
             var ordersQuery = _db.Orders
-                .Where(o => o.Driver != null && o.Driver.Id == id)
-                .Include(o => o.TrackingHistories)
+                .AsNoTracking()
+                .Where(o => o.DriverId == id)
                 .OrderByDescending(o => o.CreatedAt);
 
             var total = await ordersQuery.CountAsync();
-            var delivered = await ordersQuery.Where(o => o.DeliveredAt != default).CountAsync();
-            var returned = await ordersQuery.Where(o => o.TrackingHistories.Any(th => th.Status == OrderStatus.Returned)).CountAsync();
 
-            // financials calculation using COD
-            var driver = await _db.Drivers.FindAsync(id);
-            var codOrders = ordersQuery.Where(o => o.PaymentType == PaymentType.COD);
+            var delivered = await ordersQuery.CountAsync(o =>
+                o.status == OrderStatus.Delivered);
 
-            var totalCashCollected = await codOrders.Where(o => o.DeliveredAt != default).SumAsync(o => (decimal?)o.TotalPrice) ?? 0m;
-            var cashDeliveredToCompany = driver?.TotalCashSubmitted ?? 0m;
+            var returned = await ordersQuery.CountAsync(o =>
+                o.status == OrderStatus.Returned);
+
+            var totalCashCollected = await ordersQuery
+                .Where(o =>
+                    o.PaymentType == PaymentType.COD &&
+                    o.status == OrderStatus.Delivered)
+                .SumAsync(o => (decimal?)o.TotalPrice) ?? 0;
+
+            var cashDeliveredToCompany = driver.TotalCashSubmitted;
+
             var cashInHand = totalCashCollected - cashDeliveredToCompany;
-            var balance = cashInHand;
 
-            var recent = await ordersQuery.Take(5).Select(o => new OrderSummaryViewModel
-            {
-                Id = o.Id,
-                OrderNumber = o.TrackingUuid,
-                CustomerName = o.CustomerName,
-                Amount = o.TotalPrice,
-                CreatedAt = o.CreatedAt,
-                Status = o.TrackingHistories.OrderByDescending(th => th.Timestamp).Select(th => th.Status.ToString()).FirstOrDefault() ?? (o.DeliveredAt != default ? "Delivered" : "Created")
-            }).ToListAsync();
+            var recent = await ordersQuery
+                .Take(5)
+                .Select(o => new OrderSummaryViewModel
+                {
+                    Id = o.Id,
+                    OrderNumber = o.TrackingUuid,
+                    CustomerName = o.CustomerName,
+                    Amount = o.TotalPrice,
+                    CreatedAt = o.CreatedAt,
+                    Status = o.status.ToString()
+                })
+                .ToListAsync();
 
             var vm = new AgentDashboardViewModel
             {
@@ -64,13 +81,12 @@ namespace Wasla.PR.Controllers.Agent
                 Returned = returned,
                 CashInHand = cashInHand,
                 CashDelivered = cashDeliveredToCompany,
-                Balance = balance,
+                Balance = cashInHand,
                 RecentOrders = recent
             };
 
             return View(vm);
         }
-
         [HttpPost]
         public async Task<JsonResult> UpdateOrderStatus(int orderId, string status)
         {
@@ -188,40 +204,50 @@ namespace Wasla.PR.Controllers.Agent
         public async Task<IActionResult> Profile(int? driverId)
         {
             var id = await ResolveDriverId(driverId);
-            if (id == null) return View(new AgentProfileViewModel());
 
-            var driver = await _db.Drivers.Include(d => d.DriverVehicles).ThenInclude(dv => dv.Vehicle).FirstOrDefaultAsync(d => d.Id == id);
-            if (driver == null) return View(new AgentProfileViewModel());
+            if (id == null)
+                return View(new AgentProfileViewModel());
 
-            var vehicleType = driver.DriverVehicles?.FirstOrDefault()?.Vehicle?.Type.ToString() ?? string.Empty;
+            var driver = await _db.Drivers
+                .Include(d => d.User)
+                .Include(d => d.Phones)
+                .Include(d => d.DriverVehicles)
+                    .ThenInclude(dv => dv.Vehicle)
+                .FirstOrDefaultAsync(d => d.Id == id);
+
+            if (driver == null)
+                return View(new AgentProfileViewModel());
+
+            var currentVehicle = driver.DriverVehicles
+                .OrderByDescending(v => v.AssignedAt)
+                .FirstOrDefault();
 
             var vm = new AgentProfileViewModel
             {
                 Id = driver.Id,
                 FullName = driver.Name,
-                Phone = driver.Phones?.FirstOrDefault()?.PhoneNumber ?? string.Empty,
-                VehicleType = vehicleType,
-                AvatarUrl = string.Empty,
-               // Email = driver.Email
+                Phone = driver.Phones.FirstOrDefault()?.PhoneNumber ?? "",
+                Email = driver.User?.Email ?? "",
+                VehicleType = currentVehicle?.Vehicle?.Type.ToString() ?? "",
+                AvatarUrl = ""
             };
 
             return View(vm);
         }
-
         private async Task<int?> ResolveDriverId(int? providedId)
         {
-            if (providedId.HasValue) return providedId.Value;
+            if (providedId.HasValue)
+                return providedId.Value;
 
-            // try to read claim (if authentication exists)
-            if (User?.Identity?.IsAuthenticated == true)
-            {
-                var claim = User.Claims.FirstOrDefault(c => c.Type == "DriverId" || c.Type == System.Security.Claims.ClaimTypes.NameIdentifier);
-                if (claim != null && int.TryParse(claim.Value, out var parsed)) return parsed;
-            }
+            var userId = User.FindFirstValue(System.Security.Claims.ClaimTypes.NameIdentifier);
 
-            // fallback: use first driver in database for development
-            var first = await _db.Drivers.OrderBy(d => d.Id).FirstOrDefaultAsync();
-            return first?.Id;
+            if (string.IsNullOrEmpty(userId))
+                return null;
+
+            var driver = await _db.Drivers
+                .FirstOrDefaultAsync(d => d.UserId == userId);
+
+            return driver?.Id;
         }
     }
 }

@@ -6,7 +6,7 @@ using Wasla.PR.ViewModels.Admin;
 
 namespace Wasla.PR.Controllers.Admin
 {
-    //[Authorize(Roles = "Admin")]
+    [Authorize(Roles = "Admin")]
     public class AdminController : Controller
     {
         private readonly AdminDashboardService _adminDashboardService;
@@ -170,7 +170,7 @@ namespace Wasla.PR.Controllers.Admin
             };
 
 
-            return View("Orders/Details", vm);
+            return View("~/Views/Admin/Orders/Deatils.cshtml", vm);
         }
 
 

@@ -111,32 +111,57 @@ namespace Wasla.Controllers
 
             var vm = new PR.ViewModels.Merchant.MerchantOrderDetailsViewModel
             {
-                Id                 = order.Id,
-                TrackingUuid       = order.TrackingUuid,
-                CustomerName       = order.CustomerName,
-                CustomerPhone      = order.CustomerPhone,
-                CustomerAddress    = order.CustomerAddress,
-                CityFrom           = order.CityFrom,
-                CityTo             = order.CityTo,
+                Id = order.Id,
+                TrackingUuid = order.TrackingUuid,
+                CustomerName = order.CustomerName,
+                CustomerPhone = order.CustomerPhone,
+                CustomerAddress = order.CustomerAddress,
+                CityFrom = order.CityFrom,
+                CityTo = order.CityTo,
                 IsClaimingRequired = order.isClaimingRequired,
-                IsBreakable        = order.isBreakable,
-                Status             = order.status,
-                PaymentType        = order.PaymentType,
-                TotalPrice         = order.TotalPrice,
-                CreatedAt          = order.CreatedAt,
-                UpdatedAt          = order.UpdatedAt,
-                DeliveredAt        = order.DeliveredAt,
-                CurrentDriverName  = order.Driver?.Name,
-                TrackingHistory    = order.TrackingHistories?.Select(th => new PR.ViewModels.Merchant.MerchantTrackingItemViewModel
+                IsBreakable = order.isBreakable,
+                Status = order.status,
+                PaymentType = order.PaymentType,
+                TotalPrice = order.TotalPrice,
+                CreatedAt = order.CreatedAt,
+                UpdatedAt = order.UpdatedAt,
+                DeliveredAt = order.DeliveredAt,
+                CurrentDriverName = order.Driver?.Name,
+                TrackingHistory = order.TrackingHistories?.Select(th => new PR.ViewModels.Merchant.MerchantTrackingItemViewModel
                 {
-                    Id        = th.Id,
-                    Status    = th.Status.ToString(),
+                    Id = th.Id,
+                    Status = th.Status.ToString(),
                     Timestamp = th.Timestamp,
-                    Location  = th.Location
+                    Location = th.Location
                 }).ToList() ?? new List<PR.ViewModels.Merchant.MerchantTrackingItemViewModel>()
             };
 
+            if (order.CompanyId == null)
+            {
+                ViewBag.AvailableCouriers = await _merchantService.GetAvailableCouriersForOrderAsync(id);
+            }
+            else
+            {
+                ViewBag.AssignedCompanyName = order.Company?.CompanyName ?? order.Company?.Name;
+            }
+
             return View("~/Views/Merchant/Orders/Details.cshtml", vm);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> AssignCourier(int orderId, int companyId)
+        {
+            var success = await _merchantService.AssignCompanyToOrderAsync(orderId, companyId);
+            if (success)
+            {
+                TempData["Success"] = "تم إسناد طلب الشحن للشركة بنجاح.";
+            }
+            else
+            {
+                TempData["Error"] = "حدث خطأ أثناء إسناد الشركة.";
+            }
+            return RedirectToAction("Details", new { id = orderId });
         }
 
         // ==================== Wallet ====================

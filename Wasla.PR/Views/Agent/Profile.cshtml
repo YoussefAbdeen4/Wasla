@@ -7,7 +7,6 @@
 @model AgentProfileViewModel
 
 <div class="agent-card">
-    <!-- profile preview -->
     <div class="agent-profile-info" style="display: flex; align-items: center; gap: 2rem; margin-bottom: 2rem;">
         <div class="agent-avatar-large" id="avatarPreview" style="width: 100px; height: 100px; background: var(--agent-primary-light); display: flex; align-items: center; justify-content: center; border-radius: 32px; font-size: 3rem;">
             @if (!string.IsNullOrEmpty(Model?.AvatarUrl))
@@ -16,7 +15,8 @@
             }
             else
             {
-                @(!string.IsNullOrEmpty(Model?.FullName) ? Model.FullName.Substring(0,1) : "م")
+                // [تعديل]: أضفنا Trim() عشان لو الاسم متسجل بمسافات فاضية ميضربش Exception في الـ Substring
+                @(!string.IsNullOrWhiteSpace(Model?.FullName) ? Model.FullName.Trim().Substring(0, 1) : "م")
             }
         </div>
         <div>
@@ -25,7 +25,6 @@
         </div>
     </div>
 
-    <!-- read-only profile fields -->
     <div class="agent-form-group">
         <label class="agent-form-label" data-i18n="full_name">الاسم بالكامل</label>
         <input type="text" id="agentName" class="agent-form-control" disabled value="@Model?.FullName" />
@@ -55,4 +54,3 @@
     </div>
     <button id="updateAvatarBtn" class="agent-btn agent-btn-primary"><i class="fa-solid fa-upload"></i> <span data-i18n="update">تحديث الصورة</span></button>
 </div>
-

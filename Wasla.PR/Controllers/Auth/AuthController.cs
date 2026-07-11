@@ -177,7 +177,7 @@ namespace Wasla.PR.Controllers.Auth
                 return View(model);
             }
             if (user.UserType == UserType.Admin)
-                return RedirectToAction("Index", "Admin");
+                return RedirectToAction("Dashboard", "Admin");
 
             if (user.UserType == UserType.Merchant)
                 return RedirectToAction("Index", "Merchant");

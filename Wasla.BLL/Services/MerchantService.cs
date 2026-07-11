@@ -17,6 +17,8 @@ namespace Wasla.BLL.Services
         public List<Order> RecentOrders { get; set; } = new List<Order>();
     }
 
+    
+
     public class MerchantService
     {
         private readonly AppDbContext _context;
@@ -129,5 +131,52 @@ namespace Wasla.BLL.Services
                 .Where(o => o.MerchantId == merchantId && o.status == Enums.OrderStatus.Delivered)
                 .SumAsync(o => (decimal?)o.TotalPrice) ?? 0m;
         }
+
+        public async Task<List<AvailableCourierDto>> GetAvailableCouriersForOrderAsync(int orderId)
+        {
+            var order = await _context.Orders.AsNoTracking().FirstOrDefaultAsync(o => o.Id == orderId);
+            if (order == null) return new List<AvailableCourierDto>();
+
+            var availableRates = await _context.RateCards
+                .Include(rc => rc.Company)
+                .AsNoTracking()
+                .Where(rc => rc.OriginCity == order.CityFrom && rc.DestinationCity == order.CityTo)
+                .ToListAsync();
+
+         
+            var result = availableRates.Select(rc => new AvailableCourierDto
+            {
+                CompanyId = rc.CompanyId,
+                CompanyName = rc.Company.CompanyName ?? rc.Company.Name,
+                BaseFee = rc.BaseFee,
+                ExtraKiloPrice = rc.ExtraKiloPrice
+            })
+            .OrderBy(rc => rc.BaseFee) 
+            .ToList();
+
+            return result;
+        }
+
+        public async Task<bool> AssignCompanyToOrderAsync(int orderId, int companyId)
+        {
+            var order = await _context.Orders.FirstOrDefaultAsync(o => o.Id == orderId);
+            if (order == null) return false;
+
+            order.CompanyId = companyId;
+            order.status = Enums.OrderStatus.PendingConfirmation; // أو الحالة المناسبة عندك بعد الإسناد
+            order.UpdatedAt = DateTime.Now;
+
+            await _context.SaveChangesAsync();
+            return true;
+        }
+
+        public class AvailableCourierDto
+        {
+            public int CompanyId { get; set; }
+            public string CompanyName { get; set; }
+            public decimal BaseFee { get; set; }
+            public decimal ExtraKiloPrice { get; set; }
+        }
+
     }
 }
